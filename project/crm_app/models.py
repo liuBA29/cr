@@ -15,7 +15,7 @@ class Contragent(models.Model):
 
     class Meta:
         abstract = True
-
+#------------------------
 
 class Money(models.Model):
     CURRENCY_CHOICES = (
@@ -33,6 +33,9 @@ class Money(models.Model):
     price = models.FloatField()
     currency = models.CharField(choices=CURRENCY_CHOICES, default=CURRENCY_DEFAULT)
 
+    class Meta:
+        verbose_name="Деньги"
+        verbose_name_plural="Деньги"
 
 class Stavka(models.Model):
     supplyer = models.ForeignKey('Supplyer', on_delete=models.PROTECT)
@@ -46,19 +49,42 @@ class Stavka(models.Model):
         ('allowed', 'Прошли по цене'),
     )
     result = models.CharField(choices=RESULT_CHOICES, default='not ready')
+    class Meta:
+        verbose_name="Ставка"
+        verbose_name_plural="Ставки"
 
 
 class Client(Contragent):
     client_status = models.BooleanField(default=False, verbose_name="Постоянный клиент")
+    class Meta:
+        verbose_name="Заказчики"
+        verbose_name_plural="Перевозчики"
+        ordering = ['created']
 
+    def __str__(self):
+        return self.company_name
 
 class Supplyer(Contragent):
     supplyer_status = models.BooleanField(default=False, verbose_name="Надежный перевозчик")
 
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        verbose_name="Перевозчики"
+        verbose_name_plural="Перевозчики"
+        ordering = ['created']
 
 class OtherCompany(Contragent):
     descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание вида деятельности')
 
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        verbose_name="Сторонние организации"
+        verbose_name_plural = "Сторонние организации"
+        ordering = ['created']
 
 class Operation(models.Model):
     # transport
