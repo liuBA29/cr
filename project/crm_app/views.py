@@ -26,6 +26,13 @@ def login(request):
 
 
 #=============Forms add+++++++++++++++++
-def add_quot(request):
+def add_sdelka(request):
+    if request.method == 'POST':
+        form = SdelkaForm(request.POST)
 
-    return render(request, 'crm_app/add_quot.html',  {'form': form, 'menu': menu, 'title': 'Создать котировку'})
+        if form.is_valid():
+            print(form.cleaned_data)
+
+    else:
+        form = SdelkaForm()
+    return render(request, 'crm_app/add_sdelka.html',  {'form':form,  'menu': menu, 'title': 'Создать cltkre'})

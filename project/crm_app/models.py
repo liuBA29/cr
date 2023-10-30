@@ -98,6 +98,10 @@ class Stavka(models.Model):
     description = models.CharField(max_length=20)
     price = models.FloatField()
 
+    def __str__(self):
+        return str(self.price)
+
+
 
 class Sdelka(Operation):
     descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание потребності')
