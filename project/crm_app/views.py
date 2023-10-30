@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from .forms import *
 from .models import  *
 
-form = AddQuot()
+
 menu =[
     {'title': 'Главная', 'url_name': 'home'},
     {'title': 'Контрагенты', 'url_name': 'contragents'},

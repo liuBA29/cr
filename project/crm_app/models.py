@@ -1,7 +1,7 @@
 
 from django.db import models
 from django.db import models
-
+from django.urls import reverse
 
 
 class Contragent(models.Model):
@@ -16,8 +16,7 @@ class Contragent(models.Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
-        return self.company_name
+
 #------------------------
 
 class Money(models.Model):
@@ -40,28 +39,13 @@ class Money(models.Model):
         verbose_name="Деньги"
         verbose_name_plural="Деньги"
 
-class Stavka(models.Model):
-    supplyer = models.ForeignKey('Supplyer', on_delete=models.PROTECT)
-    price = models.ForeignKey(Money, on_delete=models.CASCADE)
-
-    # comment_from_supplyer
-    # our_comment
-    RESULT_CHOICES = (
-        ('not ready', 'Груз не готов'),
-        ('refused', 'Не прошли по цене'),
-        ('allowed', 'Прошли по цене'),
-    )
-    result = models.CharField(choices=RESULT_CHOICES, default='not ready')
-    class Meta:
-        verbose_name="Ставка"
-        verbose_name_plural="Ставки"
 
 
 class Client(Contragent):
     client_status = models.BooleanField(default=False, verbose_name="Постоянный клиент")
     class Meta:
-        verbose_name="Заказчики"
-        verbose_name_plural="Перевозчики"
+        verbose_name = "Заказчик"
+        verbose_name_plural = "Заказчики"
         ordering = ['created']
 
     def __str__(self):
@@ -74,9 +58,13 @@ class Supplyer(Contragent):
         return self.company_name
 
     class Meta:
-        verbose_name="Перевозчики"
-        verbose_name_plural="Перевозчики"
+        verbose_name= "Перевозчик"
+        verbose_name_plural = "Перевозчики"
         ordering = ['created']
+
+    def get_absolute_url(self):
+        return reverse('quot', kwargs={'quot_id': self.pk})
+
 
 class OtherCompany(Contragent):
     descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание вида деятельности')
@@ -85,10 +73,12 @@ class OtherCompany(Contragent):
         return self.company_name
 
     class Meta:
-        verbose_name="Сторонние организации"
+        verbose_name="Сторонняя организация"
         verbose_name_plural = "Сторонние организации"
         ordering = ['created']
 
+
+#=================================operations========
 class Operation(models.Model):
     # transport
     # direction
@@ -99,3 +89,17 @@ class Operation(models.Model):
 
 
 
+
+
+class Stavka(models.Model):
+    supplyer = models.ForeignKey(Supplyer, max_length=20, on_delete=models.CASCADE)
+    transport = models.CharField(max_length=20)
+    direction = models.CharField(max_length=20)
+    description = models.CharField(max_length=20)
+    price = models.FloatField()
+
+
+class Sdelka(Operation):
+    descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание потребності')
+    client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE)
+    stavka_from_supplyer = models.ManyToManyField(Stavka)
