@@ -20,3 +20,7 @@ def operations(request):
 
 def login(request):
     return render(request, 'crm_app/login.html', {'menu': menu, "title": "Войти"})
+
+
+
+#=============Forms add
