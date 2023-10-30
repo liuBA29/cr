@@ -6,6 +6,7 @@ urlpatterns = [
     path('contragents/', contragents, name='contragents'),
     path('operations/', operations, name='operations'),
     path('login/', login, name='login'),
+    path('add_quot/', add_quot, name='add_quot'),
 
 ]
 

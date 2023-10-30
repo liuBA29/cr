@@ -15,6 +15,9 @@ class Contragent(models.Model):
 
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.company_name
 #------------------------
 
 class Money(models.Model):

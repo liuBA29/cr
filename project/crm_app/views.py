@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
+from .forms import *
+from .models import  *
 
-
+form = AddQuot()
 menu =[
     {'title': 'Главная', 'url_name': 'home'},
     {'title': 'Контрагенты', 'url_name': 'contragents'},
@@ -23,4 +25,7 @@ def login(request):
 
 
 
-#=============Forms add
+#=============Forms add+++++++++++++++++
+def add_quot(request):
+
+    return render(request, 'crm_app/add_quot.html',  {'form': form, 'menu': menu, 'title': 'Создать котировку'})
