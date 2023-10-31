@@ -84,30 +84,77 @@ class OtherCompany(Contragent):
 
 #=================================operations========
 class Operation(models.Model):
-    # transport
-    # direction
-    # description
+     descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание потребності')
+     transport = models.CharField(default='avto', max_length=20)
 
-    class Meta:
+
+
+     class Meta:
         abstract = True
 
 
 
 
 
-class Stavka(models.Model):
-    supplyer = models.ForeignKey(Supplyer, max_length=20, on_delete=models.CASCADE)
-    transport = models.CharField(max_length=20)
-    direction = models.CharField(max_length=20)
-    description = models.CharField(max_length=20)
-    price = models.FloatField()
-
-    def __str__(self):
-        return str(self.supplyer) + " : " + str(self.price)
-
 
 
 class Sdelka(Operation):
-    descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание потребності')
+    client = models.ForeignKey(Client, max_length=20,blank = True, on_delete=models.CASCADE, verbose_name='Заказчик')
+
+    cl_price = models.CharField(max_length=20, default=1, verbose_name='цена заказчика')
+    cl_currency = models.CharField(max_length=20, default='eu', verbose_name='валюта заказчика')
+
+    supplyer1 = models.ForeignKey(Supplyer, max_length=20,  blank = True, on_delete=models.CASCADE, verbose_name='Перевозчик1', related_name='Перевозчик1')
+    sup_price1 = models.CharField(max_length=20, blank=True,verbose_name='цена перевозчіка1')
+    sup_currency1 = models.CharField(max_length=20, blank=True,verbose_name='валюта перевозчіка1')
+    sup_pometka1 = models.CharField(max_length=20,blank=True, verbose_name='пометка перевозчіка1')
+
+    supplyer2 = models.ForeignKey(Supplyer, max_length=20, blank = True, on_delete=models.CASCADE, verbose_name='Перевозчик2', related_name='Перевозчик2' )
+    sup_price2 = models.CharField(max_length=20, blank=True, verbose_name='цена перевозчіка2')
+    sup_currency2 = models.CharField(max_length=20, blank=True, verbose_name='валюта перевозчіка2')
+    sup_pometka2 = models.CharField(max_length=20, blank=True, verbose_name='пометка перевозчіка2')
+
+
+    common_direction=models.CharField(max_length=20, blank = True, verbose_name='общее направленіе доставкі')
+    common_transport = models.CharField(max_length=20, blank = True, verbose_name='транспорт іспользуемый в сделке')
+    profit = models.CharField(max_length=20, blank=True, verbose_name='прібыль в евро')
+
+    cl_documents = models.CharField(max_length=20, blank=True, verbose_name='документы заказчіка')
+
+    sup_documents1 = models.CharField(max_length=20, blank=True, verbose_name='документы перевозчика1')
+    sup_documents2 = models.CharField(max_length=20, blank=True, verbose_name='документы перевозчика2')
+
+    data_zagruzki_1 = models.CharField(max_length=20,blank=True, verbose_name='дата загрузки1')
+    data_vygruzki_1 = models.CharField(max_length=20, blank=True, verbose_name='дата выгрузки1')
+
+    data_zagruzki_2 = models.CharField(max_length=20, blank=True, verbose_name='дата загрузки2')
+    data_vygruzki_2 = models.CharField(max_length=20, blank=True, verbose_name='дата выгрузки2')
+
+    debitorks = models.BooleanField(default=False,  verbose_name='подтвержение выгузки1')
+    debitorka2 = models.BooleanField(default=False, verbose_name='подтвержение выгузки2')
+
+    status = models.CharField(max_length=20, blank = True, verbose_name='статус: текущие, закрытые, проект')
+    status_other = models.CharField(max_length=20, blank = True, verbose_name='статус other- новая, принята, в пути, выгружена')
+    number = models.CharField(max_length=20, blank = True, verbose_name='номер сделки')
+
+
+class Quotation(Operation):
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE)
-    stavka_from_supplyer = models.ManyToManyField(Stavka)
+    common_direction = models.CharField(max_length=20, blank = True, verbose_name='общее направленіе доставкі')
+    common_transport = models.CharField(max_length=20, blank=True, verbose_name='транспорт іспользуемый в сделке')
+
+    stavka1 = models.CharField(max_length=20, blank=True, verbose_name='ставка1')
+    comment_field1=  models.CharField(max_length=20,blank = True,  verbose_name='комментарій к ставке1')
+
+    stavka2 = models.CharField(max_length=20, blank=True,verbose_name='ставка2')
+    comment_field2= models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке2')
+
+    stavka3 = models.CharField(max_length=20, blank=True, verbose_name='ставка3')
+    comment_field3 = models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке3')
+
+    stavka4 = models.CharField(max_length=20, blank=True, verbose_name='ставка4')
+    comment_field4 = models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке4')
+
+    status = models.CharField(max_length=20, default='новая', verbose_name='статус other- новая, в работе, закрыта')
+
+    result = models.CharField(max_length=20, default='не прошли', verbose_name='статус other- прошлі по цене, груз не готов, не прошлі по цене')
