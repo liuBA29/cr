@@ -7,6 +7,6 @@ urlpatterns = [
     path('operations/', operations, name='operations'),
     path('login/', login, name='login'),
     path('add_sdelka/', add_sdelka, name='add_sdelka'),
-
+    path('add_stavka/', add_stavka, name='add_stavka'),
 ]
 

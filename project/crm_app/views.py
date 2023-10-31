@@ -4,7 +4,7 @@ from .models import  *
 
 
 menu =[
-    {'title': 'Главная', 'url_name': 'home'},
+
     {'title': 'Контрагенты', 'url_name': 'contragents'},
     {'title': 'Операции', 'url_name': 'operations'},
     {'title': 'Войти', 'url_name': 'login'},
@@ -36,3 +36,15 @@ def add_sdelka(request):
     else:
         form = SdelkaForm()
     return render(request, 'crm_app/add_sdelka.html',  {'form':form,  'menu': menu, 'title': 'Создать cltkre'})
+
+
+def add_stavka(request):
+    if request.method == 'POST':
+        form = StavkaForm(request.POST)
+
+        if form.is_valid():
+            print(form.cleaned_data)
+
+    else:
+        form = StavkaForm()
+    return render(request, 'crm_app/add_sdelka.html',  {'form':form,  'menu': menu, 'title': 'добавітьe'})

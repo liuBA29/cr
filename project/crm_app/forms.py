@@ -6,6 +6,8 @@ class SdelkaForm(forms.ModelForm):
         model = Sdelka
         fields = '__all__'
 
+    date = forms.DateInput()
+
 class StavkaForm(forms.ModelForm):
     class Meta:
         model = Stavka

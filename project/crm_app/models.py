@@ -99,7 +99,7 @@ class Stavka(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return str(self.price)
+        return str(self.supplyer) + " : " + str(self.price)
 
 
 
