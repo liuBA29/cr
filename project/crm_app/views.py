@@ -1,6 +1,11 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.urls import resolve
+
 from .forms import *
 from .models import  *
+
+
+
 
 operationss = [
     {'title': 'Котировки', 'key': 'Quotation.objects.all()', 'url_name': 'quotations'},
@@ -20,17 +25,28 @@ menu =[
     {'title': 'Войти', 'url_name': 'login'},
        ]
 
+
+
+
+
 def index(request):
+
+
     return render(request, 'crm_app/index.html', {'menu': menu, "title": "Главная"})
 
 
 def contragents(request):
-    return render(request, 'crm_app/contragents.html', {'contragentss': contragentss, 'menu': menu, "title": "Контрагенты"})
+    url = resolve(request.path_info).url_name
+    return render(request, 'crm_app/contragents.html', {'url':url,  'contragentss': contragentss, 'menu': menu, "title": "Контрагенты"})
+
+
 
 
 def clients(request):
+    url = resolve(request.path_info).url_name
     clients = Client.objects.all()
     contect = {
+        'url': url,
         'contragentss': contragentss,
         'clients': clients,
         'menu': menu,
@@ -60,8 +76,52 @@ def other_companies(request):
     return render(request, 'crm_app/other_companies.html', context=contect)
 
 
-def show_contragent(request, c_id):
-    return HttpResponse(f'reflexing contr with id = {c_id}')
+def show_client(request, c_id):
+    client = get_object_or_404(Client, pk=c_id)
+    url = resolve(request.path_info).url_name
+
+    clients = Client.objects.all()
+    contect = {
+        'url': url,
+        'contragentss': contragentss,
+        'client': client,
+        'clients': clients,
+        'menu': menu,
+        "title": "Заказчики",
+    }
+    return render(request, 'crm_app/client.html', context=contect)
+
+
+def show_supplyer(request, c_id):
+    supplyer = get_object_or_404(Supplyer, pk=c_id)
+    url = resolve(request.path_info).url_name
+
+    supplyers = Supplyer.objects.all()
+    contect = {
+        'url': url,
+        'contragentss': contragentss,
+        'supplyer': supplyer,
+        'supplyers': supplyers,
+        'menu': menu,
+        "title": "Перевозчики",
+    }
+    return render(request, 'crm_app/supplyer.html', context=contect)
+
+
+def show_other_company(request, c_id):
+    other_company = get_object_or_404(OtherCompany, pk=c_id)
+    url = resolve(request.path_info).url_name
+
+    other_companys = OtherCompany.objects.all()
+    contect = {
+        'url': url,
+        'contragentss': contragentss,
+        'other_company': other_company,
+        'sother_company': other_companys,
+        'menu': menu,
+        "title": "Перевозчики",
+    }
+    return render(request, 'crm_app/other_company.html', context=contect)
 
 
 def show_operation(request, c_id):
@@ -123,3 +183,5 @@ def add_stavka(request):
     else:
         form = StavkaForm()
     return render(request, 'crm_app/add_sdelka.html',  {'form':form,  'menu': menu, 'title': 'добавітьe'})
+
+

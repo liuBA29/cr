@@ -1,12 +1,16 @@
 {% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
 
 {%block content%}
 
 
-
-
 <div class="left-bar"><ul>
+
+{% get_sdelki filter=1%}
+
+
     {%for c in operationss %}
+
        <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
     {%endfor%}</ul>
 

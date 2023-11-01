@@ -2,8 +2,9 @@
 {%block content%}
 
 <div class="left-bar"><ul>
+
     {%for c in contragentss %}
-         {% if c.url_name == 'clients' %}
+         {% if c.url_name == url %}
 
        <li class="selected">{{c.title}}</li>
     {%else%}

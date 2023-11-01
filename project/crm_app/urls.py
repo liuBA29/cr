@@ -8,7 +8,11 @@ urlpatterns = [
     path('supplyers/', supplyers, name='supplyers'),
     path('other_companies/', other_companies, name='other_companies'),
 
-    path('contragent/<int:c_id>/', show_contragent, name='show_contragent'),
+
+    path('client/<int:c_id>/', show_client, name='show_client'),
+    path('supplyer/<int:c_id>/', show_supplyer, name='show_supplyer'),
+    path('other_company/<int:c_id>/', show_other_company, name='show_other_company'),
+
     path('operation/<int:c_id>/', show_operation, name='show_operation'),
 
 

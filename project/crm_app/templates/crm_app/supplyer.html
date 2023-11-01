@@ -1,0 +1,29 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in contragentss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+        <h3>{{supplyer.company_name}}</h3>
+    <li>{{supplyer.contact_name}}</li>
+    <li>{{supplyer.email}} </li>
+    <li>{{supplyer.phone}}</li>
+    <li>{{supplyer.address}} </li>
+    <li>{{supplyer.created}} </li>
+    <li>{{supplyer.supplyer_status}} </li>
+    <li><a href="#">sdelki v kotoryh uchavstvuet - количество</a></li>
+    <li><a href="#">документы </a></li>
+
+<p ><a href="#">Редактировать</a></p><p ><a href="#">Удалить</a></p>
+
+</ul>
+</div>
+{%endblock content%}

@@ -52,7 +52,7 @@ class Client(Contragent):
         return self.company_name
 
     def get_absolute_url(self):
-        return reverse('show_contragent', kwargs={'c_id':self.pk})
+        return reverse('show_client', kwargs={'c_id':self.pk})
 
 class Supplyer(Contragent):
     supplyer_status = models.BooleanField(default=False, verbose_name="Надежный перевозчик")
@@ -66,7 +66,7 @@ class Supplyer(Contragent):
         ordering = ['created']
 
     def get_absolute_url(self):
-        return reverse('show_contragent', kwargs={'c_id': self.pk})
+        return reverse('show_supplyer', kwargs={'c_id': self.pk})
 
 class OtherCompany(Contragent):
     descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание вида деятельности')
@@ -80,7 +80,7 @@ class OtherCompany(Contragent):
         ordering = ['created']
 
     def get_absolute_url(self):
-        return reverse('show_contragent', kwargs={'c_id':self.pk})
+        return reverse('show_other_company', kwargs={'c_id':self.pk})
 
 #=================================operations========
 class Operation(models.Model):
@@ -137,9 +137,14 @@ class Sdelka(Operation):
     status_other = models.CharField(max_length=20, blank = True, verbose_name='статус other- новая, принята, в пути, выгружена')
     number = models.CharField(max_length=20, blank = True, verbose_name='номер сделки')
 
+    def __str__(self):
+        return 'Сделка с клиентом:' + str(self.client)
+
 
     def get_absolute_url(self):
         return reverse('show_operation', kwargs={'c_id':self.pk})
+
+
 
 
 class Quotation(Operation):
