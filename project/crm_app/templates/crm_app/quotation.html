@@ -1,0 +1,26 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+        <h3>{{quotation.descripsion}}</h3>
+    <li>{{quotation.transport}}</li>
+    <li>{{quotation.client}} </li>
+
+    <li><a href="#">sdelki v kotoryh uchavstvuet - количество</a></li>
+    <li><a href="#">документы </a></li>
+
+<p ><a href="#">Редактировать</a></p><p ><a href="#">Удалить</a></p>
+
+</ul>
+</div>
+{%endblock content%}

@@ -162,12 +162,12 @@ class Quotation(Operation):
     comment_field3 = models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке3')
 
     stavka4 = models.CharField(max_length=20, blank=True, verbose_name='ставка4')
-    comment_field4 = models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке4')
+    comment_field4 = models.CharField(max_length=20, blank = True,verbose_name='комментарий к ставке4')
 
-    status = models.CharField(max_length=20, default='новая', verbose_name='статус other- новая, в работе, закрыта')
+    status = models.CharField(max_length=20, default='новая', verbose_name='статус: новая, в работе, закрыта')
 
-    result = models.CharField(max_length=20, default='не прошли', verbose_name='статус other- прошлі по цене, груз не готов, не прошлі по цене')
+    result = models.CharField(max_length=20, default='не прошли', verbose_name='статус2: прошли по цене, груз не готов, не прошли по цене')
 
 
     def get_absolute_url(self):
-        return reverse('show_operation', kwargs={'c_id':self.pk})
+        return reverse('show_quotation', kwargs={'c_id':self.pk})

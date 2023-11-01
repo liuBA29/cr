@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
 
 from .forms import *
@@ -117,15 +117,30 @@ def show_other_company(request, c_id):
         'url': url,
         'contragentss': contragentss,
         'other_company': other_company,
-        'sother_company': other_companys,
+        'other_companys': other_companys,
         'menu': menu,
         "title": "Перевозчики",
     }
     return render(request, 'crm_app/other_company.html', context=contect)
 
 
-def show_operation(request, c_id):
-    return HttpResponse(f'reflexing operation with id = {c_id}')
+
+
+
+def show_quotation(request, c_id):
+    quotation = get_object_or_404(Quotation, pk=c_id)
+    url = resolve(request.path_info).url_name
+
+    quotations = Quotation.objects.all()
+    contect = {
+        'url': url,
+        'operationss': operationss,
+        'quotation': quotation,
+        'quotations': quotations,
+        'menu': menu,
+        "title": "Котировки",
+    }
+    return render(request, 'crm_app/quotation.html', context=contect)
 
 
 def operations(request):
@@ -162,26 +177,22 @@ def login(request):
 
 #=============Forms add+++++++++++++++++
 def add_sdelka(request):
-    if request.method == 'POST':
-        form = SdelkaForm(request.POST)
+    return render(request, 'crm_app/add_sdelka.html',  { 'menu': menu, 'title': 'Создать cltkre'})
 
+
+def add_quotation(request):
+    if request.method == "POST":
+        form = AddQuotForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data)
+            try:
+                Quotation.objects.create(**form.cleaned_data)
+                return redirect('quotations')
+            except:
+                form.add_error(None, 'ошибка добавления котировки')
 
     else:
-        form = SdelkaForm()
-    return render(request, 'crm_app/add_sdelka.html',  {'form':form,  'menu': menu, 'title': 'Создать cltkre'})
-
-
-def add_stavka(request):
-    if request.method == 'POST':
-        form = StavkaForm(request.POST)
-
-        if form.is_valid():
-            print(form.cleaned_data)
-
-    else:
-        form = StavkaForm()
-    return render(request, 'crm_app/add_sdelka.html',  {'form':form,  'menu': menu, 'title': 'добавітьe'})
+        form = AddQuotForm()
+    return render(request, 'crm_app/add_quotation.html',  { 'form': form, 'menu': menu, 'title': 'Создать котировку'})
 
 

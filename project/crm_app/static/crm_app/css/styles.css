@@ -43,6 +43,8 @@ h1{text-align: center;}
 
 .addbutton {
     float: right;
+
+
 }
 
 .selected {
@@ -59,5 +61,10 @@ h1{text-align: center;}
 
 img.sm-pic {
     max-height: 245px;
+}
+
+.form-input{
+    width: 350px;
+
 }
 
