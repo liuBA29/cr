@@ -1,6 +1,22 @@
 {% extends 'crm_app/base.html' %}
 
 {%block content%}
-<h1>{{title}}</h1>
-<p>operations</p>
+
+
+
+
+<div class="left-bar"><ul>
+    {%for c in operationss %}
+       <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent">
+    {% for c in operationss %}
+        <h3>{{c.key}}</h3>
+
+    <hr>
+    {% endfor %}
+</div>
 {%endblock content%}

@@ -138,6 +138,10 @@ class Sdelka(Operation):
     number = models.CharField(max_length=20, blank = True, verbose_name='номер сделки')
 
 
+    def get_absolute_url(self):
+        return reverse('show_operation', kwargs={'c_id':self.pk})
+
+
 class Quotation(Operation):
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE)
     common_direction = models.CharField(max_length=20, blank = True, verbose_name='общее направленіе доставкі')
@@ -158,3 +162,7 @@ class Quotation(Operation):
     status = models.CharField(max_length=20, default='новая', verbose_name='статус other- новая, в работе, закрыта')
 
     result = models.CharField(max_length=20, default='не прошли', verbose_name='статус other- прошлі по цене, груз не готов, не прошлі по цене')
+
+
+    def get_absolute_url(self):
+        return reverse('show_operation', kwargs={'c_id':self.pk})

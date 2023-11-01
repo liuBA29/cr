@@ -2,6 +2,12 @@ from django.shortcuts import render, HttpResponse
 from .forms import *
 from .models import  *
 
+operationss = [
+    {'title': 'Котировки', 'key': 'Quotation.objects.all()', 'url_name': 'quotations'},
+    {'title': 'Сделки', 'key': 'Sdelka.objects.all()', 'url_name': 'sdelki'},
+]
+
+
 contragentss = [
     {'title': 'Заказчики', 'key': 'Client.objects.all()', 'url_name': 'clients'},
     {'title': 'Перевозчики', 'key': 'Supplyer.objects.all()', 'url_name': 'supplyers'},
@@ -57,9 +63,36 @@ def show_contragent(request, c_id):
     return HttpResponse(f'reflexing contr with id = {c_id}')
 
 
+def show_operation(request, c_id):
+    return HttpResponse(f'reflexing operation with id = {c_id}')
+
 
 def operations(request):
-    return render(request, 'crm_app/operations.html', {'menu': menu, "title": "Операции"})
+    return render(request, 'crm_app/operations.html',
+                  {'operationss': operationss, 'menu': menu, "title": "Операции"})
+
+def quotations(request):
+    quotations = Quotation.objects.all()
+    contect = {
+        'operationss': operationss,
+        'quotations': quotations,
+        'menu': menu,
+        "title": "Котировки",
+    }
+    return render(request, 'crm_app/quotations.html', context=contect)
+
+
+def sdelki(request):
+    sdelki = Sdelka.objects.all()
+    contect = {
+        'operationss': operationss,
+        'sdelki': sdelki,
+        'menu': menu,
+        "title": "Сделки",
+    }
+    return render(request, 'crm_app/sdelki.html', context=contect)
+
+
 
 def login(request):
     return render(request, 'crm_app/login.html', {'menu': menu, "title": "Войти"})
