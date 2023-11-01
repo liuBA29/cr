@@ -3,7 +3,12 @@
 
 <div class="left-bar"><ul>
     {%for c in contragentss %}
-        <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+         {% if c.url_name == 'clients' %}
+
+       <li class="selected">{{c.title}}</li>
+    {%else%}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {% endif%}
 
     {%endfor%}</ul>
 

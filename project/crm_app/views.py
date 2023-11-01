@@ -35,6 +35,7 @@ def clients(request):
         'clients': clients,
         'menu': menu,
         "title": "Заказчики",
+
     }
     return render(request, 'crm_app/clients.html', context=contect)
 
