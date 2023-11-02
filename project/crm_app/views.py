@@ -190,7 +190,6 @@ def add_quotation(request):
                 return redirect('quotations')
             except:
                 form.add_error(None, 'ошибка добавления котировки')
-
     else:
         form = AddQuotForm()
     return render(request, 'crm_app/add_quotation.html',  { 'form': form, 'menu': menu, 'title': 'Создать котировку'})

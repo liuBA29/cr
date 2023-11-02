@@ -3,7 +3,8 @@ from .models import *
 
 
 class AddQuotForm(forms.Form):
-    descripsion = forms.CharField(max_length=150, required=False, label='Описание потребности', widget=forms.TextInput(attrs={'class':'form-input'}))
+    descripsion = forms.CharField(max_length=150, required=False, label='Описание потребности',
+                                  widget=forms.TextInput(attrs={'class':'form-input'}))
     transport = forms.CharField( max_length=20, label='Транспорт')
 
     client = forms.ModelChoiceField(queryset=Client.objects.all(), label='Заказчик')
