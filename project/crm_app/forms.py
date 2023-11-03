@@ -14,8 +14,10 @@ class AddQuotForm(forms.Form):
     stavka1 = forms.CharField(max_length=20, required=False, label='ставка1')
     comment_field1 = forms.CharField(max_length=20, required=False, label='комментарій к ставке1')
 
-    stavka2 = forms.CharField(max_length=20, required=False, label='ставка2')
-    comment_field2 = forms.CharField(max_length=20, required=False, label='комментарій к ставке2')
+    stavka2 = forms.CharField(max_length=20, required=False, label='ставка2',
+                              widget=forms.TextInput(attrs={'class':'block'}))
+    comment_field2 = forms.CharField(max_length=20, required=False, label='комментарій к ставке2',
+                                     widget=forms.TextInput(attrs={'class':'block'}))
 
     stavka3 = forms.CharField(max_length=20, required=False, label='ставка3')
     comment_field3 = forms.CharField(max_length=20, required=False, label='комментарій к ставке3')

@@ -68,3 +68,15 @@ img.sm-pic {
 
 }
 
+.displ:hover{
+    color:green;
+}
+
+.displ:visit{
+    color:red;
+}
+
+
+
+
+

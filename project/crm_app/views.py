@@ -179,10 +179,12 @@ def login(request):
 def add_sdelka(request):
     return render(request, 'crm_app/add_sdelka.html',  { 'menu': menu, 'title': 'Создать cltkre'})
 
+cat=5
 
 def add_quotation(request):
     if request.method == "POST":
         form = AddQuotForm(request.POST)
+
         if form.is_valid():
             print(form.cleaned_data)
             try:
@@ -192,6 +194,6 @@ def add_quotation(request):
                 form.add_error(None, 'ошибка добавления котировки')
     else:
         form = AddQuotForm()
-    return render(request, 'crm_app/add_quotation.html',  { 'form': form, 'menu': menu, 'title': 'Создать котировку'})
+    return render(request, 'crm_app/add_quotation.html',  {  'form': form, 'menu': menu, 'title': 'Создать котировку'})
 
 
