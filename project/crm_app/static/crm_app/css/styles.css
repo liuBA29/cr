@@ -62,19 +62,21 @@ h1{text-align: center;}
 img.sm-pic {
     max-height: 245px;
 }
-
 .form-input{
     width: 350px;
-
 }
-
 .displ:hover{
     color:green;
 }
-
 .displ:visit{
     color:red;
 }
+
+p#hh {
+    color: green;
+}
+
+
 
 
 

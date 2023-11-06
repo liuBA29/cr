@@ -15,7 +15,10 @@
 
 </div>
 
-<div class="centercontent"><ul>
+<div class="centercontent">
+<p id="button"><a href="{% url 'home' %}">Посмотреть подробней</a></p>
+    <p id="hh">hhhhhhhhhhhhhhh</p>
+    <ul>
     {% for c in clients %}
         <h3>{{c.company_name}}</h3>
     <li>{{c.contact_name}}</li>
@@ -25,7 +28,7 @@
     <li>{{c.created}} </li>
     <li>{{c.updated}} </li>
 
-<p ><a href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+<p><a href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
     {% endfor %}<hr>
 </ul>
 </div>
