@@ -184,7 +184,6 @@ cat=5
 def add_quotation(request):
     if request.method == "POST":
         form = AddQuotForm(request.POST)
-
         if form.is_valid():
             print(form.cleaned_data)
             try:

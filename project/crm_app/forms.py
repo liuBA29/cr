@@ -12,7 +12,8 @@ class AddQuotForm(forms.Form):
     common_transport = forms.CharField(max_length=20, required=False, label='Транспорт іспользуемый - весь')
 
     stavka1 = forms.CharField(max_length=20, required=False, label='ставка1')
-    comment_field1 = forms.CharField(max_length=20, required=False, label='комментарій к ставке1')
+    comment_field1 = forms.CharField(max_length=20, required=False, label='комментарій к ставке1',
+                                     widget=forms.TextInput(attrs={'class':'block'}))
 
     stavka2 = forms.CharField(max_length=20, required=False, label='ставка2',
                               widget=forms.TextInput(attrs={'class':'block'}))

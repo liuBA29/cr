@@ -13,9 +13,9 @@
 
 
     {% for f in form %}
-{{form.field.as_hidden }}
+
     <div class=""><label for="{{ f.id_for_label }}" >{{f.label}}: </label> {{f}} </div>
     <div >{{ f.errors }}</div>
-
-    {% endfor %} <button>добавіть</button>
+    {% endfor %}
+    <button>добавіть</button>
 {% endblock content %}

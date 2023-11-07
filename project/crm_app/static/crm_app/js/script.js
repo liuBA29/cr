@@ -232,13 +232,13 @@
 
 //console.log(firstCh);
 //console.log(hOne);
-
-const elClass = document.querySelectorAll('.block');
-console.log(elClass);
-
-
-const elClassli = document.querySelectorAll('li');
-console.log(elClassli);
+//
+//const elClass = document.querySelectorAll('.block');
+//console.log(elClass);
+//
+//
+//const elClassli = document.querySelectorAll('li');
+//console.log(elClassli);
 //for (const item of elems) {
 //    console.log(item);
 //}
@@ -247,15 +247,69 @@ console.log(elClassli);
 //const elClassid = document.querySelectorAll('#hh');
 //console.log(elClassid);
 //
-//const elid = document.getElementById('hh');
+//const elid = document.getElementById('id_stavka2');
 //console.log(elid);
+
+//const elcl = document.getElementsByClassName('block');
+//console.log(elcl);
+
+
+
+//const textLabel = document.querySelector("label");
+//console.log(textLabel);
+
+//textElContent = textEl.innerHTML;
+//console.log(textElContent);
 //
-//const button = document.getElementById("button");
-//button.onclick = () => alert("you clicked me");
+//const textHh = document.querySelector('.ttt');
 //
+//
+//
+//
+//const textconttt = textHh.innerHTML;
+//console.log(textconttt);
+//
+//const textcontout = textHh.outerHTML;
+//console.log(textcontout);
+//
+////textHh.outerHTML = `<p> how are you?</p>`;
+//textHh.innerHTML = `<p> how are you?</p>`;
+//
+//const mycont=textHh.textContent;
+//console.log(mycont);
+//
+//textHh.textContent = `good bye`;
+
+//const textEl = document.querySelector('.block');
+//console.log(textEl);
+
+//const getComment = textEl.nextSibling;
+//console.log(getComment);
+//console.log(getComment.data);
+//getComment.data=`some text`;
+
+//const mewEll = document.createElement('button');
 
 
 
+//mewEll.innerHTML = `thisu is my newr divchik`;
+//console.log(mewEll);
 
 
 
+//const mewstr = document.createTextNode('new strokav');
+
+//console.log(mewstr);
+//вставляем текст в доку
+//textEl.before(mewEll);
+//textEl.after(mewEll);
+//textEl.prepend(mewEll);
+//textEl.append(mewEll);
+
+//мощный эдджасмент
+const texta = document.querySelector('.block');
+texta.insertAdjacentHTML(
+'afterend',
+  `<p class="gg">добавить второго Перевозчика?</p>`
+);
+//texta.remove()
