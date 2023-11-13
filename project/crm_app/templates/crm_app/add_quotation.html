@@ -11,9 +11,8 @@
 {% csrf_token %}
     <div class="form-error">{{ form.non_field_errors }}</div>
 
-
-
-
+   <p><label for="{{ form.descripsion.id_for_label }}">{{ form.descripsion.label }}:</label>{{ form.descripsion }}</p>
+    <div class="form-error">{{ form.descripsion.errors }}</div>
 
   <p><label for="{{ form.client.id_for_label }}">{{ form.client.label }}:</label>{{ form.client }}</p>
     <div class="form-error">{{ form.client.errors }}</div>

@@ -148,9 +148,9 @@ class Sdelka(Operation):
 
 
 class Quotation(Operation):
-    descripsion = models.CharField(max_length=250, blank = True)
-    client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE)
-    common_direction = models.CharField(max_length=20, blank = True, verbose_name='общее направленіе доставкі')
+    descripsion = models.CharField(max_length=250, blank = True, verbose_name='Описание потребности')
+    client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
+    common_direction = models.CharField(max_length=20, blank = True, verbose_name='Общее направление доставки')
     common_transport = models.CharField(max_length=20, blank=True, verbose_name='транспорт іспользуемый в сделке')
 
     stavka1 = models.CharField(max_length=20, blank=True, verbose_name='ставка1')
