@@ -3,16 +3,18 @@ from .models import *
 
 
 class AddQuotForm(forms.Form):
-    descripsion = forms.CharField(max_length=150, required=False, label='Описание потребности',
+    descripsion = forms.CharField(max_length=250, required=False, label='Описание потребности',
                                   widget=forms.TextInput(attrs={'class':'form-input'}))
+    client = forms.ModelChoiceField(queryset=Client.objects.all(), label='Заказчик')
+
     transport = forms.CharField( max_length=20, label='Транспорт')
 
-    client = forms.ModelChoiceField(queryset=Client.objects.all(), label='Заказчик')
+
     common_direction = forms.CharField(max_length=20, required=False, label='общее направленіе доставкі')
     common_transport = forms.CharField(max_length=20, required=False, label='Транспорт іспользуемый - весь')
 
-    stavka1 = forms.CharField(max_length=20, required=False, label='ставка1')
-    comment_field1 = forms.CharField(max_length=20, required=False, label='комментарій к ставке1',
+    stavka1 = forms.CharField(max_length=20, required=False, label='Перевозчик 1')
+    comment_field1 = forms.CharField(max_length=250, required=False, label='Комментарий к ставке 1',
                                      widget=forms.TextInput(attrs={'class':'block'}))
 
     stavka2 = forms.CharField(max_length=20, required=False, label='ставка2',

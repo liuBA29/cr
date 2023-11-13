@@ -182,6 +182,8 @@ def add_sdelka(request):
 cat=5
 
 def add_quotation(request):
+    num1=1
+    num2=2
     if request.method == "POST":
         form = AddQuotForm(request.POST)
         if form.is_valid():
@@ -193,6 +195,6 @@ def add_quotation(request):
                 form.add_error(None, 'ошибка добавления котировки')
     else:
         form = AddQuotForm()
-    return render(request, 'crm_app/add_quotation.html',  {  'form': form, 'menu': menu, 'title': 'Создать котировку'})
+    return render(request, 'crm_app/add_quotation.html',  {'num1':num1, 'num2' :num2, 'form': form, 'menu': menu, 'title': 'Создать котировку'})
 
 

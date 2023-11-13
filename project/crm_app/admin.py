@@ -19,4 +19,5 @@ admin.site.register(Supplyer, SupplyerAdmin)
 
 admin.site.register(OtherCompany)
 admin.site.register(Money)
+admin.site.register(Quotation)
 admin.site.register(Sdelka, SdelkaAdmin)

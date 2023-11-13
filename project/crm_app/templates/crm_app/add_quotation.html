@@ -12,10 +12,72 @@
     <div class="form-error">{{ form.non_field_errors }}</div>
 
 
-    {% for f in form %}
 
-    <div class=""><label for="{{ f.id_for_label }}" >{{f.label}}: </label> {{f}} </div>
-    <div >{{ f.errors }}</div>
-    {% endfor %}
+
+
+  <p><label for="{{ form.client.id_for_label }}">{{ form.client.label }}:</label>{{ form.client }}</p>
+    <div class="form-error">{{ form.client.errors }}</div>
+
+  <p><label for="{{ form.transport.id_for_label }}">{{ form.transport.label }}:</label>{{ form.transport }}</p>
+    <div class="form-error">{{ form.transport.errors }}</div>
+
+  <p><label for="{{ form.common_direction.id_for_label }}">{{ form.common_direction.label }}:</label>{{ form.common_direction }}</p>
+    <div class="form-error">{{ form.common_direction.errors }}</div>
+<h4>Ставка 1:</h4>
+  <p><label for="{{ form.stavka1.id_for_label }}">{{ form.stavka1.label }}:</label>{{ form.stavka1 }}</p>
+    <div class="form-error">{{ form.stavka1.errors }}</div>
+  <p><label for="{{ form.comment_field1.id_for_label }}">{{ form.comment_field1.label }}:</label>{{ form.comment_field1 }}</p>
+    <div class="form-error">{{ form.comment_field1.errors }}</div>
+
+    <!-- ставки: 2, 3, 4 -->
+    <ul class="tree">
+      <li><details><summary> + Добавить вторую ставку: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.stavka2.id_for_label }}">{{ form.stavka2.label }}:</label>{{ form.stavka2 }}</summary>
+            <div class="form-error">{{ form.stavka2.errors }}</div>
+        </li>
+      <li>
+            <summary><label for="{{ form.comment_field2.id_for_label }}">{{ form.comment_field2.label }}:</label>{{ form.comment_field2 }}</summary>
+            <div class="form-error">{{ form.comment_field2.errors }}</div>
+      </li></ul>
+      </details></li></ul>
+
+   <ul class="tree">
+      <li><details><summary> + Добавить третью ставку: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.stavka3.id_for_label }}">{{ form.stavka3.label }}:</label>{{ form.stavka3 }}</summary>
+            <div class="form-error">{{ form.stavka3.errors }}</div>
+        </li>
+      <li>
+            <summary><label for="{{ form.comment_field3.id_for_label }}">{{ form.comment_field3.label }}:</label>{{ form.comment_field3 }}</summary>
+            <div class="form-error">{{ form.comment_field3.errors }}</div>
+      </li></ul>
+      </details></li></ul>
+
+    <ul class="tree">
+      <li><details><summary> + Добавить четвертоую ставку: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.stavka4.id_for_label }}">{{ form.stavka4.label }}:</label>{{ form.stavka4 }}</summary>
+            <div class="form-error">{{ form.stavka4.errors }}</div>
+        </li>
+      <li>
+            <summary><label for="{{ form.comment_field4.id_for_label }}">{{ form.comment_field4.label }}:</label>{{ form.comment_field4 }}</summary>
+            <div class="form-error">{{ form.comment_field4.errors }}</div>
+      </li></ul>
+      </details></li></ul>
+    <!-- ставки 2, 3, 4 - конец -->
+
+  <p><label for="{{ form.status.id_for_label }}">{{ form.status.label }}:</label>{{ form.status }}</p>
+    <div class="form-error">{{ form.status.errors }}</div>
+
+  <p><label for="{{ form.result.id_for_label }}">{{ form.result.label }}:</label>{{ form.result }}</p>
+    <div class="form-error">{{ form.result.errors }}</div>
+
+
+
+
     <button>добавіть</button>
 {% endblock content %}

@@ -148,21 +148,22 @@ class Sdelka(Operation):
 
 
 class Quotation(Operation):
+    descripsion = models.CharField(max_length=250, blank = True)
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE)
     common_direction = models.CharField(max_length=20, blank = True, verbose_name='общее направленіе доставкі')
     common_transport = models.CharField(max_length=20, blank=True, verbose_name='транспорт іспользуемый в сделке')
 
     stavka1 = models.CharField(max_length=20, blank=True, verbose_name='ставка1')
-    comment_field1=  models.CharField(max_length=20,blank = True,  verbose_name='комментарій к ставке1')
+    comment_field1=  models.CharField(max_length=280,blank = True,  verbose_name='комментарій к ставке1')
 
     stavka2 = models.CharField(max_length=20, blank=True,verbose_name='ставка2')
-    comment_field2= models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке2')
+    comment_field2= models.CharField(max_length=280, blank = True,verbose_name='комментарій к ставке2')
 
     stavka3 = models.CharField(max_length=20, blank=True, verbose_name='ставка3')
-    comment_field3 = models.CharField(max_length=20, blank = True,verbose_name='комментарій к ставке3')
+    comment_field3 = models.CharField(max_length=280, blank = True,verbose_name='комментарій к ставке3')
 
     stavka4 = models.CharField(max_length=20, blank=True, verbose_name='ставка4')
-    comment_field4 = models.CharField(max_length=20, blank = True,verbose_name='комментарий к ставке4')
+    comment_field4 = models.CharField(max_length=280, blank = True,verbose_name='комментарий к ставке4')
 
     status = models.CharField(max_length=20, default='новая', verbose_name='статус: новая, в работе, закрыта')
 
