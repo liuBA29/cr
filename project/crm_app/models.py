@@ -154,16 +154,34 @@ class Quotation(Operation):
     common_transport = models.CharField(max_length=20, blank=True, verbose_name='транспорт іспользуемый в сделке')
 
     stavka1 = models.CharField(max_length=20, blank=True, verbose_name='ставка1')
-    comment_field1=  models.CharField(max_length=280,blank = True,  verbose_name='комментарій к ставке1')
+    comment_field1=  models.CharField(max_length=280,blank = True,  verbose_name='комментарий к ставке 1')
 
     stavka2 = models.CharField(max_length=20, blank=True,verbose_name='ставка2')
-    comment_field2= models.CharField(max_length=280, blank = True,verbose_name='комментарій к ставке2')
+    comment_field2= models.CharField(max_length=280, blank = True,verbose_name='комментарий к ставке ')
 
-    stavka3 = models.CharField(max_length=20, blank=True, verbose_name='ставка3')
-    comment_field3 = models.CharField(max_length=280, blank = True,verbose_name='комментарій к ставке3')
+    stavka3 = models.CharField(max_length=20, blank=True, verbose_name='ставка 3')
+    comment_field3 = models.CharField(max_length=280, blank = True,verbose_name='комментарий к ставке 3')
 
     stavka4 = models.CharField(max_length=20, blank=True, verbose_name='ставка4')
     comment_field4 = models.CharField(max_length=280, blank = True,verbose_name='комментарий к ставке4')
+
+    stavka5 = models.CharField(max_length=20, blank=True, verbose_name='ставка 5')
+    comment_field5 = models.CharField(max_length=280, blank=True, verbose_name='комментарий к ставке 5')
+
+    stavka6 = models.CharField(max_length=20, blank=True, verbose_name='ставка 6')
+    comment_field6 = models.CharField(max_length=280, blank=True, verbose_name='комментарий к ставке 6')
+
+    stavka7 = models.CharField(max_length=20, blank=True, verbose_name='ставка 7')
+    comment_field7 = models.CharField(max_length=280, blank=True, verbose_name='комментарий к ставке 7')
+
+    stavka8 = models.CharField(max_length=20, blank=True, verbose_name='ставка 8')
+    comment_field8 = models.CharField(max_length=280, blank=True, verbose_name='комментарий к ставке 8')
+
+    stavka9 = models.CharField(max_length=20, blank=True, verbose_name='ставка 9')
+    comment_field9 = models.CharField(max_length=280, blank=True, verbose_name='комментарий к ставке 9')
+
+    stavka10 = models.CharField(max_length=20, blank=True, verbose_name='ставка 10')
+    comment_field10 = models.CharField(max_length=280, blank=True, verbose_name='комментарий к ставке 10')
 
     status = models.CharField(max_length=20, default='новая', verbose_name='статус: новая, в работе, закрыта')
 
