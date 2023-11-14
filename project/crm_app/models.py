@@ -153,34 +153,34 @@ class Quotation(Operation):
     common_direction = models.CharField(max_length=20, blank = True, verbose_name='Направление доставки')
     common_transport = models.CharField(max_length=20, blank=True, verbose_name='Транспорт')
 
-    stavka1 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик')
+    stavka1 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик', related_name="stavka1")
     comment_field1=  models.CharField(max_length=280,blank = True,  verbose_name='Комментарий к ставке 1')
 
-    stavka2 = models.CharField(max_length=20, blank=True,verbose_name='Перевозчик 2')
+    stavka2 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 2', related_name="stavka2")
     comment_field2= models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке ')
 
-    stavka3 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 3')
+    stavka3 = models.ForeignKey(Supplyer, max_length=40, blank=True,null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 3', related_name="stavka3")
     comment_field3 = models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке 3')
 
-    stavka4 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 4')
+    stavka4 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 4', related_name="stavka4")
     comment_field4 = models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке4')
 
-    stavka5 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 5')
+    stavka5 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 5', related_name="stavka5")
     comment_field5 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 5')
 
-    stavka6 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 6')
+    stavka6 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 6', related_name="stavka6")
     comment_field6 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 6')
 
-    stavka7 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 7')
+    stavka7 = models.ForeignKey(Supplyer, max_length=40, blank=True,null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 7', related_name="stavka7")
     comment_field7 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 7')
 
-    stavka8 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 8')
+    stavka8 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 8', related_name="stavka8")
     comment_field8 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 8')
 
-    stavka9 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 9')
+    stavka9 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 9', related_name="stavka9")
     comment_field9 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 9')
 
-    stavka10 = models.CharField(max_length=20, blank=True, verbose_name='Перевозчик 10')
+    stavka10 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 10', related_name="stavka10")
     comment_field10 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 10')
 
     status = models.CharField(max_length=20, default='новая', verbose_name='Статус: новая, в работе, закрыта')
