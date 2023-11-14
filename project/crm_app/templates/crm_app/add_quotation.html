@@ -17,11 +17,13 @@
   <p><label for="{{ form.client.id_for_label }}">{{ form.client.label }}:</label>{{ form.client }}</p>
     <div class="form-error">{{ form.client.errors }}</div>
 
-  <p><label for="{{ form.transport.id_for_label }}">{{ form.transport.label }}:</label>{{ form.transport }}</p>
-    <div class="form-error">{{ form.transport.errors }}</div>
-
   <p><label for="{{ form.common_direction.id_for_label }}">{{ form.common_direction.label }}:</label>{{ form.common_direction }}</p>
     <div class="form-error">{{ form.common_direction.errors }}</div>
+
+    <p><label for="{{ form.common_transport.id_for_label }}">{{ form.common_transport.label }}:</label>{{ form.common_transport }}</p>
+    <div class="form-error">{{ form.common_transport.errors }}</div>
+
+
 <h4>Ставка 1:</h4>
   <p><label for="{{ form.stavka1.id_for_label }}">{{ form.stavka1.label }}:</label>{{ form.stavka1 }}</p>
     <div class="form-error">{{ form.stavka1.errors }}</div>
@@ -159,5 +161,5 @@
 
 
 
-    <button>добавіть</button>
+    <button>Добавить</button>
 {% endblock content %}
