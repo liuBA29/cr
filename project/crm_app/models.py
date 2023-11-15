@@ -17,6 +17,7 @@ class Contragent(models.Model):
         abstract = True
 
 
+
 #------------------------
 
 class Money(models.Model):
@@ -85,7 +86,7 @@ class OtherCompany(Contragent):
 #=================================operations========
 class Operation(models.Model):
      descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание потребності')
-     transport = models.CharField(default='avto', max_length=20)
+     
 
 
 
@@ -145,6 +146,30 @@ class Sdelka(Operation):
         return reverse('show_operation', kwargs={'c_id':self.pk})
 
 
+class Transport(models.Model):
+    slug = models.SlugField(max_length=25, db_index=True, unique=True, verbose_name='transport')
+    transport_name = models.CharField(max_length=15, db_index=True)
+
+    def __str__(self):
+        return self.transport_name
+
+    class Meta:
+        verbose_name = "Транспорт"
+        verbose_name_plural = "Транспорт"
+
+
+class Direction(models.Model):
+    slug = models.SlugField(max_length=25, db_index=True, unique=True, verbose_name='direcrion')
+    direction_name = models.CharField(max_length=15, db_index=True)
+
+    def __str__(self):
+        return self.direction_name
+
+    class Meta:
+        verbose_name = "Направление"
+        verbose_name_plural = "Направление"
+
+
 class Currency(models.Model):
 
     slug = models.SlugField(max_length=25, db_index=True, unique=True, verbose_name='currency')
@@ -160,8 +185,15 @@ class Currency(models.Model):
 class Quotation(Operation):
     descripsion = models.CharField(max_length=250, blank = True, verbose_name='Описание потребности')
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
-    common_direction = models.CharField(max_length=20, blank = True, verbose_name='Направление доставки')
-    common_transport = models.CharField(max_length=20, blank=True, verbose_name='Транспорт')
+    loading_country = models.ForeignKey(Direction, max_length=15, blank=True, null=True, on_delete=models.CASCADE,
+                                        verbose_name='Место загрузки',
+                                        related_name='loading_country')
+    unloading_country = models.ForeignKey(Direction, max_length=15, blank=True, null=True, on_delete=models.CASCADE,
+                                          verbose_name='Место выгрузки',
+                                          related_name='unloading_country')
+    common_transport = models.ForeignKey(Transport, max_length=20, blank=True, null=True, on_delete=models.CASCADE,
+                                        verbose_name='Транспорт',
+                                        related_name='transport')
 
 
 

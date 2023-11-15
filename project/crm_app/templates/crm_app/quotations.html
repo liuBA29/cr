@@ -15,6 +15,8 @@
     {% for c in quotations %}
         <h3>{{c.client}}</h3>
     <li>{{c.status}}</li>
+    <li>место загрузки:  {{c.loading_country}}  ||  место выгрузки: {{c.unloading_country}}</li>
+    <li>транспорт: {{c.common_transport}} </li>
     <li>{{c.result}} </li>
    
 

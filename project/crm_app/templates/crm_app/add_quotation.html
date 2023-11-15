@@ -17,8 +17,11 @@
   <p><label for="{{ form.client.id_for_label }}">{{ form.client.label }}:</label>{{ form.client }}</p>
     <div class="form-error">{{ form.client.errors }}</div>
 
-  <p><label for="{{ form.common_direction.id_for_label }}">{{ form.common_direction.label }}:</label>{{ form.common_direction }}</p>
-    <div class="form-error">{{ form.common_direction.errors }}</div>
+  <p><label for="{{ form.loading_country.id_for_label }}">{{ form.loading_country.label }}:</label>{{ form.loading_country }}
+    <label for="{{ form.unloading_country.id_for_label }}">{{ form.unloading_country.label }}:</label>{{ form.unloading_country }}</p>
+
+    <div class="form-error">{{ form.loading_country.errors }}</div>
+    <div class="form-error">{{ form.unloading_country.errors }}</div>
 
     <p><label for="{{ form.common_transport.id_for_label }}">{{ form.common_transport.label }}:</label>{{ form.common_transport }}</p>
     <div class="form-error">{{ form.common_transport.errors }}</div>
