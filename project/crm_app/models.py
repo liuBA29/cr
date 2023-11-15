@@ -152,11 +152,26 @@ class Quotation(Operation):
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
     common_direction = models.CharField(max_length=20, blank = True, verbose_name='Направление доставки')
     common_transport = models.CharField(max_length=20, blank=True, verbose_name='Транспорт')
+    CURRENCY_CHOICES = [
+        ('BYR', 'Беларуский руб.'),
+        ('EU', 'Евро'),
+        ('CNY', 'Китайский юань'),
+        ('RUB', 'российский руб.'),
+        ('USD', 'Доллар США'),
+        ('KZT', 'Казахский тенге'),
+        ('UAG', 'Украинская гривна'),
+
+    ]
+
 
     stavka1 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик', related_name="stavka1")
+    price1 = models.IntegerField(default=0)
+    currency1 = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='BYR')
     comment_field1=  models.CharField(max_length=280,blank = True,  verbose_name='Комментарий к ставке 1')
 
     stavka2 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 2', related_name="stavka2")
+    price2 = models.IntegerField(default=0)
+    currency2 = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='BYR')
     comment_field2= models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке ')
 
     stavka3 = models.ForeignKey(Supplyer, max_length=40, blank=True,null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 3', related_name="stavka3")
