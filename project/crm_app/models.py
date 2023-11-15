@@ -1,4 +1,4 @@
-
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db import models
 from django.urls import reverse
@@ -145,6 +145,16 @@ class Sdelka(Operation):
         return reverse('show_operation', kwargs={'c_id':self.pk})
 
 
+class Currency(models.Model):
+
+    slug = models.SlugField(max_length=25, db_index=True, unique=True, verbose_name='currency')
+    currency_name = models.CharField(max_length=3,  db_index=True)
+    def __str__(self):
+        return self.currency_name
+
+    class Meta:
+        verbose_name = "Валюта"
+        verbose_name_plural = "Валюта"
 
 
 class Quotation(Operation):
@@ -152,50 +162,67 @@ class Quotation(Operation):
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
     common_direction = models.CharField(max_length=20, blank = True, verbose_name='Направление доставки')
     common_transport = models.CharField(max_length=20, blank=True, verbose_name='Транспорт')
-    CURRENCY_CHOICES = [
-        ('BYR', 'Беларуский руб.'),
-        ('EU', 'Евро'),
-        ('CNY', 'Китайский юань'),
-        ('RUB', 'российский руб.'),
-        ('USD', 'Доллар США'),
-        ('KZT', 'Казахский тенге'),
-        ('UAG', 'Украинская гривна'),
 
-    ]
 
 
     stavka1 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик', related_name="stavka1")
-    price1 = models.IntegerField(default=0)
-    currency1 = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='BYR')
+    price1 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency1 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency1")
     comment_field1=  models.CharField(max_length=280,blank = True,  verbose_name='Комментарий к ставке 1')
 
     stavka2 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 2', related_name="stavka2")
-    price2 = models.IntegerField(default=0)
-    currency2 = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='BYR')
-    comment_field2= models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке ')
+    price2 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency2 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency2")
+    comment_field2= models.CharField(max_length=280, blank = True, verbose_name='Комментарий к ставке ')
 
     stavka3 = models.ForeignKey(Supplyer, max_length=40, blank=True,null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 3', related_name="stavka3")
-    comment_field3 = models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке 3')
+    price3 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency3 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency3")
+    comment_field3 = models.CharField(max_length=280, blank = True, verbose_name='Комментарий к ставке 3')
 
     stavka4 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 4', related_name="stavka4")
+    price4 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency4 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency4")
     comment_field4 = models.CharField(max_length=280, blank = True,verbose_name='Комментарий к ставке4')
 
     stavka5 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 5', related_name="stavka5")
+    price5 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency5 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency5")
     comment_field5 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 5')
 
     stavka6 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 6', related_name="stavka6")
+    price6 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency6 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency6")
     comment_field6 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 6')
 
     stavka7 = models.ForeignKey(Supplyer, max_length=40, blank=True,null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 7', related_name="stavka7")
+    price7 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency7 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency7")
     comment_field7 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 7')
 
     stavka8 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 8', related_name="stavka8")
+    price8 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency8 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency8")
     comment_field8 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 8')
 
     stavka9 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 9', related_name="stavka9")
+    price9 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency9 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency9")
     comment_field9 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 9')
 
     stavka10 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 10', related_name="stavka10")
+    price10 = models.PositiveIntegerField(default=0, verbose_name='Цена')
+    currency10 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
+                                  verbose_name='Валюта', related_name="currency10")
     comment_field10 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 10')
 
     status = models.CharField(max_length=20, default='новая', verbose_name='Статус: новая, в работе, закрыта')
@@ -205,3 +232,8 @@ class Quotation(Operation):
 
     def get_absolute_url(self):
         return reverse('show_quotation', kwargs={'c_id':self.pk})
+
+
+    class Meta:
+        verbose_name = "Котировка"
+        verbose_name_plural = "Котировки"
