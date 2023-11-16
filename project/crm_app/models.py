@@ -86,9 +86,6 @@ class OtherCompany(Contragent):
 #=================================operations========
 class Operation(models.Model):
      descripsion = models.CharField(max_length=150, blank=True, verbose_name='Описание потребності')
-     
-
-
 
      class Meta:
         abstract = True
@@ -183,6 +180,21 @@ class Currency(models.Model):
 
 
 class Quotation(Operation):
+    STATUS_CHOICES = [
+        ('NEW', 'Новая'),
+        ('CURRENT', 'В работе'),
+        ('CLOSED', 'Закрыта'),
+
+    ]
+
+    RESULT_CHOICES = [
+        ('NOT_READY', 'Груз не готов'),
+        ('PRICE_GOOD', 'Прошли по цене'),
+        ('PRICE_BAD', 'Не прошли по цене'),
+
+    ]
+
+
     descripsion = models.CharField(max_length=250, blank = True, verbose_name='Описание потребности')
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
     loading_country = models.ForeignKey(Direction, max_length=15, blank=True, null=True, on_delete=models.CASCADE,
@@ -209,7 +221,7 @@ class Quotation(Operation):
                                   verbose_name='Валюта', related_name="currency2")
     comment_field2= models.CharField(max_length=280, blank = True, verbose_name='Комментарий к ставке ')
 
-    stavka3 = models.ForeignKey(Supplyer, max_length=40, blank=True,null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 3', related_name="stavka3")
+    stavka3 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Перевозчик 3', related_name="stavka3")
     price3 = models.PositiveIntegerField(default=0, verbose_name='Цена')
     currency3 = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
                                   verbose_name='Валюта', related_name="currency3")
@@ -257,9 +269,9 @@ class Quotation(Operation):
                                   verbose_name='Валюта', related_name="currency10")
     comment_field10 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 10')
 
-    status = models.CharField(max_length=20, default='новая', verbose_name='Статус: новая, в работе, закрыта')
+    status = models.CharField(max_length=20, default='Новая', choices=STATUS_CHOICES, verbose_name='Статус')
 
-    result = models.CharField(max_length=20, default='не прошли', verbose_name='Результат: прошли по цене, груз не готов, не прошли по цене')
+    result = models.CharField(max_length=20, blank=True, null=True, choices=RESULT_CHOICES, verbose_name='Результат')
 
 
     def get_absolute_url(self):
