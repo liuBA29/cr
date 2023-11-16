@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crm_app.apps.CrmAppConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test1',
+        'NAME': 'test2',
         'USER': 'admin',
         'PASSWORD': '1212',
         'HOST': 'localhost',

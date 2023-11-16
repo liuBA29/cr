@@ -14,6 +14,7 @@
 
     {% for c in quotations %}
         <h3>{{c.client}}</h3>
+    <li>котировка создана: {{c.time_create}}</li>
     <li>{{c.status}}</li>
     <li>место загрузки:  {{c.loading_country}}  ||  место выгрузки: {{c.unloading_country}}</li>
     <li>транспорт: {{c.common_transport}} </li>

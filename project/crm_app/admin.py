@@ -6,7 +6,7 @@ class SupplyerAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'phone')
 
 class QuotationAdmin(admin.ModelAdmin):
-    list_display = ('client', 'loading_country', 'status')
+    list_display = ('time_create', 'client', 'loading_country', 'status')
 
 
 class SdelkaAdmin(admin.ModelAdmin):

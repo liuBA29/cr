@@ -194,6 +194,8 @@ class Quotation(Operation):
 
     ]
 
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
 
     descripsion = models.CharField(max_length=250, blank = True, verbose_name='Описание потребности')
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
@@ -277,6 +279,8 @@ class Quotation(Operation):
     def get_absolute_url(self):
         return reverse('show_quotation', kwargs={'c_id':self.pk})
 
+    def __str__(self):
+        return self.descripsion
 
     class Meta:
         verbose_name = "Котировка"
