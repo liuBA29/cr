@@ -1,6 +1,11 @@
 from django import forms
 from .models import *
 
+class AddSdelkaForm(forms.ModelForm):
+    class Meta:
+        model = Sdelka
+        fields = '__all__'
+
 
 class AddQuotForm(forms.ModelForm):
     class Meta:
@@ -23,5 +28,4 @@ class AddQuotForm(forms.ModelForm):
             'comment_field8': forms.Textarea(attrs={'cols': 40, 'rows': 8}),
             'comment_field9': forms.Textarea(attrs={'cols': 40, 'rows': 8}),
             'comment_field10': forms.Textarea(attrs={'cols': 40, 'rows': 8}),
-
         }

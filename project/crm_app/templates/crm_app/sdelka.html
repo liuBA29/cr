@@ -1,0 +1,59 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+
+    <h3>от </h3>
+    <li>Описание потребности: {{sdelka.descripsion}}</li>
+<li>Клиент: {{sdelka.cl_price}}</li>
+    <li>{{sdelka.client}} </li>
+    <li>{{sdelka.cl_price}} </li>
+    <li>ставка  -{{sdelka.cl_currency}} </li>
+     <li>цена:  -{{sdelka.supplyer1}} </li>
+    <li>коммент  -{{sdelka.sup_price1}} </li>
+    <li>ставка 2 - {{sdelka.currency1}}
+     <li>цена:  -{{sdelka.sup_pometka1}}</li>
+
+     <li>цена:  -{{sdelka.supplyer2}} </li>
+        <li>коммент  -{{sdelka.sup_price2}} </li>
+    <li>ставка 2 - {{sdelka.currency2}}
+     <li>цена:  -{{sdelka.sup_pometka2}}</li>
+
+    <li>коммент 2 - {{sdelka.common_direction}} </li>
+    <li>ставка 3 - {{sdelka.common_transport}} </li>
+
+    <li>цена:  -{{sdelka.profit3}}  </li>
+    <li>коммент 3 -{{sdelka.cl_documents}} </li>
+
+    <li>ставка 4 -{{sdelka.sup_documents1}} </li>
+        <li>ставка 4 -{{sdelka.sup_documents2}} </li>
+
+     <li>цена:  -{{sdelka.data_zagruzki_1}} {{quotation.data_vygruzki_1}}  </li>
+         <li>цена:  -{{sdelka.data_zagruzki_1}} {{quotation.data_vygruzki_1}}  </li>
+
+   <li>коммент 4 -{{sdelka.debitorks}} </li>
+
+     <li>ставка 5  -{{sdelka.debitorka2}} </li>
+     <li>цена:  - {{sdelka.status}}  </li>
+    <li>коммент 5 -{{sdelka.status_other}} </li>
+
+    <li>ставка 6 - {{sdelka.number}} </li>
+
+    <br>
+
+<td ><a href="#">Редактировать</a></td>
+    <td align = 'right'><a href="#">Удалить</a></td>
+
+</ul>
+</div>
+{%endblock content%}

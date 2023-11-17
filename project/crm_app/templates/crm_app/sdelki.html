@@ -10,14 +10,16 @@
 </div>
 
 <div class="centercontent"><ul>
-    {% for c in sdelki %}
+    <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить сделку</a></button>
+{% for c in sdelki %}
         <h3>{{c.client}}</h3>
-    <li>{{c.cl_price}} {{c.cl_currency}}</li>
-    <li>номер сделкі: {{c.number}} </li>
+
 
 
 <p ><a href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
     {% endfor %}<hr>
+
+
 </ul>
 </div>
 {%endblock content%}

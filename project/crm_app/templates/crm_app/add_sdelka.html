@@ -1,11 +1,17 @@
+{% extends 'crm_app/base.html' %}
 
 {%block content%}
-<h1>{{title}}</h1>
-<form action="{% url 'add_sdelka' %}" method="post"></form>
+
+<div class="left-bar"><ul>
+
+</ul>
+</div>
+
+<form action="{% url 'add_sdelka' %}" method="post">
 {% csrf_token %}
 {{form.as_p}}
 
 <button type="submit">добавить</button>
-
+</form>
 
 {%endblock content%}

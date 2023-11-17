@@ -151,6 +151,21 @@ def delete_quotation(request, c_id):
     return redirect('quotations')
 
 
+def show_sdelka(request, c_id):
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
+    url = resolve(request.path_info).url_name
+    sdelki = Sdelka.objects.all()
+    contect = {
+        'url': url,
+        'operationss': operationss,
+        'sdelka': sdelka,
+        'sdelki': sdelki,
+        'menu': menu,
+        "title": "Сделка",
+    }
+    return render(request, 'crm_app/sdelka.html', context=contect)
+
+
 
 def show_quotation(request, c_id):
     quotation = get_object_or_404(Quotation, pk=c_id)
@@ -202,7 +217,21 @@ def login(request):
 
 #=============Forms add+++++++++++++++++
 def add_sdelka(request):
-    return render(request, 'crm_app/add_sdelka.html',  { 'menu': menu, 'title': 'Создать cltkre'})
+
+    if request.method == "POST":
+        form = AddSdelkaForm(request.POST)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            try:
+                Sdelka.objects.create(**form.cleaned_data)
+                return redirect('quotations')
+            except:
+                form.add_error(None, 'ошибка добавления сделки')
+    else:
+        form = AddSdelkaForm()
+
+    return render(request, 'crm_app/add_sdelka.html',  { 'form': form, 'menu': menu, 'title': 'Создать сделку'})
 
 
 
@@ -210,6 +239,7 @@ def add_quotation(request):
 
     if request.method == "POST":
         form = AddQuotForm(request.POST)
+
         if form.is_valid():
             #print(form.cleaned_data)
             try:
@@ -219,6 +249,6 @@ def add_quotation(request):
                 form.add_error(None, 'ошибка добавления котировки')
     else:
         form = AddQuotForm()
-    return render(request, 'crm_app/add_quotation.html',  {'form': form, 'menu': menu, 'title': 'Создать котировку'})
+    return render(request, 'crm_app/add_quotation.html',  {'form': form,  'menu': menu, 'title': 'Создать котировку'})
 
 

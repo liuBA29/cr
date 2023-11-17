@@ -90,59 +90,6 @@ class Operation(models.Model):
      class Meta:
         abstract = True
 
-
-
-
-
-
-
-class Sdelka(Operation):
-    client = models.ForeignKey(Client, max_length=20,blank = True, on_delete=models.CASCADE, verbose_name='Заказчик')
-
-    cl_price = models.CharField(max_length=20, default=1, verbose_name='цена заказчика')
-    cl_currency = models.CharField(max_length=20, default='eu', verbose_name='валюта заказчика')
-
-    supplyer1 = models.ForeignKey(Supplyer, max_length=20,  blank = True, on_delete=models.CASCADE, verbose_name='Перевозчик1', related_name='Перевозчик1')
-    sup_price1 = models.CharField(max_length=20, blank=True,verbose_name='цена перевозчіка1')
-    sup_currency1 = models.CharField(max_length=20, blank=True,verbose_name='валюта перевозчіка1')
-    sup_pometka1 = models.CharField(max_length=20,blank=True, verbose_name='пометка перевозчіка1')
-
-    supplyer2 = models.ForeignKey(Supplyer, max_length=20, blank = True, on_delete=models.CASCADE, verbose_name='Перевозчик2', related_name='Перевозчик2' )
-    sup_price2 = models.CharField(max_length=20, blank=True, verbose_name='цена перевозчіка2')
-    sup_currency2 = models.CharField(max_length=20, blank=True, verbose_name='валюта перевозчіка2')
-    sup_pometka2 = models.CharField(max_length=20, blank=True, verbose_name='пометка перевозчіка2')
-
-
-    common_direction=models.CharField(max_length=20, blank = True, verbose_name='общее направленіе доставкі')
-    common_transport = models.CharField(max_length=20, blank = True, verbose_name='транспорт іспользуемый в сделке')
-    profit = models.CharField(max_length=20, blank=True, verbose_name='прібыль в евро')
-
-    cl_documents = models.CharField(max_length=20, blank=True, verbose_name='документы заказчіка')
-
-    sup_documents1 = models.CharField(max_length=20, blank=True, verbose_name='документы перевозчика1')
-    sup_documents2 = models.CharField(max_length=20, blank=True, verbose_name='документы перевозчика2')
-
-    data_zagruzki_1 = models.CharField(max_length=20,blank=True, verbose_name='дата загрузки1')
-    data_vygruzki_1 = models.CharField(max_length=20, blank=True, verbose_name='дата выгрузки1')
-
-    data_zagruzki_2 = models.CharField(max_length=20, blank=True, verbose_name='дата загрузки2')
-    data_vygruzki_2 = models.CharField(max_length=20, blank=True, verbose_name='дата выгрузки2')
-
-    debitorks = models.BooleanField(default=False,  verbose_name='подтвержение выгузки1')
-    debitorka2 = models.BooleanField(default=False, verbose_name='подтвержение выгузки2')
-
-    status = models.CharField(max_length=20, blank = True, verbose_name='статус: текущие, закрытые, проект')
-    status_other = models.CharField(max_length=20, blank = True, verbose_name='статус other- новая, принята, в пути, выгружена')
-    number = models.CharField(max_length=20, blank = True, verbose_name='номер сделки')
-
-    def __str__(self):
-        return 'Сделка с клиентом:' + str(self.client)
-
-
-    def get_absolute_url(self):
-        return reverse('show_operation', kwargs={'c_id':self.pk})
-
-
 class Transport(models.Model):
     slug = models.SlugField(max_length=25, db_index=True, unique=True, verbose_name='transport')
     transport_name = models.CharField(max_length=15, db_index=True)
@@ -177,6 +124,60 @@ class Currency(models.Model):
     class Meta:
         verbose_name = "Валюта"
         verbose_name_plural = "Валюта"
+
+
+
+
+
+
+class Sdelka(Operation):
+    client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
+
+    cl_price = models.CharField(max_length=20, default=1, verbose_name='цена заказчика')
+    cl_currency = models.CharField(max_length=20, default='eu', verbose_name='валюта заказчика')
+
+    supplyer1 = models.ForeignKey(Supplyer, max_length=20,   on_delete=models.CASCADE, verbose_name='Перевозчик1', related_name='Перевозчик1')
+    sup_price1 = models.CharField(max_length=20, blank=True, null=True, verbose_name='цена перевозчіка1')
+    sup_currency1 = models.CharField(max_length=20, blank=True, null=True, verbose_name='валюта перевозчіка1')
+    sup_pometka1 = models.CharField(max_length=20, blank=True, null=True,  verbose_name='пометка перевозчіка1')
+
+    supplyer2 = models.ForeignKey(Supplyer, max_length=20, blank = True,null=True,  on_delete=models.CASCADE, verbose_name='Перевозчик2', related_name='Перевозчик2' )
+    sup_price2 = models.CharField(max_length=20, blank=True,null=True,  verbose_name='цена перевозчіка2')
+    sup_currency2 = models.CharField(max_length=20, blank=True, null=True, verbose_name='валюта перевозчіка2')
+    sup_pometka2 = models.CharField(max_length=20, blank=True, null=True, verbose_name='пометка перевозчіка2')
+
+
+    common_direction=models.CharField(max_length=20, blank = True,null=True, verbose_name='общее направленіе доставкі')
+    common_transport = models.CharField(max_length=20, blank = True,null=True, verbose_name='транспорт іспользуемый в сделке')
+    profit = models.CharField(max_length=20, blank=True, verbose_name='прібыль в евро')
+
+    cl_documents = models.CharField(max_length=20, blank=True,null=True, verbose_name='документы заказчіка')
+
+    sup_documents1 = models.CharField(max_length=20, blank=True,null=True, verbose_name='документы перевозчика1')
+    sup_documents2 = models.CharField(max_length=20, blank=True,null=True, verbose_name='документы перевозчика2')
+
+    data_zagruzki_1 = models.CharField(max_length=20,blank=True,null=True, verbose_name='дата загрузки1')
+    data_vygruzki_1 = models.CharField(max_length=20, blank=True,null=True, verbose_name='дата выгрузки1')
+
+    data_zagruzki_2 = models.CharField(max_length=20, blank=True,null=True, verbose_name='дата загрузки2')
+    data_vygruzki_2 = models.CharField(max_length=20, blank=True,null=True, verbose_name='дата выгрузки2')
+
+    debitorks = models.BooleanField(default=False,  verbose_name='подтвержение выгузки1')
+    debitorka2 = models.BooleanField(default=False, verbose_name='подтвержение выгузки2')
+
+    status = models.CharField(max_length=20, blank = True, null=True, verbose_name='статус: текущие, закрытые, проект')
+    status_other = models.CharField(max_length=20, blank = True, null=True, verbose_name='статус other- новая, принята, в пути, выгружена')
+    number = models.CharField(max_length=20, blank = True, null=True, verbose_name='номер сделки')
+
+    def __str__(self):
+        return 'Сделка с клиентом:' + str(self.client)
+
+
+    def get_absolute_url(self):
+        return reverse('show_sdelka', kwargs={'c_id':self.pk})
+
+
+
 
 
 class Quotation(Operation):

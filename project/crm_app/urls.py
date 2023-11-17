@@ -15,6 +15,8 @@ urlpatterns = [
 
 
     path('quotation/<int:c_id>/', show_quotation, name='show_quotation'),
+    path('sdelka/<int:c_id>/', show_sdelka, name='show_sdelka'),
+
     path('update_quotation/<int:c_id>/', update_quotation, name='update_quotation'),
     path('delete_quotation/<int:c_id>/', delete_quotation, name='delete_quotation'),
 
