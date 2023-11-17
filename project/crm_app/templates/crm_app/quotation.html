@@ -12,9 +12,10 @@
 
 <div class="centercontent"><ul>
 
-    <h3>{{quotation.descripsion}}</h3>
-    <li>{{quotation.time_create}}</li>
-    <li>{{quotation.transport}}</li>
+
+    <h3>от {{quotation.time_create}}</h3>
+    <li>Описание потребности: {{quotation.descripsion}}</li>
+    <li>Транспорт: {{quotation.transport}}</li>
     <li>{{quotation.client}} </li>
     <li>{{quotation.common_direction}} </li>
     <li>ставка  -{{quotation.stavka1}} </li>
@@ -62,10 +63,10 @@
 
     <li>{{quotation.common_transport}} </li>
 
-    <li><a href="#">sdelki v kotoryh uchavstvuet - количество</a></li>
-    <li><a href="#">документы </a></li>
+    <br>
 
-<p ><a href="#">Редактировать</a></p><p ><a href="#">Удалить</a></p>
+<td ><a href="{% url 'update_quotation' quotation.id %}">Редактировать</a></td>
+    <td align = 'right'><a href="{% url 'delete_quotation' quotation.id %}">Удалить</a></td>
 
 </ul>
 </div>

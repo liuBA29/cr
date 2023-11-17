@@ -1,0 +1,22 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+
+ <form action="" method="post">
+{% csrf_token %}
+ {{form.as_p}}
+
+
+<button type="submit">Сохранить изменения</button>
+
+
+{%endblock content%}

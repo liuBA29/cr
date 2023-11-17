@@ -125,6 +125,31 @@ def show_other_company(request, c_id):
 
 
 
+def update_quotation(request, c_id):
+    quotation = get_object_or_404(Quotation, pk=c_id)
+    form = AddQuotForm(request.POST or None, instance=quotation)
+    url = resolve(request.path_info).url_name
+    quotations = Quotation.objects.all()
+    contect = {
+        'form': form,
+        'url': url,
+        'operationss': operationss,
+        'quotation': quotation,
+        'quotations': quotations,
+        'menu': menu,
+        "title": "Редактировать Котировку",
+    }
+    if form.is_valid():
+        form.save()
+        return redirect('quotations')
+    return render(request, 'crm_app/update_quotation.html', context=contect)
+
+#delete quotation:
+def delete_quotation(request, c_id):
+    quotation = get_object_or_404(Quotation, pk=c_id)
+    quotation.delete()
+    return redirect('quotations')
+
 
 
 def show_quotation(request, c_id):
@@ -138,7 +163,7 @@ def show_quotation(request, c_id):
         'quotation': quotation,
         'quotations': quotations,
         'menu': menu,
-        "title": "Котировки",
+        "title": "Котировка",
     }
     return render(request, 'crm_app/quotation.html', context=contect)
 
@@ -179,15 +204,14 @@ def login(request):
 def add_sdelka(request):
     return render(request, 'crm_app/add_sdelka.html',  { 'menu': menu, 'title': 'Создать cltkre'})
 
-cat=5
+
 
 def add_quotation(request):
-    num1=1
-    num2=2
+
     if request.method == "POST":
         form = AddQuotForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
+            #print(form.cleaned_data)
             try:
                 Quotation.objects.create(**form.cleaned_data)
                 return redirect('quotations')
@@ -195,6 +219,6 @@ def add_quotation(request):
                 form.add_error(None, 'ошибка добавления котировки')
     else:
         form = AddQuotForm()
-    return render(request, 'crm_app/add_quotation.html',  {'num1':num1, 'num2' :num2, 'form': form, 'menu': menu, 'title': 'Создать котировку'})
+    return render(request, 'crm_app/add_quotation.html',  {'form': form, 'menu': menu, 'title': 'Создать котировку'})
 
 
