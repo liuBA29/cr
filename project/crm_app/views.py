@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
+from django.core.files.storage import FileSystemStorage
 
 from .forms import *
 from .models import  *
@@ -220,14 +221,10 @@ def add_sdelka(request):
 
     if request.method == "POST":
         form = AddSdelkaForm(request.POST, request.FILES)
-
         if form.is_valid():
             # print(form.cleaned_data)
-            try:
-                Sdelka.objects.create(**form.cleaned_data)
-                return redirect('sdelki')
-            except:
-                form.add_error(None, 'ошибка добавления сделки')
+            form.save()
+            return redirect('sdelki')
     else:
         form = AddSdelkaForm()
 
