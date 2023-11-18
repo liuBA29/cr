@@ -19,6 +19,10 @@
     <li>{{sdelka.client}} </li>
     <li>{{sdelka.cl_price}} </li>
     <li>ставка  -{{sdelka.cl_currency}} </li>
+    {% if sdelka.cl_douments %}
+    <li><a href="" src="{{sdelka.cl_documents.url}}">doc here</a></li>
+    {% endif %}
+
      <li>цена:  -{{sdelka.supplyer1}} </li>
     <li>коммент  -{{sdelka.sup_price1}} </li>
     <li>ставка 2 - {{sdelka.currency1}}

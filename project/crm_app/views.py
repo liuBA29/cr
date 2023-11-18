@@ -219,13 +219,13 @@ def login(request):
 def add_sdelka(request):
 
     if request.method == "POST":
-        form = AddSdelkaForm(request.POST)
+        form = AddSdelkaForm(request.POST, request.FILES)
 
         if form.is_valid():
             # print(form.cleaned_data)
             try:
                 Sdelka.objects.create(**form.cleaned_data)
-                return redirect('quotations')
+                return redirect('sdelki')
             except:
                 form.add_error(None, 'ошибка добавления сделки')
     else:

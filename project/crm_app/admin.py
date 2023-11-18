@@ -10,7 +10,7 @@ class QuotationAdmin(admin.ModelAdmin):
 
 
 class SdelkaAdmin(admin.ModelAdmin):
-    list_display = ('descripsion', 'client')
+    list_display = ('descripsion', 'client', 'cl_documents', 'sup_documents')
 
 
 admin.site.register(Client)

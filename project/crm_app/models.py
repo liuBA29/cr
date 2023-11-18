@@ -44,6 +44,7 @@ class Money(models.Model):
 
 class Client(Contragent):
     client_status = models.BooleanField(default=False, verbose_name="Постоянный клиент")
+
     class Meta:
         verbose_name = "Заказчик"
         verbose_name_plural = "Заказчики"
@@ -151,9 +152,9 @@ class Sdelka(Operation):
     common_transport = models.CharField(max_length=20, blank = True,null=True, verbose_name='транспорт іспользуемый в сделке')
     profit = models.CharField(max_length=20, blank=True, verbose_name='прібыль в евро')
 
-    cl_documents = models.CharField(max_length=20, blank=True,null=True, verbose_name='документы заказчіка')
+    cl_documents = models.FileField(blank=True, null=True,  verbose_name='документы Заказчика', upload_to="documents/")
+    sup_documents = models.FileField(blank=True, null=True, verbose_name='документы Перевозчика', upload_to="documents/")
 
-    sup_documents1 = models.CharField(max_length=20, blank=True,null=True, verbose_name='документы перевозчика1')
     sup_documents2 = models.CharField(max_length=20, blank=True,null=True, verbose_name='документы перевозчика2')
 
     data_zagruzki_1 = models.CharField(max_length=20,blank=True,null=True, verbose_name='дата загрузки1')
@@ -286,3 +287,4 @@ class Quotation(Operation):
     class Meta:
         verbose_name = "Котировка"
         verbose_name_plural = "Котировки"
+        ordering = ['-time_update', '-time_create']
