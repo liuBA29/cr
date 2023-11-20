@@ -6,11 +6,11 @@ class SupplyerAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'phone')
 
 class QuotationAdmin(admin.ModelAdmin):
-    list_display = ('time_create', 'client', 'loading_country', 'status')
+    list_display = ( 'client', 'loading_country', 'status')
 
 
 class SdelkaAdmin(admin.ModelAdmin):
-    list_display = ('descripsion', 'client', 'cl_documents', 'sup_documents')
+    list_display = ('description', 'client')
 
 
 admin.site.register(Client)
@@ -19,7 +19,7 @@ admin.site.register(Supplyer, SupplyerAdmin)
 
 
 admin.site.register(OtherCompany)
-admin.site.register(Money)
+admin.site.register(Documents)
 admin.site.register(Currency)
 admin.site.register(Direction)
 admin.site.register(Transport)
