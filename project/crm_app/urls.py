@@ -32,5 +32,14 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('add_sdelka/', add_sdelka, name='add_sdelka'),
     path('add_quotation/', add_quotation, name='add_quotation'),
+
+    path('documents/', upload_documents, name='documents'),
+
+    path('extract/', sdelka_vypiska, name='extract'),
+
+
+
+
+
 ]
 

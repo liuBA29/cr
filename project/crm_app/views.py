@@ -156,7 +156,7 @@ def show_sdelka(request, c_id):
     sdelka = get_object_or_404(Sdelka, pk=c_id)
     url = resolve(request.path_info).url_name
     sdelki = Sdelka.objects.all()
-    contect = {
+    context = {
         'url': url,
         'operationss': operationss,
         'sdelka': sdelka,
@@ -164,7 +164,7 @@ def show_sdelka(request, c_id):
         'menu': menu,
         "title": "Сделка",
     }
-    return render(request, 'crm_app/sdelka.html', context=contect)
+    return render(request, 'crm_app/sdelka.html', context=context)
 
 
 
@@ -249,3 +249,41 @@ def add_quotation(request):
     return render(request, 'crm_app/add_quotation.html',  {'form': form,  'menu': menu, 'title': 'Создать котировку'})
 
 
+
+
+def upload_documents(request):
+    if request.method == 'POST':
+        form = UploadDocumentsForm(request.POST, request.FILES)
+        #file = request.FILES.getlist('file')[1]
+        file = request.FILES['file']
+        client = Client.objects.get(pk=1)
+        supplyer1 = Supplyer.objects.get(pk=1)
+        print(client)
+        print(supplyer1)
+        client_document=Sdelka.objects.create(client=client, supplyer1=supplyer1, cl_documents=file)
+        client_document.save()
+        return HttpResponse('file added to sdelka: ' + str(client_document.pk))
+    else:
+        form = UploadDocumentsForm()
+
+    return render(request, 'crm_app/documents.html',  { 'form': form, 'menu': menu, 'title': 'Документы'})
+
+
+
+def sdelka_vypiska(request):
+
+
+    '''простые запросы'''
+    value = ""
+    '''
+    & - і (пріор 2)
+    | - ілі (пріор 3)
+    ~ - не (пріор 1)
+    
+    __gt  >
+    __gte >=
+    __lt  <
+    __lte <=
+    '''
+    obj_list = Sdelka.objects.filter(client=1).all()
+    return render(request, 'crm_app/extract.html', {'obj_list': obj_list, 'value': value} )

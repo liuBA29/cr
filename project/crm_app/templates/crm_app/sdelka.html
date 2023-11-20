@@ -19,10 +19,16 @@
     <li>{{sdelka.client}} </li>
     <li>{{sdelka.cl_price}} </li>
     <li>ставка  -{{sdelka.cl_currency}} </li>
-    {% if sdelka.cl_douments %}
-    <li><a href="" src="{{sdelka.cl_documents.url}}">doc here</a></li>
+<p>==========================================================</p>
+    {% if sdelka.cl_documents %}
+    <a href="{{ sdelka.cl_documents.url }}"> {{sdelka.cl_documents.name}}</a>
+    {% endif %}
+<p></p>
+      {% if sdelka.sup_documents %}
+    <a href="{{ sdelka.sup_documents.url }}"> {{sdelka.sup_documents.name}}</a>
     {% endif %}
 
+<p>=======================================================</p>
      <li>цена:  -{{sdelka.supplyer1}} </li>
     <li>коммент  -{{sdelka.sup_price1}} </li>
     <li>ставка 2 - {{sdelka.currency1}}
@@ -37,7 +43,7 @@
     <li>ставка 3 - {{sdelka.common_transport}} </li>
 
     <li>цена:  -{{sdelka.profit3}}  </li>
-    <li>коммент 3 -{{sdelka.cl_documents}} </li>
+
 
     <li>ставка 4 -{{sdelka.sup_documents1}} </li>
         <li>ставка 4 -{{sdelka.sup_documents2}} </li>

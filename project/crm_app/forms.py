@@ -1,6 +1,12 @@
 from django import forms
 from .models import *
 
+
+class UploadDocumentsForm(forms.Form):
+    file = forms.FileField()
+
+
+
 class AddSdelkaForm(forms.ModelForm):
     class Meta:
         model = Sdelka

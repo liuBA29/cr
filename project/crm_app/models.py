@@ -132,6 +132,7 @@ class Currency(models.Model):
 
 
 class Sdelka(Operation):
+    
     client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE, verbose_name='Заказчик')
 
     cl_price = models.CharField(max_length=20, default=1, verbose_name='цена заказчика')
