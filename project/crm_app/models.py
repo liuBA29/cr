@@ -327,11 +327,6 @@ class Documents(models.Model):
 
 # =======================================
 class Quotation(Operation):
-    description = models.CharField(max_length=250, blank=True, verbose_name='Описание потребности')
-    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
-    time_update = models.DateTimeField(auto_now=True, verbose_name='Время последнего обновления')
-    client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE,
-                               verbose_name='Заказчик', related_name="qu_client")
     STATUS_CHOICES = [
         ('NEW', 'Новая'),
         ('CURRENT', 'В работе'),
@@ -345,6 +340,12 @@ class Quotation(Operation):
         ('PRICE_BAD', 'Не прошли по цене'),
 
     ]
+    description = models.CharField(max_length=250, blank=True, verbose_name='Описание потребности')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Время последнего обновления')
+    client = models.ForeignKey(Client, max_length=20, on_delete=models.CASCADE,
+                               verbose_name='Заказчик', related_name="qu_client")
+
     loading_country = models.ForeignKey(Direction, max_length=15, blank=True, null=True, on_delete=models.CASCADE,
                                         verbose_name='Место загрузки',
                                         related_name='common_loading_country')

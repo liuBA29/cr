@@ -231,12 +231,20 @@ def add_sdelka(request):
     return render(request, 'crm_app/add_sdelka.html',  { 'form': form, 'menu': menu, 'title': 'Создать сделку'})
 
 
+def add_client(request):
+    if request.method == 'POST':
+        form = AddClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('clients')
+    else:
+        form = AddClientForm()
+    return render(request, 'crm_app/add_client.html', {'form': form,  'menu': menu, 'title': 'Создать Заказчика'})
+
 
 def add_quotation(request):
-
     if request.method == "POST":
         form = AddQuotForm(request.POST)
-
         if form.is_valid():
             #print(form.cleaned_data)
             try:

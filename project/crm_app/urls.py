@@ -30,6 +30,7 @@ urlpatterns = [
 
 
     path('login/', login, name='login'),
+    path('add_client/', add_client, name='add_client'),
     path('add_sdelka/', add_sdelka, name='add_sdelka'),
     path('add_quotation/', add_quotation, name='add_quotation'),
 

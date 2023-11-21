@@ -17,7 +17,7 @@
 
 <div class="centercontent">
 
-
+ <button class="addbutton"><a href="{% url 'add_client' %}">Добавить заказчика</a></button>
     <ul>
     {% for c in clients %}
         <h3>{{c.company_name}}</h3>
@@ -30,7 +30,7 @@
 
 <p><a href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
     {% endfor %}<hr>
-        <button type="submit">Добавить</button>
+
 </ul>
 </div>
 {%endblock content%}

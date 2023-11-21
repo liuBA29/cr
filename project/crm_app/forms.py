@@ -6,6 +6,11 @@ class UploadDocumentsForm(forms.Form):
     file = forms.FileField()
 
 
+class AddClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = '__all__'
+
 
 class AddSdelkaForm(forms.ModelForm):
     class Meta:
