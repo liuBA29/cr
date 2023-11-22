@@ -23,6 +23,8 @@ urlpatterns = [
     path('update_quotation/<int:c_id>/', update_quotation, name='update_quotation'),
     path('delete_quotation/<int:c_id>/', delete_quotation, name='delete_quotation'),
 
+    path('delete_sdelka/<int:c_id>/', delete_sdelka, name='delete_sdelka'),
+
 
     path('operations/', operations, name='operations'),
     path('quotations/', quotations, name='quotations'),
@@ -31,6 +33,9 @@ urlpatterns = [
 
     path('login/', login, name='login'),
     path('add_client/', add_client, name='add_client'),
+    path('add_supplyer/', add_supplyer, name='add_supplyer'),
+    path('add_othercompany/', add_othercompany, name='add_othercompany'),
+
     path('add_sdelka/', add_sdelka, name='add_sdelka'),
     path('add_quotation/', add_quotation, name='add_quotation'),
 

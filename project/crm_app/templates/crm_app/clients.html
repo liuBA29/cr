@@ -18,6 +18,12 @@
 <div class="centercontent">
 
  <button class="addbutton"><a href="{% url 'add_client' %}">Добавить заказчика</a></button>
+
+    {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+
     <ul>
     {% for c in clients %}
         <h3>{{c.company_name}}</h3>

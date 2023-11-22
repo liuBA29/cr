@@ -12,6 +12,12 @@
 <div class="centercontent"><ul>
     <button class="addbutton"><a href="{% url 'add_quotation' %}">Добавить котировку</a></button>
 
+
+
+    {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
     {% for c in quotations %}
         <h3>{{c.client}}</h3>
     <li>котировка создана: {{c.time_create}}</li>

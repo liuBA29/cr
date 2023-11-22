@@ -18,6 +18,11 @@
 </div>
 
 <div class="centercontent"><ul>
+    <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
     {% for c in supplyers %}
         <h3>{{c.company_name}}</h3>
     <li>{{c.contact_name}}</li>

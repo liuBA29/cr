@@ -11,6 +11,12 @@
 
 <div class="centercontent"><ul>
     <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить сделку</a></button>
+
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+
 {% for c in sdelki %}
         <h3>{{c.client}}</h3>
 

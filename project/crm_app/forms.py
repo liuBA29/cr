@@ -12,10 +12,26 @@ class AddClientForm(forms.ModelForm):
         fields = '__all__'
 
 
+
+class AddSupplyerForm(forms.ModelForm):
+    class Meta:
+        model = Supplyer
+        fields = '__all__'
+
+
+class AddOtherCompanyForm(forms.ModelForm):
+    class Meta:
+        model = OtherCompany
+        fields = '__all__'
+
+#============================================================
+
+
 class AddSdelkaForm(forms.ModelForm):
     class Meta:
         model = Sdelka
         fields = '__all__'
+
 
 
 class AddQuotForm(forms.ModelForm):

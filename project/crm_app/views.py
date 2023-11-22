@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
 from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
 
 from .forms import *
 from .models import  *
@@ -142,15 +143,37 @@ def update_quotation(request, c_id):
     }
     if form.is_valid():
         form.save()
+        messages.success(request, 'Котировка изменена успешно')
         return redirect('quotations')
     return render(request, 'crm_app/update_quotation.html', context=contect)
 
-#delete quotation:
+
+#===================================
+# delete quotation:
 def delete_quotation(request, c_id):
     quotation = get_object_or_404(Quotation, pk=c_id)
-    quotation.delete()
-    return redirect('quotations')
 
+    if request.method == "POST":
+        #confirming delete
+        quotation.delete()
+        messages.success(request, 'Котировка удалена успешно')
+        return redirect('quotations')
+    context = {
+        'quotation': quotation,
+        'menu': menu,
+        "title": "Удалить котировку",
+    }
+    return render(request, 'crm_app/delete_quotation.html', context=context)
+
+
+def delete_sdelka(request, c_id):
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
+    sdelka.delete()
+    messages.success(request, 'Сделка удалена успешно')
+    return redirect('sdelki')
+
+
+#========================================================================
 
 def show_sdelka(request, c_id):
     sdelka = get_object_or_404(Sdelka, pk=c_id)
@@ -224,6 +247,7 @@ def add_sdelka(request):
         if form.is_valid():
             # print(form.cleaned_data)
             form.save()
+            messages.success(request, 'Сделка добавлена')
             return redirect('sdelki')
     else:
         form = AddSdelkaForm()
@@ -236,22 +260,48 @@ def add_client(request):
         form = AddClientForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Заказчик добавлен')
             return redirect('clients')
     else:
         form = AddClientForm()
     return render(request, 'crm_app/add_client.html', {'form': form,  'menu': menu, 'title': 'Создать Заказчика'})
 
 
+
+def add_supplyer(request):
+    if request.method == 'POST':
+        form = AddSupplyerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('supplyers')
+    else:
+        form = AddSupplyerForm()
+        messages.success(request, 'Перевозчик добавлен')
+    return render(request, 'crm_app/add_supplyer.html', {'form': form,  'menu': menu, 'title': 'Создать Перевозчика'})
+
+def add_othercompany(request):
+    if request.method == 'POST':
+        form = AddOtherCompanyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Организация добавлена')
+            return redirect('other_companies')
+    else:
+        form = AddOtherCompanyForm()
+    return render(request, 'crm_app/add_othercompany.html', {'form': form,  'menu': menu, 'title': 'Создать Стороннюю Организацию'})
+
+#================================
+
+
+
+
 def add_quotation(request):
     if request.method == "POST":
         form = AddQuotForm(request.POST)
         if form.is_valid():
-            #print(form.cleaned_data)
-            try:
-                Quotation.objects.create(**form.cleaned_data)
-                return redirect('quotations')
-            except:
-                form.add_error(None, 'ошибка добавления котировки')
+           form.save()
+           messages.success(request, 'Котировка добавлена')
+           return redirect('quotations')
     else:
         form = AddQuotForm()
     return render(request, 'crm_app/add_quotation.html',  {'form': form,  'menu': menu, 'title': 'Создать котировку'})

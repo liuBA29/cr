@@ -7,7 +7,7 @@
 </ul>
 </div>
 
-<form action="{% url 'add_client' %}" method="post">
+<form action="{% url 'add_supplyer' %}" method="post">
     {% csrf_token %}
      <div class="form-error">{{ form.non_field_errors }}</div>
 
@@ -15,6 +15,7 @@
     <p><label for="{{ f.id_for_label }}">{{ f.label }}:</label>{{ f }}</p>
     <div class="form-error">{{ f.errors }}</div>
     {% endfor %}
+
 
 <button>Добавить</button>
 </form>
