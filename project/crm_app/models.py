@@ -301,13 +301,13 @@ class Sdelka(Operation):
 # ===================доки=====
 class Documents(models.Model):
     name = models.CharField(max_length=35, blank=True, null=True, verbose_name='Название документа документа: ')
-    sdelka = models.ForeignKey(Sdelka, on_delete=models.PROTECT, blank=True, null=True,
+    sdelka = models.ForeignKey(Sdelka, on_delete=models.CASCADE, blank=True, null=True,
                                verbose_name="Документы в сделке")
-    client = models.ForeignKey(Client, on_delete=models.PROTECT, blank=True, null=True,
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True,
                                verbose_name="Документы от заказчика")
-    supplyer = models.ForeignKey(Supplyer, on_delete=models.PROTECT, blank=True, null=True,
+    supplyer = models.ForeignKey(Supplyer, on_delete=models.CASCADE, blank=True, null=True,
                                  verbose_name="Документы от перевозчика")
-    other_organization = models.ForeignKey(OtherCompany, on_delete=models.PROTECT, blank=True, null=True,
+    other_organization = models.ForeignKey(OtherCompany, on_delete=models.CASCADE, blank=True, null=True,
                                            verbose_name="Документы прочие")
     DOC_CHOICES = [
         ('DOGOVOR', 'дОГОВОР'),

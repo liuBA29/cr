@@ -1,0 +1,17 @@
+{% extends 'crm_app/base.html' %}
+
+{%block content%}
+
+<div class="left-bar"><ul>
+
+</ul>
+</div>
+
+<form action="." method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{form.as_p}}
+
+<button type="submit">Внести изменения</button>
+</form>
+
+{%endblock content%}

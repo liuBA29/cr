@@ -21,9 +21,14 @@ urlpatterns = [
     path('sdelka/<int:c_id>/', show_sdelka, name='show_sdelka'),
 
     path('update_quotation/<int:c_id>/', update_quotation, name='update_quotation'),
-    path('delete_quotation/<int:c_id>/', delete_quotation, name='delete_quotation'),
+    path('update_sdelka/<int:c_id>/', update_sdelka, name='update_sdelka'),
+    path('quot_sdelka/<int:c_id>/', quot_sdelka, name='quot_sdelka'),
 
+    path('delete_quotation/<int:c_id>/', delete_quotation, name='delete_quotation'),
     path('delete_sdelka/<int:c_id>/', delete_sdelka, name='delete_sdelka'),
+    path('delete_client/<int:c_id>/', delete_client, name='delete_client'),
+    path('delete_supplyer/<int:c_id>/', delete_supplyer, name='delete_supplyer'),
+    path('delete_other_company/<int:c_id>/', delete_other_company, name='delete_other_company'),
 
 
     path('operations/', operations, name='operations'),
@@ -38,6 +43,7 @@ urlpatterns = [
 
     path('add_sdelka/', add_sdelka, name='add_sdelka'),
     path('add_quotation/', add_quotation, name='add_quotation'),
+
 
     path('documents/', upload_documents, name='documents'),
 

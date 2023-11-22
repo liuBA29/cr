@@ -121,9 +121,57 @@ def show_other_company(request, c_id):
         'other_company': other_company,
         'other_companys': other_companys,
         'menu': menu,
-        "title": "Перевозчики",
+        "title": "Организация",
     }
     return render(request, 'crm_app/other_company.html', context=contect)
+
+#=========================================
+def quot_sdelka(request, c_id):
+    sdelka = get_object_or_404(Quotation, pk=c_id)
+    quotation = get_object_or_404(Quotation, pk=c_id)
+    form = AddSdelkaForm(request.POST or None, instance=quotation)
+    url = resolve(request.path_info).url_name
+    quotations = Quotation.objects.all()
+    context = {
+        'form': form,
+        'url': url,
+        'operationss': operationss,
+        'sdelka': sdelka,
+        'sdelki': sdelki,
+        'quotation': quotation,
+        'quotations': quotations,
+        'menu': menu,
+        "title": "СОЗДАТЬ Сделку из Котировки",
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Сделка с номером: успешно создана')
+        return redirect('sdelki')
+    return render(request, 'crm_app/quot_sdelka.html', context=context)
+
+
+def update_sdelka(request, c_id):
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
+
+    form = AddSdelkaForm(request.POST or None, instance=sdelka)
+    url = resolve(request.path_info).url_name
+    quotations = Sdelka.objects.all()
+    context = {
+        'form': form,
+        'url': url,
+        'operationss': operationss,
+        'sdelka': sdelka,
+        'sdelki': sdelki,
+
+        'menu': menu,
+        "title": "Редактировать Сделку",
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Котировка изменена успешно')
+        return redirect('sdelki')
+    return render(request, 'crm_app/update_sdelka.html', context=context)
+# ====UPDATE QUOTATION
 
 
 
@@ -132,7 +180,7 @@ def update_quotation(request, c_id):
     form = AddQuotForm(request.POST or None, instance=quotation)
     url = resolve(request.path_info).url_name
     quotations = Quotation.objects.all()
-    contect = {
+    context = {
         'form': form,
         'url': url,
         'operationss': operationss,
@@ -145,10 +193,58 @@ def update_quotation(request, c_id):
         form.save()
         messages.success(request, 'Котировка изменена успешно')
         return redirect('quotations')
-    return render(request, 'crm_app/update_quotation.html', context=contect)
+    return render(request, 'crm_app/update_quotation.html', context=context)
 
 
 #===================================
+
+def delete_client(request, c_id):
+    client = get_object_or_404(Client, pk=c_id)
+
+    if request.method == "POST":
+        # confirming delete
+        client.delete()
+        messages.success(request, 'Заказчик удален успешно')
+        return redirect('clients')
+    context = {
+        'client': client,
+        'menu': menu,
+        "title": "Удалить заказчика",
+    }
+    return render(request, 'crm_app/delete_client.html', context=context)
+
+def delete_supplyer(request, c_id):
+    supplyer = get_object_or_404(Supplyer, pk=c_id)
+
+    if request.method == "POST":
+        # confirming delete
+        supplyer.delete()
+        messages.success(request, 'Перевозчик удален успешно')
+        return redirect('supplyers')
+    context = {
+        'supplyer': supplyer,
+        'menu': menu,
+        "title": "Удалить перевозчика",
+    }
+    return render(request, 'crm_app/delete_supplyer.html', context=context)
+
+
+def delete_other_company(request, c_id):
+    other_company = get_object_or_404(OtherCompany, pk=c_id)
+
+    if request.method == "POST":
+        # confirming delete
+        other_company.delete()
+        messages.success(request, 'Организация удалена успешно')
+        return redirect('other_companies')
+    context = {
+        'other_company': other_company,
+        'menu': menu,
+        "title": "Удалить организацию",
+    }
+    return render(request, 'crm_app/delete_other_company.html', context=context)
+
+
 # delete quotation:
 def delete_quotation(request, c_id):
     quotation = get_object_or_404(Quotation, pk=c_id)
@@ -168,9 +264,18 @@ def delete_quotation(request, c_id):
 
 def delete_sdelka(request, c_id):
     sdelka = get_object_or_404(Sdelka, pk=c_id)
-    sdelka.delete()
-    messages.success(request, 'Сделка удалена успешно')
-    return redirect('sdelki')
+
+    if request.method == "POST":
+        # confirming delete
+        sdelka.delete()
+        messages.success(request, 'Сделка удалена успешно')
+        return redirect('quotations')
+    context = {
+        'sdelka': sdelka,
+        'menu': menu,
+        "title": "Удалить сделку",
+    }
+    return render(request, 'crm_app/delete_sdelka.html', context=context)
 
 
 #========================================================================
