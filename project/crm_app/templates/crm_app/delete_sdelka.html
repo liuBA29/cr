@@ -12,7 +12,7 @@
 <div class="centercontent">
     <form action="." method="post">
         {% csrf_token %}
-        <h3>Вы действительно хотите удалить эту сделку,  с id:{{sdelka.id}}?</h3>
+        <h3>Вы действительно хотите удалить Сделку №{{sdelka.number}}?</h3>
         <p><input type="submit" value="Да" />  <a href="{{ sdelka.get_absolute_url }}">Нет</a></p>
     </form>
 </div>

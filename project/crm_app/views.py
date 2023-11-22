@@ -145,7 +145,7 @@ def quot_sdelka(request, c_id):
     }
     if form.is_valid():
         form.save()
-        messages.success(request, 'Сделка с номером: успешно создана')
+        messages.success(request, 'Сделка из котировки создана')
         return redirect('sdelki')
     return render(request, 'crm_app/quot_sdelka.html', context=context)
 
@@ -290,7 +290,7 @@ def show_sdelka(request, c_id):
         'sdelka': sdelka,
         'sdelki': sdelki,
         'menu': menu,
-        "title": "Сделка",
+        "title": f'Сделка № {str(sdelka.number)}',
     }
     return render(request, 'crm_app/sdelka.html', context=context)
 
@@ -352,7 +352,7 @@ def add_sdelka(request):
         if form.is_valid():
             # print(form.cleaned_data)
             form.save()
-            messages.success(request, 'Сделка добавлена')
+            messages.success(request, f'Сделка успешно добавлена!')
             return redirect('sdelki')
     else:
         form = AddSdelkaForm()

@@ -192,7 +192,7 @@ class Sdelka(Operation):
 
 
     # new
-    number = models.IntegerField(unique=True, null=True, verbose_name='номер сделки')
+    number = models.PositiveIntegerField(unique=True, null=True, verbose_name='номер сделки')
     client_price = models.PositiveIntegerField(default=0, verbose_name='Цена')
     client_currency = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
                                         verbose_name='Валюта', related_name="client_currency")

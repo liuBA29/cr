@@ -1,17 +1,22 @@
 {% extends 'crm_app/base.html' %}
-
 {%block content%}
-
 <div class="left-bar"><ul>
 
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
 </ul>
+
 </div>
 
-<form action="{% url 'add_sdelka' %}" method="post" enctype="multipart/form-data">
+<div class="centercontent"><ul>
+
+<form action="" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {{form.as_p}}
 
 <button type="submit">создать сделку</button>
 </form>
-
+</ul>
+</div>
 {%endblock content%}
