@@ -150,6 +150,86 @@ def quot_sdelka(request, c_id):
     return render(request, 'crm_app/quot_sdelka.html', context=context)
 
 
+
+
+#==============================
+# =update_other_company==
+def update_other_company(request, c_id):
+    other_company = get_object_or_404(OtherCompany, pk=c_id)
+
+    form = AddClientForm(request.POST or None, instance=other_company)
+    url = resolve(request.path_info).url_name
+    other_companies = OtherCompany.objects.all()
+    context = {
+        'form': form,
+        'url': url,
+        'operationss': operationss,
+        'other_company': other_company,
+        'other_companies': other_companies,
+
+        'menu': menu,
+        "title": "Редактировать Организацию",
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Организация изменена успешно')
+        return redirect('other_companies')
+    return render(request, 'crm_app/update_other_company.html', context=context)
+
+
+
+
+# ===update_supplyer======
+def update_supplyer(request, c_id):
+    supplyer = get_object_or_404(Supplyer, pk=c_id)
+
+    form = AddClientForm(request.POST or None, instance=supplyer)
+    url = resolve(request.path_info).url_name
+    supplyers = Supplyer.objects.all()
+    context = {
+        'form': form,
+        'url': url,
+        'operationss': operationss,
+        'supplyer': supplyer,
+        'supplyers': supplyers,
+
+        'menu': menu,
+        "title": "Редактировать Перевозчика",
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Перевозчик изменен успешно')
+        return redirect('supplyers')
+    return render(request, 'crm_app/update_supplyer.html', context=context)
+
+
+# =====update_client ================
+
+def update_client(request, c_id):
+    client = get_object_or_404(Client, pk=c_id)
+
+    form = AddClientForm(request.POST or None, instance=client)
+    url = resolve(request.path_info).url_name
+    clients = Client.objects.all()
+    context = {
+        'form': form,
+        'url': url,
+        'operationss': operationss,
+        'client': client,
+        'clients': clients,
+
+        'menu': menu,
+        "title": "Редактировать Заказчика",
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Заказчик изменен успешно')
+        return redirect('clients')
+    return render(request, 'crm_app/update_client.html', context=context)
+
+
+# ===================================
+
 def update_sdelka(request, c_id):
     sdelka = get_object_or_404(Sdelka, pk=c_id)
 

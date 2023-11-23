@@ -23,6 +23,9 @@ urlpatterns = [
     path('update_quotation/<int:c_id>/', update_quotation, name='update_quotation'),
     path('update_sdelka/<int:c_id>/', update_sdelka, name='update_sdelka'),
     path('quot_sdelka/<int:c_id>/', quot_sdelka, name='quot_sdelka'),
+    path('update_client/<int:c_id>/', update_client, name='update_client'),
+    path('update_supplyer/<int:c_id>/', update_supplyer, name='update_supplyer'),
+    path('update_other_company/<int:c_id>/', update_other_company, name='update_other_company'),
 
     path('delete_quotation/<int:c_id>/', delete_quotation, name='delete_quotation'),
     path('delete_sdelka/<int:c_id>/', delete_sdelka, name='delete_sdelka'),

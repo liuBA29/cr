@@ -22,7 +22,7 @@
     <li><a href="#">sdelki v kotoryh uchavstvuet - количество</a></li>
     <li><a href="#">документы </a></li>
 
-<p ><a href="#">Редактировать</a></p>
+<p ><a href="{% url 'update_supplyer' supplyer.id  %}">Редактировать</a></p>
     <td align = 'right'><a href="{% url 'delete_supplyer' supplyer.id %}">Удалить</a></td>
 
 </ul>
