@@ -13,51 +13,181 @@
 <div class="centercontent"><ul>
 
 
-    <h3>от </h3>
-    <li>Описание потребности: {{sdelka.descripsion}}</li>
-<li>Клиент: {{sdelka.cl_price}}</li>
-    <li>{{sdelka.client}} </li>
-    <li>{{sdelka.cl_price}} </li>
-    <li>ставка  -{{sdelka.cl_currency}} </li>
-<p>==========================================================</p>
-    {% if sdelka.cl_documents %}
-    <a href="{{ sdelka.cl_documents.url }}"> {{sdelka.cl_documents.name}}</a>
+<div class="borders">
+    <li>от {{sdelka.time_create}}</li>
+    <li>Описание потребности: {{sdelka.description}}</li>
+    <li>Заказчик: {{sdelka.client}}</li>
+    <li>Транспорт: {{sdelka.common_transport}} </li>
+    <li>Цена Заказчика: {{sdelka.client_price}}{{sdelka.client_currency}}  </li>
+    <br>
+    <hr>
+    <h3>Перевозчик 1:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_1}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_1}}{{sdelka.currency1}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field1}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_1}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_1}}</li>
+    <li> Дата загрузки: {{sdelka.data_zagruzki_1}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_1}}</li>
+    <li>Дебиторка: {{sdelka.debitorka1}}</li>
+    <br>
+    <hr>
+
+
+     {% if sdelka.supplyer_2 %}
+    <h3>Перевозчик 2:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_2}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_2}}{{sdelka.currency2}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field2}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_2}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_2}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_2}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_2}}</li>
+    <li>Дебиторка: {{sdelka.debitorka2}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 2-------</p>
     {% endif %}
-<p></p>
-      {% if sdelka.sup_documents %}
-    <a href="{{ sdelka.sup_documents.url }}"> {{sdelka.sup_documents.name}}</a>
+
+     {% if sdelka.supplyer_3 %}
+    <h3>Перевозчик 3:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_3}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_3}}{{sdelka.currency3}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field3}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_3}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_3}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_3}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_3}}</li>
+    <li>Дебиторка: {{sdelka.debitorka3}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 3-------</p>
     {% endif %}
 
-<p>=======================================================</p>
-     <li>цена:  -{{sdelka.supplyer1}} </li>
-    <li>коммент  -{{sdelka.sup_price1}} </li>
-    <li>ставка 2 - {{sdelka.currency1}}
-     <li>цена:  -{{sdelka.sup_pometka1}}</li>
+     {% if sdelka.supplyer_4 %}
+    <h3>Перевозчик 4:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_4}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_4}}{{sdelka.currency4}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field4}}</li>
 
-     <li>цена:  -{{sdelka.supplyer2}} </li>
-        <li>коммент  -{{sdelka.sup_price2}} </li>
-    <li>ставка 2 - {{sdelka.currency2}}
-     <li>цена:  -{{sdelka.sup_pometka2}}</li>
+    <li>Место загрузки: {{sdelka.loading_country_4}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_4}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_4}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_4}}</li>
+    <li>Дебиторка: {{sdelka.debitorka4}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 4-------</p>
+    {% endif %}
 
-    <li>коммент 2 - {{sdelka.common_direction}} </li>
-    <li>ставка 3 - {{sdelka.common_transport}} </li>
+     {% if sdelka.supplyer_5 %}
+    <h3>Перевозчик 5:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_5}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_5}}{{sdelka.currency5}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field5}}</li>
 
-    <li>цена:  -{{sdelka.profit3}}  </li>
+    <li>Место загрузки: {{sdelka.loading_country_5}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_5}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_5}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_5}}</li>
+    <li>Дебиторка: {{sdelka.debitorka5}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 5-------</p>
+    {% endif %}
+
+     {% if sdelka.supplyer_6 %}
+    <h3>Перевозчик 6:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_6}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_6}}{{sdelka.currency6}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field6}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_6}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_6}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_6}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_6}}</li>
+    <li>Дебиторка: {{sdelka.debitorka6}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 6-------</p>
+    {% endif %}
+
+     {% if sdelka.supplyer_7 %}
+    <h3>Перевозчик 7:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_7}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_7}}{{sdelka.currency7}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field7}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_7}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_7}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_7}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_7}}</li>
+    <li>Дебиторка: {{sdelka.debitorka7}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 7-------</p>
+    {% endif %}
+
+     {% if sdelka.supplyer_8 %}
+    <h3>Перевозчик 8:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_8}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_8}}{{sdelka.currency8}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field8}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_8}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_8}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_8}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_8}}</li>
+    <li>Дебиторка: {{sdelka.debitorka8}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 8-------</p>
+    {% endif %}
+
+     {% if sdelka.supplyer_9 %}
+    <h3>Перевозчик 9:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_9}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_9}}{{sdelka.currency9}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field9}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_9}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_9}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_9}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_9}}</li>
+    <li>Дебиторка: {{sdelka.debitorka9}}</li>
+    <hr>
+    {%else%}
+
+    <p>------no supplyer 9-------</p>
+    {% endif %}
+
+     {% if sdelka.supplyer_10 %}
+    <h3>Перевозчик 10:</h3>
+    <li>Наименование Перевозчика: {{sdelka.supplyer_10}}</li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_10}}{{sdelka.currency10}} </li>
+    <li>Комментарий Перевозчика: {{sdelka.comment_field10}}</li>
+
+    <li>Место загрузки: {{sdelka.loading_country_10}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_10}}</li>
+    <li>Дата загрузки: {{sdelka.data_zagruzki_10}}</li>
+    <li>Дата выгрузки: {{sdelka.data_vygruzki_10}}</li>
+    <li>Дебиторка: {{sdelka.debitorka10}}</li>
+    <hr>
+    {%else%}
+    <p>------no supplyer 10-------</p>
+    {% endif %}
 
 
-    <li>ставка 4 -{{sdelka.sup_documents1}} </li>
-        <li>ставка 4 -{{sdelka.sup_documents2}} </li>
+<hr>
 
-     <li>цена:  -{{sdelka.data_zagruzki_1}} {{quotation.data_vygruzki_1}}  </li>
-         <li>цена:  -{{sdelka.data_zagruzki_1}} {{quotation.data_vygruzki_1}}  </li>
+    <li>Статус:  - {{sdelka.status_sdelka}}  </li>
+    <li>Статус состояния: {{sdelka.status_sdelka_other}} </li>
 
-   <li>коммент 4 -{{sdelka.debitorks}} </li>
-
-     <li>ставка 5  -{{sdelka.debitorka2}} </li>
-     <li>цена:  - {{sdelka.status}}  </li>
-    <li>коммент 5 -{{sdelka.status_other}} </li>
-
-    <li>ставка 6 - {{sdelka.number}} </li>
+    <li>Посмотреть профит: {{sdelka.profit}}</li>
+</div>
 
     <br>
 

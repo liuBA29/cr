@@ -248,7 +248,7 @@ def update_sdelka(request, c_id):
     }
     if form.is_valid():
         form.save()
-        messages.success(request, 'Котировка изменена успешно')
+        messages.success(request, 'Сделка изменена успешно')
         return redirect('sdelki')
     return render(request, 'crm_app/update_sdelka.html', context=context)
 # ====UPDATE QUOTATION
