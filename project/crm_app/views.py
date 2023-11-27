@@ -379,6 +379,7 @@ def show_sdelka(request, c_id):
 def show_quotation(request, c_id):
     quotation = get_object_or_404(Quotation, pk=c_id)
     url = resolve(request.path_info).url_name
+    proshli_po_cene = Quotation.objects.filter(status="PRICE_GOOD")
 
     quotations = Quotation.objects.all()
     contect = {
@@ -387,6 +388,7 @@ def show_quotation(request, c_id):
         'quotation': quotation,
         'quotations': quotations,
         'menu': menu,
+        'proshli_po_cene': proshli_po_cene,
         "title": "Котировка",
     }
     return render(request, 'crm_app/quotation.html', context=contect)
@@ -398,6 +400,7 @@ def operations(request):
 
 def quotations(request):
     quotations = Quotation.objects.all()
+
     contect = {
         'operationss': operationss,
         'quotations': quotations,
@@ -485,6 +488,7 @@ def add_quotation(request):
         form = AddQuotForm(request.POST)
         if form.is_valid():
            form.save()
+           print(form.cleaned_data)
            messages.success(request, 'Котировка добавлена')
            return redirect('quotations')
     else:
