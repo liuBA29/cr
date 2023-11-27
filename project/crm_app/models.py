@@ -189,8 +189,6 @@ class Sdelka(Operation):
     currency10 = models.ForeignKey("Currency", max_length=3, blank=True, null=True, on_delete=models.PROTECT,
                                    verbose_name='Валюта', related_name="currency10")
 
-
-
     # new
     number = models.PositiveIntegerField(unique=True, null=True, verbose_name='номер сделки')
     client_price = models.PositiveIntegerField(default=0, verbose_name='Цена')
@@ -290,6 +288,8 @@ class Sdelka(Operation):
     debitorka10 = models.BooleanField(default=False, verbose_name='подтвержение выгузки10')
 
     profit = models.CharField(max_length=20, blank=True, verbose_name='прибыль в евро')
+    class Meta:
+        ordering = ['-time_update', '-time_create', 'number',]
 
     def __str__(self):
         return 'Сделка с клиентом:' + str(self.client)
