@@ -2,12 +2,41 @@
 {%block content%}
 
 <div class="left-bar"><ul>
+
     {%for c in operationss %}
         <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
     {%endfor%}</ul>
 </div>
 
 <div class="centercontent">
+
+    {% for c in documents %}
+        <h3>{{c.name}}</h3>
+    <ul>
+        {% if c.client%}
+        <li>Документ от Заказчика: {{c.client}}</li>
+        {% elif c.supplyer%}
+         <li>Документ от Перевозчика: {{c.supplyer}}</li>
+        {% elif c.other_organization%}
+         <li>Документ от Сторонней организации: {{c.other_oranization}}</li>
+        {%else%}
+        <li>Корпоративный документ</li>
+
+        {% endif %}
+
+         <li>{{c.type}}</li>
+         {% if c.file %}
+         <a href="{{c.file.url}}">{{c.file}}</a>
+        {%else%}
+        <p>no file</p>
+        {% endif %}
+    </ul>
+
+    {% endfor %}
+<br>
+    <hr>
+<h2>Загрузить новый документ</h2>
+
     <form action="{% url 'documents' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>

@@ -239,26 +239,26 @@ class Sdelka(Operation):
     unloading_country_10 = models.ForeignKey(Direction, max_length=15, blank=True, null=True, on_delete=models.CASCADE,
                                              verbose_name='Место разгрузки', related_name='unloading_country_10')
 
-    data_zagruzki_1 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_1 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_2 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_2 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_3 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_3 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_4 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_4 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_5 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_5 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_6 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_6 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_7 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_7 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_8 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_8 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_9 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_9 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
-    data_zagruzki_10 = models.DateField(blank=True, null=True, verbose_name='Дата загрузки')
-    data_vygruzki_10 = models.CharField(blank=True, null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_1 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_1 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_2 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_2 = models.CharField(blank=True, max_length=40, null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_3 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_3 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_4 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_4 = models.CharField(blank=True, max_length=40, null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_5 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_5 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_6 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_6 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_7 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_7 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_8 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_8 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_9 = models.DateField(blank=True,max_length=40,  null=True, verbose_name='Дата загрузки')
+    data_vygruzki_9 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
+    data_zagruzki_10 = models.DateField(blank=True, max_length=40, null=True, verbose_name='Дата загрузки')
+    data_vygruzki_10 = models.CharField(blank=True,max_length=40,  null=True, verbose_name='Дата выгрузки')
 
     STATUS_SDELKA_CHOICES = [
         ('PROJECT', 'Проект'),
@@ -313,10 +313,10 @@ class Documents(models.Model):
     other_organization = models.ForeignKey(OtherCompany, on_delete=models.CASCADE, blank=True, null=True,
                                            verbose_name="Документы прочие")
     DOC_CHOICES = [
-        ('DOGOVOR', 'дОГОВОР'),
-        ('TN', 'ТН'),
-        ('CONONAMENT', 'Коносамент'),
-        ('DEBITORKA', 'ДЕБИТОРКА'),
+        ('Договор', 'Договор'),
+        ('ТН', 'ТН'),
+        ('Коносамент', 'Коносамент'),
+        ('Дебиторка', 'Дебиторка'),
 
     ]
     type = models.CharField(max_length=35, default='Договор', choices=DOC_CHOICES,

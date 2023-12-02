@@ -496,9 +496,11 @@ def add_quotation(request):
     return render(request, 'crm_app/add_quotation.html',  {'form': form,  'menu': menu, 'title': 'Создать котировку'})
 
 
-
+#===documents
 
 def upload_documents(request):
+    sdelki = Sdelka.objects.all()
+    documents = Documents.objects.all()
     if request.method == 'POST':
         form = UploadDocumentsForm(request.POST, request.FILES)
         #file = request.FILES.getlist('file')[1]
@@ -513,9 +515,18 @@ def upload_documents(request):
     else:
         form = UploadDocumentsForm()
 
-    return render(request, 'crm_app/documents.html',  { 'form': form, 'menu': menu, 'title': 'Документы'})
+        context = {
+            'form': form,
+            'operationss': operationss,
+            'sdelki': sdelki,
+            'menu': menu,
+            'documents': documents,
+            "title": "Документы",
 
+        }
+    return render(request, 'crm_app/documents.html',  context=context)
 
+#-----------============================------------------
 
 def sdelka_vypiska(request):
 
