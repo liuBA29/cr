@@ -13,14 +13,34 @@
 <div class="centercontent"><ul>
 
         <h3>{{client.company_name}}</h3>
-    <li>{{client.contact_name}}</li>
-    <li>{{client.email}} </li>
-    <li>{{client.phone}}</li>
-    <li>{{client.address}} </li>
+    <li>Контакт с сотрудником: {{client.contact_name}}</li>
+    <li>Email заказчика:{{client.email}} </li>
+    <li>Телефон: {{client.phone}}</li>
+    <li>Адрес: {{client.address}} </li>
+    <hr>
     <li>{{client.created}} </li>
     <li>{{client.updated}} </li>
-    <li><a href="#">sdelki v kotoryh uchavstvuet - количество</a></li>
-    <li><a href="#">документы </a></li>
+    <br>
+    <h3>Сделки, в которых учавствует Заказчик:</h3>
+
+    {% for s in client.sdelka_set.all %}
+   <p><a href="{% url 'show_sdelka' s.pk %}">Сделка № {{s.number}}</a></p>
+
+    {% endfor %}
+
+    <br>
+   <h3>Документы:</h3>
+    {% for d in doc_cl %}
+
+    <li>{{d.sdelka}}</li>
+    <!--    <li><a href="#">Сделка номер</a></li>-->
+    <a href="{{d.file.url}}">{{d}}</a>
+    <hr>
+    {% endfor %}
+
+
+
+
 
 <p ><a href="{% url 'update_client' client.id  %}">Редактировать</a></p>
      <td align = 'right'><a href="{% url 'delete_client' client.id %}">Удалить</a></td>

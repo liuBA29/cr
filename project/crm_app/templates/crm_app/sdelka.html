@@ -179,9 +179,16 @@
     {%else%}
     <p>------no supplyer 10-------</p>
     {% endif %}
-
-
 <hr>
+<h3>Документы в сделке:</h3>
+{% if sdelka.documents_set.all%}
+    {% for d in sdelka.documents_set.all %}
+
+     <p> {{d.type}}: <a href="{{d.file.url}}">{{d.sdelka}}</a></li></p>
+   {%endfor%} {%else%}
+    <p>------no documents-------</p>
+
+    {% endif %}
 
     <li>Статус:  - {{sdelka.status_sdelka}}  </li>
     <li>Статус состояния: {{sdelka.status_sdelka_other}} </li>
@@ -192,7 +199,7 @@
     <br>
 
 <td>
-    <a href="{% url 'update_sdelka' sdelka.id %}">Редактировать</a>
+   <button> <a href="{% url 'update_sdelka' sdelka.id %}">Редактировать</a></button>
     <td align = 'right'><a href="{% url 'delete_sdelka' sdelka.id %}">Удалить</a></td>
 
 

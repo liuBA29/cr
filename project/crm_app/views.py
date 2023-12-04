@@ -21,9 +21,17 @@ contragentss = [
     {'title': 'Сторонние компании', 'key': 'OtherCompany.objects.all()', 'url_name': 'other_companies'},
 ]
 
-menu =[
+docs = [
+    {'title': 'Документы Заказчика', 'key': 'Client.objects.all()', 'url_name': 'client_docs'},
+    {'title': 'Документы Перевозчика', 'key': 'Supplyer.objects.all()', 'url_name': 'supplyer_docs'},
+    {'title': 'Документы Сторонних компаний', 'key': 'OtherCompany.objects.all()', 'url_name': 'other_companies_docs'},
+    {'title': 'Корпоративные Документы', 'key': 'OtherCompany.objects.all()', 'url_name': 'corporative_docs'},
+]
+
+menu = [
     {'title': 'Контрагенты', 'url_name': 'contragents'},
     {'title': 'Операции', 'url_name': 'operations'},
+    {'title': 'Документы', 'url_name': 'documents'},
     {'title': 'Войти', 'url_name': 'login'},
        ]
 
@@ -81,6 +89,7 @@ def other_companies(request):
 def show_client(request, c_id):
     client = get_object_or_404(Client, pk=c_id)
     url = resolve(request.path_info).url_name
+    doc_cl = client.documents_set.all()
 
     clients = Client.objects.all()
     contect = {
@@ -89,7 +98,8 @@ def show_client(request, c_id):
         'client': client,
         'clients': clients,
         'menu': menu,
-        "title": "Заказчики",
+        "title": "Заказчик",
+        'doc_cl': doc_cl,
     }
     return render(request, 'crm_app/client.html', context=contect)
 
@@ -97,6 +107,7 @@ def show_client(request, c_id):
 def show_supplyer(request, c_id):
     supplyer = get_object_or_404(Supplyer, pk=c_id)
     url = resolve(request.path_info).url_name
+    doc_cl = supplyer.documents_set.all()
 
     supplyers = Supplyer.objects.all()
     contect = {
@@ -105,7 +116,8 @@ def show_supplyer(request, c_id):
         'supplyer': supplyer,
         'supplyers': supplyers,
         'menu': menu,
-        "title": "Перевозчики",
+        "title": "Перевозчик",
+        "doc_cl": doc_cl,
     }
     return render(request, 'crm_app/supplyer.html', context=contect)
 
@@ -349,7 +361,7 @@ def delete_sdelka(request, c_id):
         # confirming delete
         sdelka.delete()
         messages.success(request, 'Сделка удалена успешно')
-        return redirect('quotations')
+        return redirect('sdelki')
     context = {
         'sdelka': sdelka,
         'menu': menu,
