@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import *
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
 from django.core.files.storage import FileSystemStorage
@@ -9,16 +9,16 @@ from .models import  *
 
 
 supplyers_in_sdelka = [
-    {'supplyer': 'supplyer_1', 'price': 'sup_price_1', 'currency': 'currency1'},
-    {'supplyer': 'supplyer_2', 'price': 'sup_price_2', 'currency': 'currency2'},
-    {'supplyer': 'supplyer_3', 'price': 'sup_price_3', 'currency': 'currency3'},
-    {'supplyer': 'supplyer_4', 'price': 'sup_price_4', 'currency': 'currency4'},
-    {'supplyer': 'supplyer_5', 'price': 'sup_price_5', 'currency': 'currency5'},
-    {'supplyer': 'supplyer_6', 'price': 'sup_price_6', 'currency': 'currency6'},
-    {'supplyer': 'supplyer_7', 'price': 'sup_price_7', 'currency': 'currency7'},
-    {'supplyer': 'supplyer_8', 'price': 'sup_price_8', 'currency': 'currency8'},
-    {'supplyer': 'supplyer_9', 'price': 'sup_price_9', 'currency': 'currency9'},
-    {'supplyer': 'supplyer_10', 'price': 'sup_price_10', 'currency': 'currency10'},
+    {'title': 'Перевозчик 1', 'supplyer': 'supplyer_1', 'price': 'sup_price_1', 'currency': 'currency1'},
+    {'title': 'Перевозчик 2', 'supplyer': 'supplyer_2', 'price': 'sup_price_2', 'currency': 'currency2'},
+    {'title': 'Перевозчик 3', 'supplyer': 'supplyer_3', 'price': 'sup_price_3', 'currency': 'currency3'},
+    {'title': 'Перевозчик 4', 'supplyer': 'supplyer_4', 'price': 'sup_price_4', 'currency': 'currency4'},
+    {'title': 'Перевозчик 5', 'supplyer': 'supplyer_5', 'price': 'sup_price_5', 'currency': 'currency5'},
+    {'title': 'Перевозчик 6', 'supplyer': 'supplyer_6', 'price': 'sup_price_6', 'currency': 'currency6'},
+    {'title': 'Перевозчик 7', 'supplyer': 'supplyer_7', 'price': 'sup_price_7', 'currency': 'currency7'},
+    {'title': 'Перевозчик 8', 'supplyer': 'supplyer_8', 'price': 'sup_price_8', 'currency': 'currency8'},
+    {'title': 'Перевозчик 9', 'supplyer': 'supplyer_9', 'price': 'sup_price_9', 'currency': 'currency9'},
+    {'title': 'Перевозчик 10', 'supplyer': 'supplyer_10', 'price': 'sup_price_10', 'currency': 'currency10'},
 ]
 
 operationss = [
@@ -453,6 +453,7 @@ def show_quotation(request, c_id):
         'menu': menu,
         'proshli_po_cene': proshli_po_cene,
         "title": "Котировка",
+
     }
     return render(request, 'crm_app/quotation.html', context=contect)
 
@@ -461,8 +462,18 @@ def show_quotation(request, c_id):
 
 def operations(request):
     euro = Currency.objects.get(pk=2)
+    sdelka = Sdelka.objects.get(pk=3)
+    sdelki = Sdelka.objects.all()
     euro_insdelka = euro.client_currency.all()
-    #not_euro =
+    euro_insdelka_count = euro.client_currency.count()
+    late_d = Sdelka.objects.latest('time_update')
+    next_d = late_d.get_previous_by_time_update()  # this isprevious get_next_by will be next
+    next_d_by = late_d.get_previous_by_time_update(client_currency=2)
+    is_supl_2 = Sdelka.objects.filter(supplyer_3=4)
+    agr_f= Sdelka.objects.aggregate(Max('client_currency'))
+    agr_f2 = Sdelka.objects.aggregate(Max('client_currency'), Min('client_currency'))
+    valu = Sdelka.objects.values('supplyer_1', 'supplyer_2', 'supplyer_3', 'supplyer_4', 'supplyer_5', 'supplyer_6',).filter(pk__gt=2)
+    efe= Sdelka.objects.filter(client_currency__gt=F('currency1')) #сумма клиента больше ілі = суммы перевозчика
 
     context = {
         'operationss': operationss,
@@ -471,8 +482,19 @@ def operations(request):
         "title": "Операции",
         'euro': euro,
         'euro_insdelka': euro_insdelka,
+        'supplyers_in_sdelka': supplyers_in_sdelka,
+        'sdelka': sdelka,
+        'sdelki': sdelki,
+        'late_d': late_d,
+        'next_d': next_d,
+        'next_d_by': next_d_by,
+        'is_supl_2': is_supl_2,
+        'agr_f': agr_f,
+        'agr_f2': agr_f2,
+        'valu': valu,
+        'efe': efe,
     }
-    return render(request, 'crm_app/operations.html',context=context)
+    return render(request, 'crm_app/operations.html', context=context)
 
 #========================
 

@@ -23,26 +23,32 @@
     <br>
     <h3>Сделки, в которых учавствует Заказчик:</h3>
 
+
     {% for s in client.sdelka_set.all %}
    <p><a href="{% url 'show_sdelka' s.pk %}">Сделка № {{s.number}}</a></p>
 
     {% endfor %}
+    <hr>    <p>Количество всех сделок:  {{client.sdelka_set.count}} </p>
 
     <br>
    <h3>Документы:</h3>
     {% for d in doc_cl %}
 
     <li>{{d.sdelka}}</li>
+
+
     <!--    <li><a href="#">Сделка номер</a></li>-->
     <a href="{{d.file.url}}">{{d}}</a>
-    <hr>
+
     {% endfor %}
+     <p>Количество всех документов:  {{doc_cl.count}} </p>
+    <hr>
 
 
 
 
 
-<p ><a href="{% url 'update_client' client.id  %}">Редактировать</a></p>
+<button><a href="{% url 'update_client' client.id  %}">Редактировать</a></button>
      <td align = 'right'><a href="{% url 'delete_client' client.id %}">Удалить</a></td>
 
 </ul>

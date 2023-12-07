@@ -19,7 +19,54 @@
 <div class="centercontent">
 
     {{euro}}
-    {{euro_insdelka}}
+    название: {{euro_insdelka}}
+    всего ={{euro_insdelka.count}} сделка(-ок)
+
+
+    <p>=================================</p>
+    {%for s in supplyers_in_sdelka %}
+    {%if s.supplyer == sdelka.supplyer_1 %}
+   <p>yessss</p>
+    {%else%}
+    <p>no</p>
+  <p> {{s.supplyer}} не равно {{sdelka.supplyer_1}} </p>
+    {%endif%}
+
+    {%endfor%}
+<p>=====================+++++++++++++++++++++++++++++++++++++++</p>
+
+
+         {%for s in sdelki %}
+
+
+ {{s}}
+
+        {%endfor%}
+
+
+
+    <p>================================</p>
+latest sdelka is::: {{late_d}} <br>
+next sdelka is::: {{next_d}}<br>
+    next sdelka is::: {{next_d_by}}
+    <br> exists --- {{is_supl_2}}
+<br> agreg --- {{agr_f}}----
+
+    {% for agr in agr_f%}
+    {{agr}}
+    {% endfor %}
+    <br> agreg --- {{agr_f2}}
+    <br>value--{{valu}}
+    <br>{% for i in value%}
+
+    <p>{{i.client}}</p>
+
+    {% endfor %}
+
+
+    <br>{{efe}}  ----------------
+    sum cl > sum supl
+
 
 
     {% for c in operationss %}
