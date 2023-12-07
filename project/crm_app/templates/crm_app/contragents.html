@@ -15,6 +15,29 @@
 </div>
 
 <div class="centercontent">
+{{alena}}  - filter by alena
+    <br>
+{{ale}}-does not work here filter by regiter
+    <br>{{perevozchiki}} - filter by in []
+
+    <BR>class Q ІЛІ--  {{class_q}}
+    <br> {{q_ne}}
+    <BR>class Q 2 ІЛІ--  {{class_q2}}
+    <br>{{first1}}
+    <br>alena b wasya are in {{in_test}}
+    <BR>money --- сделки номер:
+    {% for sd in cur_cl %} <li>+ {{sd}} - {{sd.client_price}} {{sd.client_currency}} <hr></li> {% endfor %}
+     <BR>money --- сделки номер:
+    {% for sd in sup_cl %}
+    <li>+ {{sd}} - {{sd.sup_price_1}} {{sd.currency1}}
+
+
+        <hr></li>
+    {% endfor %}
+
+    <hr>
+
+    <br><br><br><br><br>
     {% for c in contragentss %}
         <h3>{{c.key}}</h3>
 

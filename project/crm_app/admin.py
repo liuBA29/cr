@@ -12,6 +12,9 @@ class QuotationAdmin(admin.ModelAdmin):
 class SdelkaAdmin(admin.ModelAdmin):
     list_display = ('description', 'client')
 
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display = ('id', 'currency_name')
+
 
 admin.site.register(Client)
 
@@ -20,7 +23,7 @@ admin.site.register(Supplyer, SupplyerAdmin)
 
 admin.site.register(OtherCompany)
 admin.site.register(Documents)
-admin.site.register(Currency)
+admin.site.register(Currency, CurrencyAdmin)
 admin.site.register(Direction)
 admin.site.register(Transport)
 admin.site.register(Quotation, QuotationAdmin)

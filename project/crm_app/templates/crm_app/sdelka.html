@@ -13,17 +13,19 @@
 <div class="centercontent"><ul>
 
 
+
+
 <div class="borders">
     <li>от {{sdelka.time_create}}</li>
     <li>Описание потребности: {{sdelka.description}}</li>
     <li>Заказчик: {{sdelka.client}}</li>
     <li>Транспорт: {{sdelka.common_transport}} </li>
-    <li>Цена Заказчика: {{sdelka.client_price}}{{sdelka.client_currency}}  </li>
+    <li>Цена Заказчика: {{sdelka.client_price}} {{sdelka.client_currency}}  </li>
     <br>
     <hr>
     <h3>Перевозчик 1:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_1}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_1}}{{sdelka.currency1}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_1}} {{sdelka.currency1}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field1}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_1}}</li>
@@ -38,7 +40,7 @@
      {% if sdelka.supplyer_2 %}
     <h3>Перевозчик 2:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_2}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_2}}{{sdelka.currency2}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_2}} {{sdelka.currency2}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field2}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_2}}</li>
@@ -54,7 +56,7 @@
      {% if sdelka.supplyer_3 %}
     <h3>Перевозчик 3:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_3}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_3}}{{sdelka.currency3}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_3}} {{sdelka.currency3}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field3}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_3}}</li>
@@ -70,7 +72,7 @@
      {% if sdelka.supplyer_4 %}
     <h3>Перевозчик 4:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_4}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_4}}{{sdelka.currency4}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_4}} {{sdelka.currency4}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field4}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_4}}</li>
@@ -86,7 +88,7 @@
      {% if sdelka.supplyer_5 %}
     <h3>Перевозчик 5:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_5}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_5}}{{sdelka.currency5}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_5}} {{sdelka.currency5}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field5}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_5}}</li>
@@ -102,7 +104,7 @@
      {% if sdelka.supplyer_6 %}
     <h3>Перевозчик 6:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_6}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_6}}{{sdelka.currency6}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_6}} {{sdelka.currency6}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field6}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_6}}</li>
@@ -118,7 +120,7 @@
      {% if sdelka.supplyer_7 %}
     <h3>Перевозчик 7:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_7}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_7}}{{sdelka.currency7}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_7}} {{sdelka.currency7}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field7}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_7}}</li>
@@ -134,7 +136,7 @@
      {% if sdelka.supplyer_8 %}
     <h3>Перевозчик 8:</h3>
     <li>Наименование Перевозчика: {{sdelka.supplyer_8}}</li>
-    <li>Цена Перевозчика: {{sdelka.sup_price_8}}{{sdelka.currency8}} </li>
+    <li>Цена Перевозчика: {{sdelka.sup_price_8}} {{sdelka.currency8}} </li>
     <li>Комментарий Перевозчика: {{sdelka.comment_field8}}</li>
 
     <li>Место загрузки: {{sdelka.loading_country_8}}</li>
@@ -184,11 +186,18 @@
 {% if sdelka.documents_set.all%}
     {% for d in sdelka.documents_set.all %}
 
+    {{euro_in_sdelka}}
+
+
      <p> {{d.type}}: <a href="{{d.file.url}}">{{d.sdelka}}</a></li></p>
    {%endfor%} {%else%}
     <p>------no documents-------</p>
 
     {% endif %}
+
+
+
+
 
     <li>Статус:  - {{sdelka.status_sdelka}}  </li>
     <li>Статус состояния: {{sdelka.status_sdelka_other}} </li>

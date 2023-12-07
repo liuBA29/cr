@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
 from django.core.files.storage import FileSystemStorage
@@ -7,7 +8,18 @@ from .forms import *
 from .models import  *
 
 
-
+supplyers_in_sdelka = [
+    {'supplyer': 'supplyer_1', 'price': 'sup_price_1', 'currency': 'currency1'},
+    {'supplyer': 'supplyer_2', 'price': 'sup_price_2', 'currency': 'currency2'},
+    {'supplyer': 'supplyer_3', 'price': 'sup_price_3', 'currency': 'currency3'},
+    {'supplyer': 'supplyer_4', 'price': 'sup_price_4', 'currency': 'currency4'},
+    {'supplyer': 'supplyer_5', 'price': 'sup_price_5', 'currency': 'currency5'},
+    {'supplyer': 'supplyer_6', 'price': 'sup_price_6', 'currency': 'currency6'},
+    {'supplyer': 'supplyer_7', 'price': 'sup_price_7', 'currency': 'currency7'},
+    {'supplyer': 'supplyer_8', 'price': 'sup_price_8', 'currency': 'currency8'},
+    {'supplyer': 'supplyer_9', 'price': 'sup_price_9', 'currency': 'currency9'},
+    {'supplyer': 'supplyer_10', 'price': 'sup_price_10', 'currency': 'currency10'},
+]
 
 operationss = [
     {'title': 'Котировки', 'key': 'Quotation.objects.all()', 'url_name': 'quotations'},
@@ -47,7 +59,38 @@ def index(request):
 
 def contragents(request):
     url = resolve(request.path_info).url_name
-    return render(request, 'crm_app/contragents.html', {'url':url,  'contragentss': contragentss, 'menu': menu, "title": "Контрагенты"})
+    sdelka=Sdelka.objects.all()
+    alena = Client.objects.filter(contact_name__contains='алена')
+    ale = Client.objects.filter(contact_name__icontains='алЕ') #DOESNOT WORK WITH SQL
+    perevozchiki = Supplyer.objects.filter(pk__in=[1, 2, 3], supplyer_status=True)
+    class_q = Supplyer.objects.filter(Q(pk__in=[1, 2, 3]) | Q(supplyer_status=True))
+    q_ne =  Client.objects.filter(~Q(pk__in=[1,2,3]) & ~Q(client_status=True) )
+    class_q2 = Supplyer.objects.filter(Q(pk__in=[1, 2, 3]) | Q(pk__in=[5])) #1 importance
+    first1 = Supplyer.objects.first()#1st zapis
+    in_test = Client.objects.filter(contact_name__in=['алена', 'Вася Пупкин'])
+    cur_cl = Sdelka.objects.filter(client_currency__in=[1,2])
+    sup_cl = Sdelka.objects.filter(currency1__in=[1, 2])
+
+    context = {
+        'url': url,
+        'contragentss': contragentss,
+        'clients': clients,
+        'menu': menu,
+        "title": "Конртагенты",
+        'alena': alena,
+        'ale': ale,
+        'class_q': class_q,
+        'class_q2': class_q2,
+        'perevozchiki': perevozchiki,
+        'q_ne': q_ne,
+        'first1': first1,
+        'in_test': in_test,
+        'cur_cl': cur_cl,
+        'sup_cl': sup_cl,
+
+
+    }
+    return render(request, 'crm_app/contragents.html', context=context)
 
 
 
@@ -55,7 +98,7 @@ def contragents(request):
 def clients(request):
     url = resolve(request.path_info).url_name
     clients = Client.objects.all()
-    contect = {
+    context = {
         'url': url,
         'contragentss': contragentss,
         'clients': clients,
@@ -63,7 +106,7 @@ def clients(request):
         "title": "Заказчики",
 
     }
-    return render(request, 'crm_app/clients.html', context=contect)
+    return render(request, 'crm_app/clients.html', context=context)
 
 def supplyers(request):
     supplyers = Supplyer.objects.all()
@@ -91,6 +134,7 @@ def show_client(request, c_id):
     url = resolve(request.path_info).url_name
     doc_cl = client.documents_set.all()
 
+
     clients = Client.objects.all()
     contect = {
         'url': url,
@@ -100,6 +144,7 @@ def show_client(request, c_id):
         'menu': menu,
         "title": "Заказчик",
         'doc_cl': doc_cl,
+
     }
     return render(request, 'crm_app/client.html', context=contect)
 
@@ -374,8 +419,12 @@ def delete_sdelka(request, c_id):
 
 def show_sdelka(request, c_id):
     sdelka = get_object_or_404(Sdelka, pk=c_id)
+
     url = resolve(request.path_info).url_name
     sdelki = Sdelka.objects.all()
+
+        #~Q(currency1=2) | ~Q(cusdelkarrency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) |)
+
     context = {
         'url': url,
         'operationss': operationss,
@@ -383,6 +432,8 @@ def show_sdelka(request, c_id):
         'sdelki': sdelki,
         'menu': menu,
         "title": f'Сделка № {str(sdelka.number)}',
+
+
     }
     return render(request, 'crm_app/sdelka.html', context=context)
 
@@ -405,25 +456,45 @@ def show_quotation(request, c_id):
     }
     return render(request, 'crm_app/quotation.html', context=contect)
 
+# operations==========
+
 
 def operations(request):
-    return render(request, 'crm_app/operations.html',
-                  {'operationss': operationss, 'menu': menu, "title": "Операции"})
+    euro = Currency.objects.get(pk=2)
+    euro_insdelka = euro.client_currency.all()
+    #not_euro =
+
+    context = {
+        'operationss': operationss,
+        'quotations': quotations,
+        'menu': menu,
+        "title": "Операции",
+        'euro': euro,
+        'euro_insdelka': euro_insdelka,
+    }
+    return render(request, 'crm_app/operations.html',context=context)
+
+#========================
+
+
+
 
 def quotations(request):
     quotations = Quotation.objects.all()
 
-    contect = {
+    context = {
         'operationss': operationss,
         'quotations': quotations,
         'menu': menu,
         "title": "Котировки",
     }
-    return render(request, 'crm_app/quotations.html', context=contect)
+    return render(request, 'crm_app/quotations.html', context=context)
 
 
 def sdelki(request):
     sdelki = Sdelka.objects.all()
+    euro = Currency.objects.get(id=2)
+
     contect = {
         'operationss': operationss,
         'sdelki': sdelki,
