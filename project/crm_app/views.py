@@ -7,6 +7,10 @@ from django.contrib import messages
 from .forms import *
 from .models import  *
 
+from datetime import datetime, timedelta
+from django.db.models.functions import *
+
+
 
 supplyers_in_sdelka = [
     {'title': 'Перевозчик 1', 'supplyer': 'supplyer_1', 'price': 'sup_price_1', 'currency': 'currency1'},
@@ -414,6 +418,33 @@ def delete_sdelka(request, c_id):
     }
     return render(request, 'crm_app/delete_sdelka.html', context=context)
 
+
+##===================filter sdelki====================
+def sdelka_filter(request, pk):
+    sdelki = Sdelka.objects.all()
+    if pk == 1:
+        now = datetime.now() - timedelta(minutes=60*24*7) #60*24---это сутки
+        sdelki = sdelki.filter(time_create__gte=now)
+    elif pk == 2:
+        now = datetime.now() - timedelta(minutes=60 * 24 * 30)  # 60*24---это сутки
+        sdelki = sdelki.filter(time_create__gte=now)
+    elif pk == 3:
+        now = datetime.now()
+        sdelki = sdelki
+
+    context = {
+         'sdelki': sdelki,
+         'menu': menu,
+         "title": "сделки за неделю",
+         'now': now,
+        'operationss': operationss,
+
+
+
+     }
+    return render(request, 'crm_app/sdelki.html', context=context)
+
+#=====================================
 
 #========================================================================
 

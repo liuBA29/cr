@@ -37,7 +37,7 @@ urlpatterns = [
     path('operations/', operations, name='operations'),
     path('quotations/', quotations, name='quotations'),
     path('sdelki/', sdelki, name='sdelki'),
-
+    path('sdelki/<int:pk>/', sdelka_filter, name='sdelka_filter'),
 
     path('login/', login, name='login'),
     path('add_client/', add_client, name='add_client'),
