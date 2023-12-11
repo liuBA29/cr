@@ -6,9 +6,9 @@
 
 
 <div class="left-bar"><ul>
+
     {%for c in contragentss %}
         {% if c.url_name == 'supplyers' %}
-
        <li class="selected">{{c.title}}</li>
     {%else%}
     <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
@@ -19,24 +19,43 @@
 
 <div class="centercontent"><ul>
 
-    <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
+     <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
     {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
+    <br>
 
-     <a href="{% url 'supplyers_search' %}"><button>Самый ранний</button></a>
-     <a href="{% url 'supplyers_search' %}"><button>Самый поздний</button></a>
+<div class="poisk_table">
 
+<div class="">
 
+<b> Поиск по названию:</b>
+    <form action="{% url 'classic_search_supplyer' %}" method="get">
 
-<h3>Выбрать период</h3>
-    <hr>
+        <input class="search" type="text" name="q" placeholder="Поиск Перевозчика"><button>Найти</button>
+    </form>
+</div>
+
+    <div class="search-right">
+<b>Найти за период:</b>
     <form action="{% url 'supplyers_for_period' %}" method="post">
         {% csrf_token %}
            С: <input type="date" name="fromdate">
             По: <input type="date" name="todate">
             <input type="submit" value="Искать"/>
 </form>
+</div>
+</div>
+
+     <h3>По дате создания:</h3>
+     <a href="{% url 'supplyers_search' %}"><button>Первый/последний</button></a>
+
+    <a href="{% url 'supplyers_filter' pk=1 %}"><button>week</button></a>
+    <a href="{% url 'supplyers_filter' pk=2 %}"><button>month</button></a>
+    <a href="{% url 'supplyers_filter' pk=4 %}"><button>квартал</button></a>
+    <a href="{% url 'supplyers_filter' pk=3 %}"><button>all</button></a>
+    <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->
+
     <hr>
 
     {% for c in supplyers %}

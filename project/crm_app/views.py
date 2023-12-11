@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
+from django.views.generic import ListView
 
 from .forms import *
 from .models import *
@@ -421,6 +422,55 @@ def delete_sdelka(request, c_id):
     }
     return render(request, 'crm_app/delete_sdelka.html', context=context)
 
+##========================supplyers_filter========
+def supplyers_filter(request, pk):
+    supplyers = Supplyer.objects.all()
+
+    if pk == 1:
+        now = datetime.now() - timedelta(minutes=60*24*7) #60*24---это сутки
+        supplyers = supplyers.filter(time_create__gte=now)
+    elif pk == 2:
+        now = datetime.now() - timedelta(minutes=60 * 24 * 30)  # 60*24---это сутки
+        supplyers = supplyers.filter(time_create__gte=now)
+    elif pk == 3:
+        now = datetime.now()
+        supplyers = supplyers
+    elif pk == 4:
+        now = datetime.now() - timedelta(minutes=60 * 24 * 30*2 + 31)  # 60*24---kvartal
+        supplyers = supplyers.filter(time_create__gte=now)
+    elif pk == 5:
+        now = datetime.now()
+        currentyear = now.year
+        supplyers = supplyers.filter(time_create__gte=currentyear)
+
+    context = {
+         'supplyers': supplyers,
+         'menu': menu,
+         "title": " перевозчики за ",
+         'now': now,
+        'operationss': operationss,
+
+     }
+    return render(request, 'crm_app/supplyers.html', context=context)
+
+# =======SEARCHING, FILTERRING, ETC========
+class ClassicSearch(ListView):
+    model = Supplyer
+
+    context_object_name = 'supplyers'
+    def get_queryset(self):
+        return Supplyer.objects.filter(company_name__iregex=self.request.GET.get('q'))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Поиск Перевозчика(-иков)'
+        context['menu'] = menu
+        context['contragentss'] = contragentss
+        context['q'] = self.request.GET.get('q')
+        return context
+
+
+
 
 ##===================filter sdelki====================
 
@@ -598,7 +648,7 @@ def add_client(request):
     return render(request, 'crm_app/add_client.html', {'form': form,  'menu': menu, 'title': 'Создать Заказчика'})
 
 
-
+#======
 #=========supplyers_for_period=====
 def supplyers_for_period(request):
     supplyers = Supplyer.objects.all()

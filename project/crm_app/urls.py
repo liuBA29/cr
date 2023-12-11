@@ -10,7 +10,7 @@ urlpatterns = [
     path('clients/', clients, name='clients'),
     path('supplyers/', supplyers, name='supplyers'),
     path('supplyers_for_period/', supplyers_for_period, name='supplyers_for_period'),
-    path('supplyers_for_period/', supplyers_search, name='supplyers_search'),
+    path('supplyers_search/', supplyers_search, name='supplyers_search'),
     path('other_companies/', other_companies, name='other_companies'),
 
 
@@ -40,10 +40,16 @@ urlpatterns = [
     path('quotations/', quotations, name='quotations'),
     path('sdelki/', sdelki, name='sdelki'),
     path('sdelki/<int:pk>/', sdelka_filter, name='sdelka_filter'),
+    path('supplyers/<int:pk>/', supplyers_filter, name='supplyers_filter'),
 
     path('login/', login, name='login'),
     path('add_client/', add_client, name='add_client'),
     path('add_supplyer/', add_supplyer, name='add_supplyer'),
+
+
+    path('supplyer_list/', ClassicSearch.as_view(), name='classic_search_supplyer'),
+
+
     path('add_othercompany/', add_othercompany, name='add_othercompany'),
 
     path('add_sdelka/', add_sdelka, name='add_sdelka'),
