@@ -9,6 +9,8 @@ urlpatterns = [
     path('contragents/', contragents, name='contragents'),
     path('clients/', clients, name='clients'),
     path('supplyers/', supplyers, name='supplyers'),
+    path('supplyers_for_period/', supplyers_for_period, name='supplyers_for_period'),
+    path('supplyers_for_period/', supplyers_search, name='supplyers_search'),
     path('other_companies/', other_companies, name='other_companies'),
 
 

@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 
 from .forms import *
-from .models import  *
+from .models import *
 
 from datetime import datetime, timedelta
 from django.db.models.functions import *
@@ -112,15 +112,18 @@ def clients(request):
     }
     return render(request, 'crm_app/clients.html', context=context)
 
+
+
+
 def supplyers(request):
     supplyers = Supplyer.objects.all()
-    contect = {
+    context = {
         'contragentss': contragentss,
         'supplyers': supplyers,
         'menu': menu,
         "title": "Перевозчики",
     }
-    return render(request, 'crm_app/supplyers.html', context=contect)
+    return render(request, 'crm_app/supplyers.html', context=context)
 
 def other_companies(request):
     other_companies = OtherCompany.objects.all()
@@ -420,8 +423,10 @@ def delete_sdelka(request, c_id):
 
 
 ##===================filter sdelki====================
+
 def sdelka_filter(request, pk):
     sdelki = Sdelka.objects.all()
+
     if pk == 1:
         now = datetime.now() - timedelta(minutes=60*24*7) #60*24---это сутки
         sdelki = sdelki.filter(time_create__gte=now)
@@ -454,6 +459,7 @@ def show_sdelka(request, c_id):
     url = resolve(request.path_info).url_name
     sdelki = Sdelka.objects.all()
 
+
         #~Q(currency1=2) | ~Q(cusdelkarrency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) |)
 
     context = {
@@ -463,6 +469,7 @@ def show_sdelka(request, c_id):
         'sdelki': sdelki,
         'menu': menu,
         "title": f'Сделка № {str(sdelka.number)}',
+
 
 
     }
@@ -591,6 +598,45 @@ def add_client(request):
     return render(request, 'crm_app/add_client.html', {'form': form,  'menu': menu, 'title': 'Создать Заказчика'})
 
 
+
+#=========supplyers_for_period=====
+def supplyers_for_period(request):
+    supplyers = Supplyer.objects.all()
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate')
+        result = Supplyer.objects.filter(time_create__lte=todate, time_create__gte=fromdate)
+    context = {
+        'fromdate': fromdate,
+        'todate': todate,
+        'contragentss': contragentss,
+        'supplyers': supplyers,
+        'menu': menu,
+        "title": "Перевозчики",
+        'result': result,
+    }
+    return render(request, 'crm_app/supplyers_for_period.html', context=context)
+
+# ====
+#=========search supplyer by date =========
+def supplyers_search(request):
+    supplyers = Supplyer.objects.all()
+    earlier_supplyer = Supplyer.objects.earliest('time_create')
+    latest_supplyer = Supplyer.objects.latest('time_create')
+    # now = datetime.now() - timedelta(minutes=60 * 24 * 7)  # 60*24---это сутки
+    # result = Supplyer.objects.filter(time_create__lte='2023-12-10', time_create__gte='2023-12-01')
+    context = {
+        'earlier_supplyer': earlier_supplyer,
+        'latest_supplyer': latest_supplyer,
+        'contragentss': contragentss,
+        'supplyers': supplyers,
+        'menu': menu,
+        "title": "Перевозчики",
+    }
+    return render(request, 'crm_app/supplyers_search.html', context=context)
+
+
+# ====
 
 def add_supplyer(request):
     if request.method == 'POST':

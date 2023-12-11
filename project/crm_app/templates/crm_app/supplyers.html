@@ -18,14 +18,31 @@
 </div>
 
 <div class="centercontent"><ul>
+
     <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
-     {% for msg in messages %}
+    {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
+
+     <a href="{% url 'supplyers_search' %}"><button>Самый ранний</button></a>
+     <a href="{% url 'supplyers_search' %}"><button>Самый поздний</button></a>
+
+
+
+<h3>Выбрать период</h3>
+    <hr>
+    <form action="{% url 'supplyers_for_period' %}" method="post">
+        {% csrf_token %}
+           С: <input type="date" name="fromdate">
+            По: <input type="date" name="todate">
+            <input type="submit" value="Искать"/>
+</form>
+    <hr>
 
     {% for c in supplyers %}
         <h3>{{c.company_name}}</h3>
     <li>{{c.id}}</li>
+    <li>time_create:  {{c.time_create}}</li>
     <li>{{c.contact_name}}</li>
      <li>Надежный: {{c.supplyer_status}}</li>
     <li>{{c.email}} </li>

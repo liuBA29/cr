@@ -11,7 +11,9 @@ class AddClientForm(forms.ModelForm):
         model = Client
         fields = '__all__'
 
-
+class SearchSupplyerForm(forms.Form):
+    date_from = forms.CharField()
+    date_to = forms.CharField()
 
 class AddSupplyerForm(forms.ModelForm):
     class Meta:
