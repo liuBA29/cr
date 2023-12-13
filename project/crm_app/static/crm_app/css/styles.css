@@ -28,8 +28,9 @@ h1{text-align: center;}
 
 .container {
     display: flex;
-
 }
+
+.footage{max-height: 250px;}
 
 .left-bar{
     width:30%;

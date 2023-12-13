@@ -15,6 +15,7 @@
     {% endif%}
     {%endfor%}</ul>
 
+
 </div>
 
 <div class="centercontent"><ul>
@@ -47,11 +48,13 @@
 </div>
 </div>
 
+    {{six_months_period}}
+
      <h3>По дате создания:</h3>
      <a href="{% url 'supplyers_search' %}"><button>Первый/последний</button></a>
 
     <a href="{% url 'supplyers_filter' pk=1 %}"><button>week</button></a>
-    <a href="{% url 'supplyers_filter' pk=2 %}"><button>month</button></a>
+    <a href="{% url 'supplyers_filter' pk=2 %}"><button>6 month</button></a>
     <a href="{% url 'supplyers_filter' pk=4 %}"><button>квартал</button></a>
     <a href="{% url 'supplyers_filter' pk=3 %}"><button>all</button></a>
     <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->

@@ -1,27 +1,15 @@
-from crm_app.models import  *
-from django import  template
 import datetime
 
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+'''функции'''
 
-
-register= template.Library()
-
-@register.simple_tag()
-def get_sdelki(filter=None):
-    if not filter:
-        return Sdelka.objects.all()
-    else:
-        return Sdelka.objects.filter(filter)
-
-
-@register.simple_tag()
-def six_month():
+def six_months_period():
     '''считаем период за 6 месяцев'''
     m1, m2, m3, m4, m5, m6 = 0, 0, 0, 0, 0, 0
+
     period = datetime.now() - timedelta(days=30)
-    # period.month  period.year
+    #period.month  period.year
     m = datetime(period.year, period.month, day=12)
     '''дней первого месяца ...'''
     m1 = m + relativedelta(day=31)
@@ -47,5 +35,5 @@ def six_month():
     m6 = m + relativedelta(day=31)
     m6 = m6.day
     result = datetime.now() - timedelta(days=m1 + m2 + m3 + m4 + m5 + m6)
-    return result
 
+    return result

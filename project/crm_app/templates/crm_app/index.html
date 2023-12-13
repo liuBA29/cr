@@ -1,7 +1,7 @@
 {% extends 'crm_app/base.html' %}
 
 {%block content%}
-<div class="left-bar"><ul>
+<div class="left-bar">
 
 
 
@@ -10,5 +10,44 @@
 
 
 <div class="centercontent">
+
+    {{cal|safe}}
+    <br><br><br>
+    {{time}}
+
+    <br><br><br>
+    <h3>клиенты за этот год ({{now.year}}):</h3>
+    {% if client_search_year %}
+        {% for c in client_search_year%}
+            {{c}}
+        {% endfor %}
+        {%else%}
+    <p>нет клиентов за {{now.year}} год</p>
+    {% endif%}
+
+
+    <h3>клиенты за этот месяц ({{month}}):</h3>
+    {% if client_search_month %}
+    {% for c in client_search_month%}
+        {{c}}
+    {% endfor %}
+    {%else%}
+    <p>нет клиентов за этот месяц</p>
+    {% endif%}
+
+    <h3>клиенты за 2 недели ():</h3>
+    {% if client_search_twoweeks %}
+    {% for c in client_search_twoweeks %}
+        {{c}}
+    {% endfor %}
+    {%else%}
+    <p>нет клиентов за 2 ytltkb</p>
+    {% endif%}
+
 </div>
 {%endblock content%}
+
+{%block footage%}
+<br><br><br>
+<center> Copyright (c) {{now_year}} </center>
+{%endblock footage%}

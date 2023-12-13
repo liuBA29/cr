@@ -1,15 +1,82 @@
+import calendar
+from calendar import HTMLCalendar
+from pprint import pprint
+
 from django.db.models import *
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.views.generic import ListView
-
+from dateutil.relativedelta import relativedelta
 from .forms import *
 from .models import *
 
-from datetime import datetime, timedelta
+
+
+from datetime import datetime, timedelta, date
+
 from django.db.models.functions import *
+
+
+#================functions===============
+def period_quartal():
+    '''считаем период за квартал'''
+    m1, m2, m3 = 0, 0, 0
+
+    period = datetime.now() - timedelta(days=30)
+    #period.month  period.year
+    m = datetime(period.year, period.month, day=12)
+    '''дней первого месяца ...'''
+    m1 = m + relativedelta(day=31)
+    m1 = m1.day
+    period = period - timedelta(days=m1)
+    m = datetime(period.year, period.month, day=12)
+    m2 = m + relativedelta(day=31)
+    m2 = m2.day
+    period = period - timedelta(days=m2)
+    m = datetime(period.year, period.month, day=12)
+    m3 = m + relativedelta(day=31)
+    m3 = m3.day
+    result = datetime.now() - timedelta(days=m1 + m2 + m3)
+    print(result)
+    return result
+
+
+
+def six_months_period():
+    '''считаем период за 6 месяцев'''
+    m1, m2, m3, m4, m5, m6 = 0, 0, 0, 0, 0, 0
+
+    period = datetime.now() - timedelta(days=30)
+    #period.month  period.year
+    m = datetime(period.year, period.month, day=12)
+    '''дней первого месяца ...'''
+    m1 = m + relativedelta(day=31)
+    m1 = m1.day
+    period = period - timedelta(days=m1)
+    m = datetime(period.year, period.month, day=12)
+    m2 = m + relativedelta(day=31)
+    m2 = m2.day
+    period = period - timedelta(days=m2)
+    m = datetime(period.year, period.month, day=12)
+    m3 = m + relativedelta(day=31)
+    m3 = m3.day
+    period = period - timedelta(days=m3)
+    m = datetime(period.year, period.month, day=12)
+    m4 = m + relativedelta(day=31)
+    m4 = m4.day
+    period = period - timedelta(days=m4)
+    m = datetime(period.year, period.month, day=12)
+    m5 = m + relativedelta(day=31)
+    m5 = m5.day
+    period = period - timedelta(days=m5)
+    m = datetime(period.year, period.month, day=12)
+    m6 = m + relativedelta(day=31)
+    m6 = m6.day
+    result = datetime.now() - timedelta(days=m1 + m2 + m3 + m4 + m5 + m6)
+    return result
+#============================end function+++++++++++++++++++
 
 
 
@@ -56,10 +123,49 @@ menu = [
 
 
 
-def index(request):
+def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    name = "Calendar"
+    month = month.title()
+    #convert month from name to number
+    month_number = list(calendar.month_name).index(month)
+    month_number = int(month_number)
+    now = datetime.now()
+
+    now_year = now.year
+    time = now.strftime('%H:%M')
+    #create calendar
+    cal = calendar.HTMLCalendar().formatmonth(
+        year,
+        month_number)
+
+    #query the search for date
+    client_search_month = Client.objects.filter(
+        time_create__year = year,
+        time_create__month = month_number,
+
+    )
+    client_search_year = Client.objects.filter(
+        time_create__year=year,
+    )
 
 
-    return render(request, 'crm_app/index.html', {'menu': menu, "title": "Главная"})
+    context = {
+       'name': name,
+        'menu': menu,
+        "title": "Главная",
+        "year": year,
+        "month": month,
+        "month_number": month_number,
+        'cal': cal,
+        'now_year': now_year,
+        'now': now,
+        'time': time,
+        'client_search_month': client_search_month,
+        'client_search_year': client_search_year,
+
+    }
+
+    return render(request, 'crm_app/index.html', context=context)
 
 
 def contragents(request):
@@ -103,12 +209,16 @@ def contragents(request):
 def clients(request):
     url = resolve(request.path_info).url_name
     clients = Client.objects.all()
+    six = six_months_period()
+    now = datetime.now()
     context = {
         'url': url,
         'contragentss': contragentss,
         'clients': clients,
         'menu': menu,
         "title": "Заказчики",
+        'six': six,
+        'now':now,
 
     }
     return render(request, 'crm_app/clients.html', context=context)
@@ -434,7 +544,8 @@ def supplyers_filter(request, pk):
         supplyers = supplyers.filter(time_create__gte=now)
     elif pk == 3:
         now = datetime.now()
-        supplyers = supplyers
+        six_month = six_months_period()
+        supplyers = supplyers.filter(time_create__gte=six_month)
     elif pk == 4:
         now = datetime.now() - timedelta(minutes=60 * 24 * 30*2 + 31)  # 60*24---kvartal
         supplyers = supplyers.filter(time_create__gte=now)
@@ -443,6 +554,9 @@ def supplyers_filter(request, pk):
         currentyear = now.year
         supplyers = supplyers.filter(time_create__gte=currentyear)
 
+
+
+
     context = {
          'supplyers': supplyers,
          'menu': menu,
@@ -450,13 +564,13 @@ def supplyers_filter(request, pk):
          'now': now,
         'operationss': operationss,
 
+
      }
     return render(request, 'crm_app/supplyers.html', context=context)
 
 # =======SEARCHING, FILTERRING, ETC========
 class ClassicSearch(ListView):
     model = Supplyer
-
     context_object_name = 'supplyers'
     def get_queryset(self):
         return Supplyer.objects.filter(company_name__iregex=self.request.GET.get('q'))
@@ -470,10 +584,7 @@ class ClassicSearch(ListView):
         return context
 
 
-
-
 ##===================filter sdelki====================
-
 def sdelka_filter(request, pk):
     sdelki = Sdelka.objects.all()
 
@@ -481,8 +592,13 @@ def sdelka_filter(request, pk):
         now = datetime.now() - timedelta(minutes=60*24*7) #60*24---это сутки
         sdelki = sdelki.filter(time_create__gte=now)
     elif pk == 2:
-        now = datetime.now() - timedelta(minutes=60 * 24 * 30)  # 60*24---это сутки
+        now = datetime.now() - six_months_period()  # 60*24---6 month
         sdelki = sdelki.filter(time_create__gte=now)
+
+       # result = Supplyer.objects.raw(
+
+
+
     elif pk == 3:
         now = datetime.now()
         sdelki = sdelki
@@ -493,15 +609,65 @@ def sdelka_filter(request, pk):
          "title": "сделки за неделю",
          'now': now,
         'operationss': operationss,
-
-
-
      }
     return render(request, 'crm_app/sdelki.html', context=context)
-
 #=====================================
+# =========supplyers_for_period=====
+def supplyers_for_period(request):
+    supplyers = Supplyer.objects.all()
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate')
+        day = timedelta(minutes=60 * 24)
+        end_date = datetime.today() + timedelta(days=1)
+        typed = type(day)
+        end_date2 = end_date.strftime("%Y-%m-%d")
+        typedd = type(todate)
 
-#========================================================================
+        # result = Supplyer.objects.filter(time_create__lte=todate, time_create__gte=fromdate)
+        result = Supplyer.objects.raw(
+            'select * from crm_app_supplyer where time_create between "' + fromdate + '" and "' + todate + '"')
+
+    else:
+        result = "Что-то пошло не так .. "
+    context = {
+        'fromdate': fromdate,
+        'todate': todate,
+        'contragentss': contragentss,
+        'supplyers': supplyers,
+        'menu': menu,
+        "title": "Перевозчики",
+        'result': result,
+        'day': day,
+        'end_date2': end_date2,
+
+        'typed': typed,
+        'typedd': typedd,
+        'end_date': end_date,
+    }
+    return render(request, 'crm_app/supplyers_for_period.html', context=context)
+
+# =========search supplyer by date =========
+def supplyers_search(request):
+    supplyers = Supplyer.objects.all()
+    earlier_supplyer = Supplyer.objects.earliest('time_create')
+    latest_supplyer = Supplyer.objects.latest('time_create')
+    # now = datetime.now() - timedelta(minutes=60 * 24 * 7)  # 60*24---это сутки
+    # result = Supplyer.objects.filter(time_create__lte='2023-12-10', time_create__gte='2023-12-01')
+    context = {
+        'earlier_supplyer': earlier_supplyer,
+        'latest_supplyer': latest_supplyer,
+        'contragentss': contragentss,
+        'supplyers': supplyers,
+        'menu': menu,
+        "title": "Перевозчики",
+    }
+    return render(request, 'crm_app/supplyers_search.html', context=context)
+
+#=============end serching======================
+
+
+
 
 def show_sdelka(request, c_id):
     sdelka = get_object_or_404(Sdelka, pk=c_id)
@@ -649,42 +815,6 @@ def add_client(request):
 
 
 #======
-#=========supplyers_for_period=====
-def supplyers_for_period(request):
-    supplyers = Supplyer.objects.all()
-    if request.method == "POST":
-        fromdate = request.POST.get('fromdate')
-        todate = request.POST.get('todate')
-        result = Supplyer.objects.filter(time_create__lte=todate, time_create__gte=fromdate)
-    context = {
-        'fromdate': fromdate,
-        'todate': todate,
-        'contragentss': contragentss,
-        'supplyers': supplyers,
-        'menu': menu,
-        "title": "Перевозчики",
-        'result': result,
-    }
-    return render(request, 'crm_app/supplyers_for_period.html', context=context)
-
-# ====
-#=========search supplyer by date =========
-def supplyers_search(request):
-    supplyers = Supplyer.objects.all()
-    earlier_supplyer = Supplyer.objects.earliest('time_create')
-    latest_supplyer = Supplyer.objects.latest('time_create')
-    # now = datetime.now() - timedelta(minutes=60 * 24 * 7)  # 60*24---это сутки
-    # result = Supplyer.objects.filter(time_create__lte='2023-12-10', time_create__gte='2023-12-01')
-    context = {
-        'earlier_supplyer': earlier_supplyer,
-        'latest_supplyer': latest_supplyer,
-        'contragentss': contragentss,
-        'supplyers': supplyers,
-        'menu': menu,
-        "title": "Перевозчики",
-    }
-    return render(request, 'crm_app/supplyers_search.html', context=context)
-
 
 # ====
 

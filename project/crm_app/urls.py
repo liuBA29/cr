@@ -1,11 +1,15 @@
 from django.urls import path
 from crm_app.views import  *
 from django.conf import settings
+import calendar
+from calendar import HTMLCalendar
 
 
 
 urlpatterns = [
     path('', index, name='home'),
+    path('<int:year>/<str:month>/', index, name='home'),
+
     path('contragents/', contragents, name='contragents'),
     path('clients/', clients, name='clients'),
     path('supplyers/', supplyers, name='supplyers'),

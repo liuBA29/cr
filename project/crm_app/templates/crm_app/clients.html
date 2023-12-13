@@ -1,7 +1,12 @@
 {% extends 'crm_app/base.html' %}
 {%block content%}
+{% load crm_app_tags %}
+
 
 <div class="left-bar"><ul>
+{% six_month  %}
+   {{six}}----
+    ----{{now}}
 
     {%for c in contragentss %}
          {% if c.url_name == url %}
@@ -12,6 +17,8 @@
     {% endif%}
 
     {%endfor%}</ul>
+
+
 
 </div>
 
