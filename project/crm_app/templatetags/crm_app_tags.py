@@ -47,5 +47,30 @@ def six_month():
     m6 = m + relativedelta(day=31)
     m6 = m6.day
     result = datetime.now() - timedelta(days=m1 + m2 + m3 + m4 + m5 + m6)
+    result = result.strftime("%d.%m.%Y")
+    return result
+
+
+@register.simple_tag()
+def period_quartal():
+    '''считаем период за квартал'''
+    m1, m2, m3 = 0, 0, 0
+
+    period = datetime.now() - timedelta(days=30)
+    #period.month  period.year
+    m = datetime(period.year, period.month, day=12)
+    '''дней первого месяца ...'''
+    m1 = m + relativedelta(day=31)
+    m1 = m1.day
+    period = period - timedelta(days=m1)
+    m = datetime(period.year, period.month, day=12)
+    m2 = m + relativedelta(day=31)
+    m2 = m2.day
+    period = period - timedelta(days=m2)
+    m = datetime(period.year, period.month, day=12)
+    m3 = m + relativedelta(day=31)
+    m3 = m3.day
+    result = datetime.now() - timedelta(days=m1 + m2 + m3)
+    result = result.strftime("%d.%m.%Y")
     return result
 

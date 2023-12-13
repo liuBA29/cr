@@ -8,8 +8,11 @@
    {{six}}----
     ----{{now}}
 
+
+
     {%for c in contragentss %}
          {% if c.url_name == url %}
+
 
        <li class="selected">{{c.title}}</li>
     {%else%}
@@ -41,11 +44,16 @@
     <li>{{c.address}} </li>
     <li>{{c.created}} </li>
     <li>{{c.updated}} </li>
-
-
-
 <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
     {% endfor %}<hr>
+{{clients_six}}
+        {% for c in clients_six %}
+        {% if clients_six %}
+        <li>{{c}}</li>
+        {% else %}
+        <li>  no unfortunately </li>
+        {% endif %}
+        {% endfor %}
 
 </ul>
 </div>

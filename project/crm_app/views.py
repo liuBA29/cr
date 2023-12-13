@@ -15,7 +15,7 @@ from .models import *
 
 
 from datetime import datetime, timedelta, date
-
+from dateutil.relativedelta import relativedelta
 from django.db.models.functions import *
 
 
@@ -78,7 +78,12 @@ def six_months_period():
     return result
 #============================end function+++++++++++++++++++
 
+selectings = [
+    {'selected': 3, 'title': 'period_quartal'},
+    {'selected': 6, 'title': 'six_month'},
+    {'selected': 1, 'title': 'week'},
 
+]
 
 supplyers_in_sdelka = [
     {'title': 'Перевозчик 1', 'supplyer': 'supplyer_1', 'price': 'sup_price_1', 'currency': 'currency1'},
@@ -209,8 +214,11 @@ def contragents(request):
 def clients(request):
     url = resolve(request.path_info).url_name
     clients = Client.objects.all()
+
     six = six_months_period()
     now = datetime.now()
+
+    clients_six = clients.filter(time_create__gte=six)
     context = {
         'url': url,
         'contragentss': contragentss,
@@ -219,6 +227,7 @@ def clients(request):
         "title": "Заказчики",
         'six': six,
         'now':now,
+        'clients_six': clients_six,
 
     }
     return render(request, 'crm_app/clients.html', context=context)
@@ -228,11 +237,27 @@ def clients(request):
 
 def supplyers(request):
     supplyers = Supplyer.objects.all()
+    '''3 month search'''
+    three = period_quartal()
+    #selected=1
+    now = datetime.now()
+    supplyers_three = supplyers.filter(time_create__gte=three)
+    '''6 month search'''
+    six = six_months_period()
+    now = datetime.now()
+    supplyers_six = supplyers.filter(time_create__gte=six)
+
     context = {
         'contragentss': contragentss,
         'supplyers': supplyers,
         'menu': menu,
         "title": "Перевозчики",
+        'supplyers_six': supplyers_six,
+        'supplyers_three': supplyers_three,
+       # 'selected':selected,
+        'selectings': selectings,
+
+        'now': now,
     }
     return render(request, 'crm_app/supplyers.html', context=context)
 
@@ -532,41 +557,9 @@ def delete_sdelka(request, c_id):
     }
     return render(request, 'crm_app/delete_sdelka.html', context=context)
 
-##========================supplyers_filter========
-def supplyers_filter(request, pk):
-    supplyers = Supplyer.objects.all()
-
-    if pk == 1:
-        now = datetime.now() - timedelta(minutes=60*24*7) #60*24---это сутки
-        supplyers = supplyers.filter(time_create__gte=now)
-    elif pk == 2:
-        now = datetime.now() - timedelta(minutes=60 * 24 * 30)  # 60*24---это сутки
-        supplyers = supplyers.filter(time_create__gte=now)
-    elif pk == 3:
-        now = datetime.now()
-        six_month = six_months_period()
-        supplyers = supplyers.filter(time_create__gte=six_month)
-    elif pk == 4:
-        now = datetime.now() - timedelta(minutes=60 * 24 * 30*2 + 31)  # 60*24---kvartal
-        supplyers = supplyers.filter(time_create__gte=now)
-    elif pk == 5:
-        now = datetime.now()
-        currentyear = now.year
-        supplyers = supplyers.filter(time_create__gte=currentyear)
 
 
 
-
-    context = {
-         'supplyers': supplyers,
-         'menu': menu,
-         "title": " перевозчики за ",
-         'now': now,
-        'operationss': operationss,
-
-
-     }
-    return render(request, 'crm_app/supplyers.html', context=context)
 
 # =======SEARCHING, FILTERRING, ETC========
 class ClassicSearch(ListView):
@@ -583,6 +576,47 @@ class ClassicSearch(ListView):
         context['q'] = self.request.GET.get('q')
         return context
 
+
+
+''' Сортііровка по неделе, кварталу, 6 месяцам, все....'''
+
+##========================supplyers_filter========
+def supplyers_filter(request, pk):
+    supplyers = Supplyer.objects.all()
+    title2=f'C _____ по настоящее время:'
+    now_str=datetime.now().strftime("%d.%m.%Y")
+    if pk == 1:
+        now = datetime.now() - timedelta(minutes=60*24*7) #60*24---это сутки*7  =неделя
+        supplyers = supplyers.filter(time_create__gte=now)
+        selected = 1
+    elif pk == 2:
+        now = datetime.now()
+        supplyers = Supplyer.objects.all()
+        selected = True
+    elif pk == 3:
+        '''3 month search'''
+        three = period_quartal()
+        now = datetime.now()
+        supplyers = supplyers.filter(time_create__gte=three)
+        selected = 3
+    elif pk == 6:
+        '''6 month search'''
+        six = six_months_period()
+        now = datetime.now()
+        supplyers = supplyers.filter(time_create__gte=six)
+        selected = 6
+    context = {
+         'supplyers': supplyers,
+         'menu': menu,
+         "title": " Перевозчики за период: " ,
+        'selected': selected,
+        'selectings': selectings,
+         'now': now,
+        'now_str': now_str,
+         'operationss': operationss,
+        'contragentss': contragentss,
+     }
+    return render(request, 'crm_app/supplyers.html', context=context)
 
 ##===================filter sdelki====================
 def sdelka_filter(request, pk):
@@ -612,6 +646,12 @@ def sdelka_filter(request, pk):
      }
     return render(request, 'crm_app/sdelki.html', context=context)
 #=====================================
+
+
+
+
+
+
 # =========supplyers_for_period=====
 def supplyers_for_period(request):
     supplyers = Supplyer.objects.all()
@@ -646,6 +686,8 @@ def supplyers_for_period(request):
         'end_date': end_date,
     }
     return render(request, 'crm_app/supplyers_for_period.html', context=context)
+
+
 
 # =========search supplyer by date =========
 def supplyers_search(request):

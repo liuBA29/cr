@@ -1,8 +1,12 @@
 {% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+
+
 
 {%block content%}
 
-
+<!-- importing simple tags -->
+{% six_month as six_month%} {% period_quartal as period_quartal%}
 
 
 <div class="left-bar"><ul>
@@ -18,7 +22,10 @@
 
 </div>
 
-<div class="centercontent"><ul>
+<div class="centercontent">
+
+
+    <ul>
 
      <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
     {% for msg in messages %}
@@ -48,18 +55,41 @@
 </div>
 </div>
 
-    {{six_months_period}}
 
-     <h3>По дате создания:</h3>
+
+
+
+     <h4>Поиск по дате создания:</h4>
+
+
+
      <a href="{% url 'supplyers_search' %}"><button>Первый/последний</button></a>
 
-    <a href="{% url 'supplyers_filter' pk=1 %}"><button>week</button></a>
-    <a href="{% url 'supplyers_filter' pk=2 %}"><button>6 month</button></a>
-    <a href="{% url 'supplyers_filter' pk=4 %}"><button>квартал</button></a>
-    <a href="{% url 'supplyers_filter' pk=3 %}"><button>all</button></a>
+    <a href="{% url 'supplyers_filter' pk=1 %}"><button>Неделя</button></a>
+    <a href="{% url 'supplyers_filter' pk=3 %}"><button>Квартал</button></a>
+    <a href="{% url 'supplyers_filter' pk=6 %}"><button>6 месяцев</button></a>
+    <a href="{% url 'supplyers' %}"><button>Все</button></a>
+
     <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->
 
     <hr>
+<h2>{{title2}}</h2>
+        {% for s in selectings%}
+         {% if s.selected == selected %}
+        {% if selected == 3%}
+        <h3 class="choicetitle"> Перевозчики за период: с
+            {{period_quartal}} по {{now_str}}</h3>
+        {% elif selected == 6%}
+        <h3 class="choicetitle"> Перевозчики за период: с
+            {{six_month}} по {{now_str}}</h3>
+
+         {% else %}
+        <h3 class="choicetitle"> Перевозчики за неделю: </h3>
+
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
 
     {% for c in supplyers %}
         <h3>{{c.company_name}}</h3>
@@ -73,7 +103,12 @@
     <li>{{c.created}} </li>
     <li>{{c.updated}} </li>
 <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
-    {% endfor %}<hr>
+    {% endfor %}
+        <hr>
 </ul>
+
+
+
+
 </div>
 {%endblock content%}
