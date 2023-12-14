@@ -14,7 +14,7 @@
 
 <div class="centercontent"><ul>
 
-    <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
+    <button class="addbutton"><a href="{% url 'add_client' %}">Добавить Заказчика</a></button>
     {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
@@ -23,14 +23,12 @@
 
     <h3 class="choicetitle">Результат поиска: " {{q}} "</h3>
 
-
-
-    {% for c in supplyers %}
+    {% for c in clients %}
         <h3>{{c.company_name}}</h3>
     <li>{{c.id}}</li>
     <li>time_create:  {{c.time_create}}</li>
     <li>{{c.contact_name}}</li>
-     <li>Надежный: {{c.supplyer_status}}</li>
+     <li>Постоянный клиент: {{c.client_status}}</li>
     <li>{{c.email}} </li>
     <li>{{c.phone}}</li>
     <li>{{c.address}} </li>

@@ -3,8 +3,9 @@
 {%block content%}
 
 <div class="left-bar"><ul>
-
-</ul>
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}</ul>
 </div>
 
 <form action="{% url 'add_quotation' %}" method="post">

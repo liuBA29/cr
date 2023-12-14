@@ -1,31 +1,87 @@
 {% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
 {%block content%}
 
-<div class="left-bar"><ul>
-    {%for c in operationss %}
-        <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+{% six_month as six_month%}{%period_quartal as period_quartal%}
 
+<div class="left-bar"><ul>
+
+    {%for c in operationss %}
+         {% if c.url_name == url %}
+       <li class="selected">{{c.title}}</li>
+    {%else%}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {% endif%}
     {%endfor%}</ul>
 
 </div>
 
 <div class="centercontent"><ul>
 
-    <a href="{% url 'sdelka_filter' pk=1 %}"><button>week</button></a>
-    <a href="{% url 'sdelka_filter' pk=2 %}"><button>month</button></a>
-    <a href="{% url 'sdelka_filter' pk=3 %}"><button>all</button></a>
+   <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить Сделку</a></button>
 
 
-
-    <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить сделку</a></button>
-
-     {% for msg in messages %}
+    {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
+-----------
+      <br>
+
+<div class="poisk_table">
+
+<div class="">
+
+<b> Поиск по названию:</b>
+    <form action="{% url 'classic_search_sdelka' %}" method="get">
+
+        <input class="search" type="text" name="q" placeholder="Поиск Сделки"><button>Найти</button>
+    </form>
+</div>
+
+    <div class="search-right">
+<b>Найти за период:</b>
+    <form action="{% url 'sdelki_for_period' %}" method="post">
+        {% csrf_token %}
+           С: <input type="date" name="fromdate">
+            По: <input type="date" name="todate">
+            <input type="submit" value="Искать"/>
+</form>
+</div>
+</div>
+
+     <h4>Поиск по дате создания:</h4>
+
+     <a href="{% url 'sdelki_search' %}"><button>Первый/последний</button></a>
+
+    <a href="{% url 'sdelki_filter' pk=1 %}"><button>Неделя</button></a>
+    <a href="{% url 'sdelki_filter' pk=3 %}"><button>Квартал</button></a>
+    <a href="{% url 'sdelki_filter' pk=6 %}"><button>6 месяцев</button></a>
+    <a href="{% url 'sdelki' %}"><button>Все</button></a>
+
+    <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->
+
+    <hr>
+<h2>{{title2}}</h2>
+        {% for s in selectings%}
+         {% if s.selected == selected %}
+        {% if selected == 3%}
+        <h3 class="choicetitle"> Сделки за период: с
+            {{period_quartal}} по {{now_str}}</h3>
+        {% elif selected == 6%}
+        <h3 class="choicetitle"> Сделки за период: с
+            {{six_month}} по {{now_str}}</h3>
+
+         {% else %}
+        <h3 class="choicetitle"> Сделки за неделю: </h3>
+
+        {% endif %}
+        {% endif %}
+        {% endfor %}
 
 
 {% for c in sdelki %}
         <h3>{{c.client}}</h3>
+    <li>Сделка номер: {{c.number}}</li>
     <li>Сделка создана: {{c.time_create}}</li>
     <li>{{c.description}}</li>
 

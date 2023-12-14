@@ -1,0 +1,48 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+
+<div class="left-bar"><ul>
+    {%for c in operationss %}
+
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+    <button class="addbutton"><a href="{% url 'add_quotation' %}">Добавить Котировку</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+
+
+<ul>
+
+    <h4>Котировки за период:</h4>
+    <h3 class="choicetitle">с: {{fromdate}} по: {{todate}}</h3>
+{% for c in result %}
+
+    <h3>{{c.client}}</h3>
+    <li>котировка создана: {{c.time_create}}</li>
+    <li>{{c.description}}</li>
+    <li>{{c.status}}</li>
+    <li>место загрузки:  {{c.loading_country}}  ||  место выгрузки: {{c.unloading_country}}</li>
+    <li>транспорт: {{c.common_transport}} </li>
+     {% if c.result == 'PRICE_GOOD' %}
+    <li>{{c.result}}</li>
+     <button class="option_button"><a  href="{% url 'quot_sdelka' c.id %}">Создать Сделку</a></button>
+    {% else %}
+     <li>{{c.result}}</li>
+    {% endif %}
+
+<p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+    {% endfor %}<hr>
+
+</ul>
+</ul>
+</div>
+{%endblock content%}

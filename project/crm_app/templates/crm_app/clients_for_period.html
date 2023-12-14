@@ -13,7 +13,7 @@
 </div>
 
 <div class="centercontent"><ul>
-    <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
+    <button class="addbutton"><a href="{% url 'add_client' %}">Добавить Заказчика</a></button>
      {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
@@ -22,7 +22,7 @@
 
 <ul>
 
-    <h4>перевозчики за период:</h4>
+    <h4>Заказчики за период:</h4>
     <h3 class="choicetitle">с: {{fromdate}} по: {{todate}}</h3>
 {% for r in result %}
      <li> {{r.company_name}} </li>

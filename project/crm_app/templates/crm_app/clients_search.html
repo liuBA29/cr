@@ -1,0 +1,33 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+<div class="left-bar"><ul>
+    {%for c in contragentss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}</ul>
+</div>
+
+<div class="centercontent"><ul>
+    <button class="addbutton"><a href="{% url 'add_client' %}">Добавить Заказчика</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+<ul>
+<h4>Самый ранний Заказчик:</h4>
+   <li> {{earlier_client.company_name}} </li>
+   <li> {{earlier_client.time_create}} </li>
+    <li>{{earlier_client.address}} </li>
+    <p ><a class="double-border-button" href="{{ earlier_client.get_absolute_url }}">Посмотреть подробней</a></p>
+ <h4>Самый поздний Заказчик:</h4>
+   <li> {{latest_client.company_name}} </li>
+   <li> {{latest_client.time_create}} </li>
+    <li>{{latest_client.address}} </li>
+<p ><a class="double-border-button" href="{{ latest_client.get_absolute_url }}">Посмотреть подробней</a></p>
+
+
+
+</ul>
+</ul>
+</div>
+{%endblock content%}

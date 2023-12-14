@@ -13,8 +13,13 @@ urlpatterns = [
     path('contragents/', contragents, name='contragents'),
     path('clients/', clients, name='clients'),
     path('supplyers/', supplyers, name='supplyers'),
+
+    path('clients_for_period/', clients_for_period, name='clients_for_period'),
     path('supplyers_for_period/', supplyers_for_period, name='supplyers_for_period'),
+
+    path('clients_search/', clients_search, name='clients_search'),
     path('supplyers_search/', supplyers_search, name='supplyers_search'),
+
     path('other_companies/', other_companies, name='other_companies'),
 
 
@@ -25,6 +30,11 @@ urlpatterns = [
 
     path('quotation/<int:c_id>/', show_quotation, name='show_quotation'),
     path('sdelka/<int:c_id>/', show_sdelka, name='show_sdelka'),
+
+    path('quotations_for_period/', quotations_for_period, name='quotations_for_period'),
+    path('sdelki_for_period/', sdelki_for_period, name='sdelki_for_period'),
+    path('quotations_search/', quotations_search, name='quotations_search'),
+    path('sdelki_search/', sdelki_search, name='sdelki_search'),
 
     path('update_quotation/<int:c_id>/', update_quotation, name='update_quotation'),
     path('update_sdelka/<int:c_id>/', update_sdelka, name='update_sdelka'),
@@ -43,15 +53,22 @@ urlpatterns = [
     path('operations/', operations, name='operations'),
     path('quotations/', quotations, name='quotations'),
     path('sdelki/', sdelki, name='sdelki'),
-    path('sdelki/<int:pk>/', sdelka_filter, name='sdelka_filter'),
+
+
     path('supplyers/<int:pk>/', supplyers_filter, name='supplyers_filter'),
+    path('clients/<int:pk>/', clients_filter, name='clients_filter'),
+    path('quotations/<int:pk>/', quotations_filter, name='quotations_filter'),
+    path('sdelki/<int:pk>/', sdelki_filter, name='sdelki_filter'),
 
     path('login/', login, name='login'),
     path('add_client/', add_client, name='add_client'),
     path('add_supplyer/', add_supplyer, name='add_supplyer'),
 
 
-    path('supplyer_list/', ClassicSearch.as_view(), name='classic_search_supplyer'),
+    path('supplyer_list/', ClassicSearchSupplyer.as_view(), name='classic_search_supplyer'),
+    path('client_list/', ClassicSearchClient.as_view(), name='classic_search_client'),
+    path('quotation_list/', ClassicSearchQuotation.as_view(), name='classic_search_quotation'),
+    path('sdelka_list/', ClassicSearchSdelka.as_view(), name='classic_search_sdelka'),
 
 
     path('add_othercompany/', add_othercompany, name='add_othercompany'),

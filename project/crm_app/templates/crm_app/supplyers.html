@@ -1,12 +1,8 @@
 {% extends 'crm_app/base.html' %}
 {% load crm_app_tags %}
-
-
-
 {%block content%}
 
-<!-- importing simple tags -->
-{% six_month as six_month%} {% period_quartal as period_quartal%}
+{% six_month as six_month%}{%period_quartal as period_quartal%}
 
 
 <div class="left-bar"><ul>
@@ -21,16 +17,12 @@
 
 
 </div>
-
 <div class="centercontent">
-
-
-    <ul>
-
      <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
     {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
+----------
     <br>
 
 <div class="poisk_table">
@@ -55,13 +47,7 @@
 </div>
 </div>
 
-
-
-
-
      <h4>Поиск по дате создания:</h4>
-
-
 
      <a href="{% url 'supplyers_search' %}"><button>Первый/последний</button></a>
 
@@ -90,7 +76,8 @@
         {% endif %}
         {% endfor %}
 
-
+-------
+        <ul>
     {% for c in supplyers %}
         <h3>{{c.company_name}}</h3>
     <li>{{c.id}}</li>
@@ -103,12 +90,9 @@
     <li>{{c.created}} </li>
     <li>{{c.updated}} </li>
 <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
-    {% endfor %}
-        <hr>
+    {% endfor %}<hr>
 </ul>
 
-
-
-
 </div>
+
 {%endblock content%}

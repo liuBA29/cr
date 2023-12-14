@@ -3,13 +3,16 @@
 {%block content%}
 
 <div class="left-bar"><ul>
-
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
 </ul>
 </div>
 
+<div class="centercontent"><ul>
 <form action="{% url 'add_sdelka' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
- <div class="form-error">{{ form.non_field_errors }}</div>
+<div class="form-error">{{ form.non_field_errors }}</div>
 
      <p><label for="{{ form.number.id_for_label }}">{{ form.number.label }}:</label>{{ form.number }}</p>
     <div class="form-error">{{ form.number.errors }}</div>
@@ -280,7 +283,11 @@
   <p><label for="{{ form.status_sdelka_other.id_for_label }}">{{ form.status_sdelka_other.label }}:</label>{{ form.status_sdelka_other }}</p>
     <div class="form-error">{{ form.status_sdelka_other.errors }}</div>
 
-<button type="submit">Добавить</button>
+
+
+<button type="submit">создать сделку</button>
 </form>
+</ul>
+</div>
 
 {%endblock content%}
