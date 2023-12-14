@@ -1229,7 +1229,56 @@ def add_quotation(request):
     return render(request, 'crm_app/add_quotation.html', context=context)
 
 
-# ===documents
+# ===documents !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+def document_sdelka_client(request, c_id):
+    documents = Documents.objects.all()
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
+
+    form = DocumentSdelkaClientForm(request.POST or None, initial={'sdelka': sdelka}, instance=sdelka)
+    url = resolve(request.path_info).url_name
+    context = {
+        'now_year': now_year,
+        'operationss': operationss,
+        'documents': documents,
+        'menu': menu,
+        "title": "Добавить документ",
+        'form': form,
+        'sdelka': sdelka,
+        'url': url,
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'file добавлен')
+        return redirect('sdelki')
+
+    return render(request, 'crm_app/document_sdelka_client.html', context=context)
+#====
+
+
+def download_document(request):
+    documents = Documents.objects.all()
+    form = None
+    if request.method == "POST":
+        form = UploadDocumentsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            print(form.cleaned_data)
+            messages.success(request, 'file добавлен')
+            return redirect('sdelki')
+    else:
+        form = UploadDocumentsForm()
+    context = {
+        'now_year': now_year,
+        'operationss': operationss,
+        'documents': documents,
+        'menu': menu,
+        "title": "Добавить документ",
+        'form': form,
+    }
+    return render(request, 'crm_app/download_document.html', context=context)
+
+
+
 
 def upload_documents(request):
     sdelki = Sdelka.objects.all()

@@ -295,7 +295,7 @@ class Sdelka(Operation):
         ordering = ['-time_update', '-time_create', 'number',]
 
     def __str__(self):
-        return 'Сделка с клиентом:' + str(self.client)
+        return 'Сделка №' +  str(self.number)
 
     def get_absolute_url(self):
         return reverse('show_sdelka', kwargs={'c_id': self.pk})
@@ -303,7 +303,7 @@ class Sdelka(Operation):
 
 # ===================доки=====
 class Documents(models.Model):
-    name = models.CharField(max_length=35, blank=True, null=True, verbose_name='Название документа документа: ')
+    name = models.CharField(max_length=35, blank=True, null=True, verbose_name='Название документа')
     sdelka = models.ForeignKey(Sdelka, on_delete=models.CASCADE, blank=True, null=True,
                                verbose_name="Документы в сделке")
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True,
@@ -320,7 +320,7 @@ class Documents(models.Model):
 
     ]
     type = models.CharField(max_length=35, default='Договор', choices=DOC_CHOICES,
-                                     verbose_name ='Вид документа: ')
+                                     verbose_name ='Вид документа')
     file = models.FileField(null=True, blank=True)
 
     def __str__(self):

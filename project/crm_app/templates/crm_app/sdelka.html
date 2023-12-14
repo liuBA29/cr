@@ -196,12 +196,12 @@
     <p>------no documents-------</p>
 
     {% endif %}
+ <a href="{% url 'download_document' %}"><button>Загрузить новый документ</button></a>
+<a href="{% url 'document_sdelka_client' sdelka.id %}"><button>Загрузить новый документ 2</button></a>
 
+<br><br>
 
-
-
-
-    <li>Статус:  - {{sdelka.status_sdelka}}  </li>
+    <li>Статус Сделки:  - {{sdelka.status_sdelka}}  </li>
     <li>Статус состояния: {{sdelka.status_sdelka_other}} </li>
 
     <li>Посмотреть профит: {{sdelka.profit}}</li>

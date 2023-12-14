@@ -78,6 +78,9 @@ urlpatterns = [
 
 
     path('documents/', upload_documents, name='documents'),
+    path('download_document/', download_document, name='download_document'),
+
+    path('document_sdelka_client/<int:c_id>/', document_sdelka_client, name='document_sdelka_client'),
 
     path('extract/', sdelka_vypiska, name='extract'),
 

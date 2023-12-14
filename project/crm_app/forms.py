@@ -2,8 +2,16 @@ from django import forms
 from .models import *
 
 
-class UploadDocumentsForm(forms.Form):
-    file = forms.FileField()
+class UploadDocumentsForm(forms.ModelForm):
+    class Meta:
+        model = Documents
+        fields = ['name', 'client', 'sdelka', 'type', 'file']
+
+class DocumentSdelkaClientForm(forms.ModelForm):
+    class Meta:
+        model = Documents
+        fields = ['name', 'client', 'supplyer', 'sdelka', 'type', 'file']
+
 
 
 class AddClientForm(forms.ModelForm):
