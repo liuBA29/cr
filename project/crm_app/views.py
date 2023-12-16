@@ -281,6 +281,11 @@ def other_companies(request):
     return render(request, 'crm_app/other_companies.html', context=context)
 
 
+
+#-------------------
+
+
+
 def show_client(request, c_id):
     client = get_object_or_404(Client, pk=c_id)
     url = resolve(request.path_info).url_name
@@ -472,7 +477,6 @@ def update_quotation(request, c_id):
 
 def delete_client(request, c_id):
     client = get_object_or_404(Client, pk=c_id)
-
     if request.method == "POST":
         # confirming delete
         client.delete()
@@ -480,7 +484,6 @@ def delete_client(request, c_id):
         return redirect('clients')
     context = {
         'now_year': now_year,
-
         'client': client,
         'menu': menu,
         "title": "Удалить заказчика",
@@ -554,6 +557,24 @@ def delete_sdelka(request, c_id):
         "title": "Удалить сделку",
     }
     return render(request, 'crm_app/delete_sdelka.html', context=context)
+#=================delete document====================
+def delete_document(request, c_id):
+    document = get_object_or_404(Documents, pk=c_id)
+    if request.method == "POST":
+        # confirming delete
+        document.delete()
+        messages.success(request, 'Документ удален успешно')
+        return redirect('documents')
+    context = {
+        'now_year': now_year,
+        'document': document,
+        'menu': menu,
+        "title": "Удалить документ",
+    }
+    return render(request, 'crm_app/delete_document.html', context=context)
+
+
+
 
 
 # =======SEARCHING, FILTERRING, ETC========
@@ -625,7 +646,20 @@ class ClassicSearchSdelka(ListView):
 
 ''' Сортііровка по неделе, кварталу, 6 месяцам, все....'''
 #==========
-
+#========show document==========
+def show_document(request, c_id):
+    document = get_object_or_404(Documents, pk=c_id)
+    url = resolve(request.path_info).url_name
+    context={
+        'document': document,
+        'url': url,
+        'now_year': now_year,
+        'url': url,
+        'documentss': documentss,
+        'menu': menu,
+        "title": "Документ",
+    }
+    return render(request, 'crm_app/document.html', context=context)
 #==================================================================
 def clients_docs(request):
     sdelki = Sdelka.objects.all()
@@ -1387,6 +1421,10 @@ def document_sdelka_client(request, c_id):
     return render(request, 'crm_app/document_sdelka_client.html', context=context)
 #====
 
+#==========delete document++++++++
+
+
+# ++
 
 def download_document(request):
     documents = Documents.objects.all()

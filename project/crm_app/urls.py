@@ -26,6 +26,7 @@ urlpatterns = [
     path('client/<int:c_id>/', show_client, name='show_client'),
     path('supplyer/<int:c_id>/', show_supplyer, name='show_supplyer'),
     path('other_company/<int:c_id>/', show_other_company, name='show_other_company'),
+    path('document/<int:c_id>/', show_document, name='show_document'),
 
 
     path('quotation/<int:c_id>/', show_quotation, name='show_quotation'),
@@ -43,6 +44,9 @@ urlpatterns = [
     path('update_supplyer/<int:c_id>/', update_supplyer, name='update_supplyer'),
     path('update_other_company/<int:c_id>/', update_other_company, name='update_other_company'),
 
+
+
+    path('delete_document/<int:c_id>/', delete_document, name='delete_document'),
     path('delete_quotation/<int:c_id>/', delete_quotation, name='delete_quotation'),
     path('delete_sdelka/<int:c_id>/', delete_sdelka, name='delete_sdelka'),
     path('delete_client/<int:c_id>/', delete_client, name='delete_client'),

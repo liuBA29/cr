@@ -16,6 +16,8 @@
         {% if c.len > 0 %}
 
          <h3>{{c.name}}</h3>
+
+
     <ul>{% if c.client%}
         <li><b>Документ от Заказчика: </b>{{c.client}}</li>
 
@@ -31,6 +33,7 @@
         {%else%}
         <p>no file</p>
         {% endif %}
+
     </ul>
      {%endif%}
     {% endfor %}

@@ -327,6 +327,9 @@ class Documents(models.Model):
     def __str__(self):
         return str(self.name)
 
+    def get_absolute_url(self):
+        return reverse('show_document', kwargs={'c_id': self.pk})
+
 
 
 # =======================================

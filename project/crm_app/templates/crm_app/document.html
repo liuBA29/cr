@@ -1,0 +1,39 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in documentss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+
+
+
+<div class="borders">
+
+
+
+    <li>Название документа: {{document.name}}</li>
+    <li>Заказчик: {{document.sdelka}}</li>
+    <li>Транспорт: {{document.client}} </li>
+    <li>Наименование Перевозчика: {{document.supplyer_1}}</li>
+
+    <li>Место загрузки: {{document.other_company}}</li>
+    <li>Место разгрузки: {{sdelka.unloading_country_1}}</li>
+    <li> Дата загрузки: {{document.type}}</li>
+    <li>Дата выгрузки: {{document.file}}</li>
+
+
+<td>
+   <button> <a href="#">Редактировать</a></button>
+    <td align = 'right'><a href="{% url 'delete_document' document.id %}">Удалить</a></td>
+
+</ul>
+</div>
+{% endblock content %}

@@ -55,18 +55,20 @@
 
     {% for c in documents %}
         {% if c.len > 0 %}
-
-
         <h3>{{c.name}}</h3>
     <ul>{% if c.client%}
         <li><b>Документ от Заказчика: </b>{{c.client}}</li>
+<p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
 
         {% elif c.supplyer%}
         <li><b>Документ от Перевозчикаа: </b>{{c.supplyert}}</li>
+        <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
         {% elif c.other_organization%}
         <li><b>Документ от сторонней организации: </b>{{c.other_company}}</li>
+        <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
         {%  else %}
         <li><b>Корпоративный Документ </b></li>
+        <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
        {%endif%}
 
          <li>Тип документа: {{c.type}}</li>
