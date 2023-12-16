@@ -17,7 +17,7 @@
 
 <div class="borders">
 
-    <li>age: {{sdelka.age}}</li>
+
     <li>от {{sdelka.time_create}}</li>
     <li>Описание потребности: {{sdelka.description}}</li>
     <li>Заказчик: {{sdelka.client}}</li>
@@ -196,8 +196,8 @@
     <p>------no documents-------</p>
 
     {% endif %}
- <a href="{% url 'download_document' %}"><button>Загрузить новый документ</button></a>
-<a href="{% url 'document_sdelka_client' sdelka.id %}"><button>Загрузить новый документ 2</button></a>
+ <a href="{% url 'document_sdelka_supplyer' sdelka.id%}"><button>Загрузить новый документ от Перевозчика</button></a>
+<a href="{% url 'document_sdelka_client' sdelka.id %}"><button>Загрузить новый документ от Заказчика</button></a>
 
 <br><br>
 

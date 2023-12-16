@@ -2,45 +2,42 @@
 {%block content%}
 
 <div class="left-bar"><ul>
-
-
     {%for c in documentss %}
-
+{% if c.title == self.title %}
+            <li class="selected">{{c.title}}</li>
+    {%else%}
             <li><a href="{%  url c.url_name %}">{{c.title}}</a></li>
-
+{% endif%}
     {%endfor%}</ul>
 </div>
-
 <div class="centercontent">
 
-
     {% for c in documents %}
-    =============
+        {% if c.len > 0 %}
+
+    ============
         <h3>{{c.name}}</h3>
-    <ul>
-        {% if c.client%}
-        <li><b>Документ от Заказчика:</b> {{c.client}}</li>
+    <ul>{% if c.client%}
+        <li><b>Документ от Заказчика: </b>{{c.client}}</li>
+
         {% elif c.supplyer%}
-         <li><b>Документ от Перевозчика:</b> {{c.supplyer}}</li>
+        <li><b>Документ от Перевозчикаа: </b>{{c.supplyert}}</li>
         {% elif c.other_organization%}
-         <li><b>Документ от Сторонней организации: </b>{{c.other_oranization}}</li>
-        {%else%}
-        <li><b>Корпоративный документ:</b> </li>
-        =======================
+        <li><b>Документ от сторонней организации: </b>{{c.other_company}}</li>
+       {%endif%}
 
-
-        {% endif %}
-
-         <li><b>Тип документа: </b>{{c.type}}</li>
+         <li>Тип документа: {{c.type}}</li>
          {% if c.file %}
          <a href="{{c.file.url}}">{{c.file}}</a>
         {%else%}
-        <p>---no file---</p>
+        <p>no file</p>
         {% endif %}
     </ul>
-
+     {%endif%}
     {% endfor %}
 
+    <hr>
+    <br><br>
 
 <h2>Загрузить новый документ</h2>
 

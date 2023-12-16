@@ -5,9 +5,15 @@ from .models import *
 class UploadDocumentsForm(forms.ModelForm):
     class Meta:
         model = Documents
-        fields = ['name', 'client', 'sdelka', 'type', 'file']
+        fields = ['name', 'client', 'sdelka','supplyer',  'type', 'file']
 
 class DocumentSdelkaClientForm(forms.ModelForm):
+    class Meta:
+        model = Documents
+        fields = ['name', 'client', 'supplyer', 'sdelka', 'type', 'file']
+
+
+class DocumentSdelkaSupplyerForm(forms.ModelForm):
     class Meta:
         model = Documents
         fields = ['name', 'client', 'supplyer', 'sdelka', 'type', 'file']

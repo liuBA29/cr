@@ -78,10 +78,20 @@ urlpatterns = [
 
 
     path('documents/', upload_documents, name='documents'),
+    path('docs_types/<int:pk>', docs_types, name='docs_types'),
+    path('docs_types_supplyers/<int:pk>', docs_types_supplyers, name='docs_types_supplyers'),
+    path('docs_types_other_companies/<int:pk>', docs_types_other_companies, name='docs_types_other_companies'),
+    path('clients_docs/', clients_docs, name='clients_docs'),
+    path('supplyers_docs/', supplyers_docs, name='supplyers_docs'),
+
+    path('other_companies_docs/', other_companies_docs, name='other_companies_docs'),
     path('download_document/', download_document, name='download_document'),
 
-    path('document_sdelka_client/<int:c_id>/', document_sdelka_client, name='document_sdelka_client'),
 
+
+
+    path('document_sdelka_client/<int:c_id>/', document_sdelka_client, name='document_sdelka_client'),
+    path('document_sdelka_supplyer/<int:c_id>/', document_sdelka_supplyer, name='document_sdelka_supplyer'),
     path('extract/', sdelka_vypiska, name='extract'),
 
 

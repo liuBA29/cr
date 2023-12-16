@@ -310,13 +310,14 @@ class Documents(models.Model):
                                verbose_name="Документы от заказчика")
     supplyer = models.ForeignKey(Supplyer, on_delete=models.CASCADE, blank=True, null=True,
                                  verbose_name="Документы от перевозчика")
-    other_organization = models.ForeignKey(OtherCompany, on_delete=models.CASCADE, blank=True, null=True,
+    other_company = models.ForeignKey(OtherCompany, on_delete=models.CASCADE, blank=True, null=True,
                                            verbose_name="Документы прочие")
     DOC_CHOICES = [
         ('Договор', 'Договор'),
         ('ТН', 'ТН'),
         ('Коносамент', 'Коносамент'),
         ('Дебиторка', 'Дебиторка'),
+        ('Корпоративные', 'Корпоративные'),
 
     ]
     type = models.CharField(max_length=35, default='Договор', choices=DOC_CHOICES,

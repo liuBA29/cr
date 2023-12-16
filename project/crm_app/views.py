@@ -110,6 +110,14 @@ contragentss = [
     {'title': 'Сторонние компании', 'key': 'OtherCompany.objects.all()', 'url_name': 'other_companies'},
 ]
 
+documentss = [
+    {'title': 'Документы Заказчиков',  'url_name': 'clients_docs'},
+    {'title': 'Документы Перевозчиков', 'url_name': 'supplyers_docs'},
+    {'title': 'Другие Документы', 'url_name': 'other_companies_docs'},
+
+
+]
+
 docs = [
     {'title': 'Документы Заказчика', 'key': 'Client.objects.all()', 'url_name': 'client_docs'},
     {'title': 'Документы Перевозчика', 'key': 'Supplyer.objects.all()', 'url_name': 'supplyer_docs'},
@@ -204,6 +212,7 @@ def contragents(request):
 
     }
     return render(request, 'crm_app/contragents.html', context=context)
+
 
 
 def clients(request):
@@ -615,7 +624,106 @@ class ClassicSearchSdelka(ListView):
         return context
 
 ''' Сортііровка по неделе, кварталу, 6 месяцам, все....'''
+#==========
 
+#==================================================================
+def clients_docs(request):
+    sdelki = Sdelka.objects.all()
+    documents = Documents.objects.all()
+    dogovory = Documents.objects.filter(type='Договор')
+    '''for choosing clients files'''
+    documents = Documents.objects.annotate(len=Length('client'))
+    context = {
+        'now_year': now_year,
+        'sdelki': sdelki,
+        'menu': menu,
+        'documents': documents,
+        'documentss': documentss,
+        "title": "Документы Заказчиков",
+
+        'dogovory': dogovory,
+        'clients_docs': clients_docs,
+    }
+    return render(request, 'crm_app/clients_docs.html', context=context)
+#=====
+
+def docs_types_other_companies(request, pk):
+    documents= Documents.objects.all()
+    documents = Documents.objects.annotate(len=Length('other_company'))
+    title2 = ''
+    if pk == 5:
+        documents = documents.filter(type='Корпоративные')
+        title2 = 'Корпоративные'
+    elif pk == 6:
+        documents = Documents.objects.annotate(len=Length('other_company'))
+        title2 = 'Другие'
+    context = {
+        'documentss': documentss,
+        'now_year': now_year,
+        'documents': documents,
+        "title": "Документы другие",
+        'title2': title2,
+        'menu': menu,
+        }
+    return render(request, 'crm_app/clients_docs.html', context=context)
+# ====
+
+# ====
+def docs_types_supplyers(request, pk):
+    documents= Documents.objects.all()
+    documents = Documents.objects.annotate(len=Length('supplyer'))
+    title2 = ''
+    if pk == 1:
+        documents = documents.filter(type='Договор')
+        title2 = 'Договоры'
+    elif pk == 2:
+        documents = documents.filter(type='Коносамент')
+        title2 = 'Коносаменты'
+    elif pk == 3:
+        documents = documents.filter(type='ТН')
+        title2 = 'ТН'
+    elif pk == 4:
+        documents = documents.filter(type='Дебиторка')
+        title2 = 'Дебиторки'
+    elif pk == 5:
+        documents = documents.filter(type='Корпоративные')
+    context = {
+        'documentss': documentss,
+        'now_year': now_year,
+        'documents': documents,
+        "title": "Документы Перевозчиков",
+        'title2': title2,
+        'menu': menu,
+        }
+    return render(request, 'crm_app/clients_docs.html', context=context)
+# ====
+def docs_types(request, pk):
+    documents= Documents.objects.all()
+    documents = Documents.objects.annotate(len=Length('client'))
+    title2 = ''
+    if pk == 1:
+        documents = documents.filter(type='Договор')
+        title2 = 'Договоры'
+    elif pk == 2:
+        documents = documents.filter(type='Коносамент')
+        title2 = 'Коносаменты'
+    elif pk == 3:
+        documents = documents.filter(type='ТН')
+        title2 = 'ТН'
+    elif pk == 4:
+        documents = documents.filter(type='Дебиторка')
+        title2 = 'Дебиторки'
+    elif pk == 5:
+        documents = documents.filter(type='Корпоративные')
+    context = {
+        'documentss': documentss,
+        'now_year': now_year,
+        'documents': documents,
+        "title": "Документы Заказчиков",
+        'title2': title2,
+        'menu': menu,
+        }
+    return render(request, 'crm_app/clients_docs.html', context=context)
 
 ##========================supplyers_filter========
 def supplyers_filter(request, pk):
@@ -1230,10 +1338,35 @@ def add_quotation(request):
 
 
 # ===documents !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+def document_sdelka_supplyer(request, c_id):
+    documents = Documents.objects.all()
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
+    form = DocumentSdelkaSupplyerForm(request.POST or None, initial={'sdelka': sdelka, 'supplyer': sdelka.supplyer_1}, instance=sdelka)
+    url = resolve(request.path_info).url_name
+    context = {
+        'now_year': now_year,
+        'operationss': operationss,
+        'documents': documents,
+        'menu': menu,
+        "title": "Добавить документ от Перевозчика",
+        'form': form,
+        'sdelka': sdelka,
+        'url': url,
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'file добавлен')
+        return redirect('sdelki')
+
+    return render(request, 'crm_app/document_sdelka_supplyer.html', context=context)
+#====
+
+####===========
+
 def document_sdelka_client(request, c_id):
     documents = Documents.objects.all()
     sdelka = get_object_or_404(Sdelka, pk=c_id)
-
     form = DocumentSdelkaClientForm(request.POST or None, initial={'sdelka': sdelka}, instance=sdelka)
     url = resolve(request.path_info).url_name
     context = {
@@ -1241,7 +1374,7 @@ def document_sdelka_client(request, c_id):
         'operationss': operationss,
         'documents': documents,
         'menu': menu,
-        "title": "Добавить документ",
+        "title": "Добавить документ от Заказчика",
         'form': form,
         'sdelka': sdelka,
         'url': url,
@@ -1280,9 +1413,55 @@ def download_document(request):
 
 
 
+
+def supplyers_docs(request):
+    sdelki = Sdelka.objects.all()
+    documents = Documents.objects.all()
+    dogovory = Documents.objects.filter(type='Договор')
+    '''for choosing clients files'''
+    documents = Documents.objects.annotate(len=Length('supplyer'))
+    context = {
+        'now_year': now_year,
+        'sdelki': sdelki,
+        'menu': menu,
+        'documents': documents,
+        'documentss': documentss,
+        "title": "Документы Перевозчиков",
+        'dogovory': dogovory,
+        'clients_docs': clients_docs,
+    }
+    return render(request, 'crm_app/clients_docs.html', context=context)
+
+def other_companies_docs(request):
+    sdelki = Sdelka.objects.all()
+    documents = Documents.objects.all()
+    dogovory = Documents.objects.filter(type='Договор')
+    '''for choosing clients files'''
+    documents = Documents.objects.annotate(len=Length('other_company'))
+    context = {
+        'now_year': now_year,
+        'sdelki': sdelki,
+        'menu': menu,
+        'documents': documents,
+        'documentss': documentss,
+        "title": "Документы Сторонних Организаций",
+        'dogovory': dogovory,
+        'clients_docs': clients_docs,
+    }
+    return render(request, 'crm_app/clients_docs.html', context=context)
+
+#===========================================================
 def upload_documents(request):
     sdelki = Sdelka.objects.all()
     documents = Documents.objects.all()
+    dogovory = Documents.objects.filter(type='Договор')
+    '''for choosing clients files'''
+    clients_docs=Documents.objects.annotate(len=Length('client'))
+    '''for choosing supplyers files'''
+    supplyers_docs = Documents.objects.annotate(len=Length('supplyer'))
+    '''for choosing other_organizations files'''
+    other_companies_docs = Documents.objects.annotate(len=Length('other_company'))
+
     if request.method == 'POST':
         form = UploadDocumentsForm(request.POST, request.FILES)
         # file = request.FILES.getlist('file')[1]
@@ -1304,7 +1483,12 @@ def upload_documents(request):
             'sdelki': sdelki,
             'menu': menu,
             'documents': documents,
+            'documentss': documentss,
             "title": "Документы",
+            'dogovory': dogovory,
+            'clients_docs': clients_docs,
+            'other_companies_docs': other_companies_docs,
+            'supplyers_docs': supplyers_docs,
 
         }
     return render(request, 'crm_app/documents.html', context=context)
