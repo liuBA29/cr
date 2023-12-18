@@ -43,6 +43,8 @@ urlpatterns = [
     path('update_client/<int:c_id>/', update_client, name='update_client'),
     path('update_supplyer/<int:c_id>/', update_supplyer, name='update_supplyer'),
     path('update_other_company/<int:c_id>/', update_other_company, name='update_other_company'),
+    path('document_itself/', document_itself, name='document_itself'),
+
 
 
 
@@ -96,7 +98,8 @@ urlpatterns = [
 
     path('document_sdelka_client/<int:c_id>/', document_sdelka_client, name='document_sdelka_client'),
     path('document_sdelka_supplyer/<int:c_id>/', document_sdelka_supplyer, name='document_sdelka_supplyer'),
-    path('extract/', sdelka_vypiska, name='extract'),
+    path('extract/<int:c_id>/', extract, name='extract'),
+    path('to_excel/', to_excel, name='to excel'),
 
 
 

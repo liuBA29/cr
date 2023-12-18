@@ -24,7 +24,7 @@
     {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}
------------
+
       <br>
 
 <div class="poisk_table">
@@ -78,20 +78,116 @@
         {% endif %}
         {% endfor %}
 
-
+    <!-- отображение СДЕЛОК -->
 {% for c in sdelki %}
-        <h3>{{c.client}}</h3>
-    <li>Сделка номер: {{c.number}}</li>
+        <h3>Название Заказчика: {{c.client}}</h3>
+    <li>Сделка номер: <b> {{c.number}}</b></li>
     <li>Сделка создана: {{c.time_create}}</li>
-    <li>{{c.description}}</li>
+    <li>Описание перевозки: {{c.description}}</li>
+    <li>Статус: <b>{{c.status_sdelka}}</b>, Состояние: <b>{{c.status_sdelka_other}}</b></li>
+    <br>
+    <li>Перевозчик 1: {{c.supplyer_1}}</li>
+     {% if  c.debitorka1 == True  %}
+    <li>Дебиторка: ✔️</li>
+    {% else %}
+     <li>Дебиторка: ❌ </li>
+    {% endif %}
 
+    {% if c.supplyer_2 %}<br>
+        <li>Перевозчик 2: {{c.supplyer_2}}</li>
+        {% if  c.debitorka2 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_3 %}<br>
+        <li>Перевозчик 3: {{c.supplyer_3}}</li>
+        {% if  c.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_4 %}<br>
+        <li>Перевозчик 4: {{c.supplyer_4}}</li>
+        {% if  c.debitorka4 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_5 %}<br>
+        <li>Перевозчик 5: {{c.supplyer_5}}</li>
+        {% if  c.debitorka5 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_6 %}<br>
+        <li>Перевозчик 6: {{c.supplyer_6}}</li>
+        {% if  c.debitorka6 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_7 %}<br>
+        <li>Перевозчик 7: {{c.supplyer_7}}</li>
+        {% if  c.debitorka7 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_8 %}<br>
+        <li>Перевозчик 8: {{c.supplyer_8}}</li>
+        {% if  c.debitorka8 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_9 %}<br>
+        <li>Перевозчик 9: {{c.supplyer_9}}</li>
+        {% if  c.debitorka9 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_10 %}<br>
+        <li>Перевозчик 10: {{c.supplyer_10}}</li>
+        {% if  c.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
 
 
 
     <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
     {% endfor %}<hr>
-
-
+<!-- END отображение СДЕЛОК -->
+<a href="#">Сделать Выпіску</a>
 </ul>
 </div>
 {%endblock content%}

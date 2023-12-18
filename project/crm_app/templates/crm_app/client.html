@@ -11,8 +11,8 @@
 </div>
 
 <div class="centercontent"><ul>
-
-        <h3>{{client.company_name}}</h3>
+ <div class="borders">
+        <h3>Название: {{client.company_name}}</h3>
     <li>Контакт с сотрудником: {{client.contact_name}}</li>
     <li>Email заказчика:{{client.email}} </li>
     <li>Телефон: {{client.phone}}</li>
@@ -20,6 +20,7 @@
     <hr>
     <li>{{client.created}} </li>
     <li>{{client.updated}} </li>
+     <li>Постоянный клиент: {{client.client_status}}</li>
     <br>
     <h3>Сделки, в которых учавствует Заказчик:</h3>
 
@@ -42,12 +43,9 @@
 
     {% endfor %}
      <p>Количество всех документов:  {{doc_cl.count}} </p>
-    <hr>
 
 
-
-
-
+ </div>
 <button><a href="{% url 'update_client' client.id  %}">Редактировать</a></button>
      <td align = 'right'><a href="{% url 'delete_client' client.id %}">Удалить</a></td>
 

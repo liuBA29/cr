@@ -7,7 +7,7 @@
 </ul>
 </div>
 
-<form action="{% url 'download_document' %}" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
      <div class="form-error">{{ form.non_field_errors }}</div>
 
@@ -18,10 +18,15 @@
     <p><label for="{{ form.sdelka.id_for_label }}">{{ form.sdelka.label }}:</label>{{ form.sdelka }}</p>
     <div class="form-error">{{ form.sdelka.errors }}</div>
 
+    <p><label for="{{ form.other_company.id_for_label }}">{{ form.other_company.label }}:</label>{{ form.other_company }}</p>
+    <div class="form-error">{{ form.other_company.errors }}</div>
+
     <p><label for="{{ form.type.id_for_label }}">{{ form.type.label }}:</label>{{ form.type }}</p>
     <div class="form-error">{{ form.type.errors }}</div>
     <p><label for="{{ form.file.id_for_label }}">{{ form.file.label }}:</label>{{ form.file }}</p>
     <div class="form-error">{{ form.file.errors }}</div>
+
+
 
 
 

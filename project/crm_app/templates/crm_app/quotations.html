@@ -83,17 +83,21 @@
 
     {% for c in quotations %}
 
-    <h3>{{c.client}}</h3>
+    <h3>Заказчик: {{c.client}}</h3>
     <li>котировка создана: {{c.time_create}}</li>
-    <li>{{c.description}}</li>
-    <li>{{c.status}}</li>
+    <li>Описание потребности: {{c.description}}</li>
+    <li>Статускотировки: {{c.status}}</li>
     <li>место загрузки:  {{c.loading_country}}  ||  место выгрузки: {{c.unloading_country}}</li>
     <li>транспорт: {{c.common_transport}} </li>
+
      {% if c.result == 'PRICE_GOOD' %}
-    <li>{{c.result}}</li>
-     <button class="option_button"><a  href="{% url 'quot_sdelka' c.id %}">Создать Сделку</a></button>
-    {% else %}
-     <li>{{c.result}}</li>
+        <li>Результат: <b><span class="green"> прошли по цене</span></b></li>
+         <button class="option_button"><a  href="{% url 'quot_sdelka' c.id %}">Создать Сделку</a></button>
+            {% elif c.result == 'NOT_READY' %}
+    <li>Результат: <span class="blue"> товар не готов</span></li>
+        {% else %}
+        <li>Результат: не прошли по цене</li>
+
     {% endif %}
 
 

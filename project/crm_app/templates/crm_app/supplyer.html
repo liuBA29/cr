@@ -1,6 +1,7 @@
 {% extends 'crm_app/base.html' %}
 {%block content%}
 
+
 <div class="left-bar"><ul>
 
     {%for c in contragentss %}
@@ -11,15 +12,20 @@
 </div>
 
 <div class="centercontent"><ul>
+    <div class="borders">
 
-        <h3>{{supplyer.company_name}}</h3>
+        <h3>Название: {{supplyer.company_name}}</h3>
     <li>Контакт с сотрудником: {{supplyer.contact_name}}</li>
     <li>Email Перевозчика: {{supplyer.email}} </li>
     <li>Телефон:{{supplyer.phone}}</li>
     <li>Адрес: {{supplyer.address}} </li>
 
     <li>{{supplyer.created}} </li>
-    <li>{{supplyer.supplyer_status}}
+        {% if  supplyer.supplyer_status == True%}
+        <li>Надежный перевозчик: ✔️ </li>
+        {% else %}
+
+        {% endif %}
 
 
    <h3>Сделки, в которых учавствует Перевозчик:</h3>
@@ -78,18 +84,17 @@
     {% endfor %}
 
 
-     <br>
-   <h3>Документы:</h3>
+   <h3>Документы Перевозчика:</h3>
     {% for d in doc_cl %}
 
    <p> {{d.type}}: <a href="{{d.file.url}}">{{d.sdelka}}</a></li></p>
 
     {% endfor %}
     <br>
-<hr>
 
 
-
+</div>
+    <br>
     <button><a href="{% url 'update_supplyer' supplyer.id  %}">Редактировать</a></button>
     <button><td align = 'right'><a href="{% url 'delete_supplyer' supplyer.id %}">Удалить</a></td></button>
 

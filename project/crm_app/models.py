@@ -120,6 +120,7 @@ class Sdelka(Operation):
                                          verbose_name='Транспорт',
                                          related_name='transport')
 
+
     client_price = models.PositiveIntegerField(default=0, verbose_name='Цена')
     client_currency = models.ForeignKey(Currency, max_length=3, blank=True, null=True, on_delete=models.PROTECT,
                                         verbose_name='Валюта', related_name="client_currency")
@@ -273,29 +274,43 @@ class Sdelka(Operation):
         ('UPLOADED', 'Выгружена'),
 
     ]
+    STATUS_SDELKA_DIRECTION = [
+        ('DE-KZ', 'DE-KZ'),
+        ('DE-LV', 'DE-LV'),
+        ('FR-DE', 'FR-DE'),
+        ('BY-PL', 'BY-PL'),
+        ('DE-PL', 'DE-PL'),
+        ('DE-FR', 'DE-FR'),
+        ('FR-BY', 'FR-BY'),
+        ('BY-KZ', 'BY-KZ'),
+
+    ]
+
+    common_direction = models.CharField(max_length=15, blank=True, null=True,
+                                         verbose_name='Место загрузки',)
 
     status_sdelka = models.CharField(max_length=20, default='Проект', choices=STATUS_SDELKA_CHOICES,
                                      verbose_name='Статус общий сделки')
-    status_sdelka_other = models.CharField(max_length=20, default='Новая', choices=STATUS_SDELKA_OTHER_CHOICES,
-                                           verbose_name='Статус состояния сделки')
+    status_sdelka_other = models.CharField(max_length=20, blank=True, null=True, choices=STATUS_SDELKA_DIRECTION,
+                                           verbose_name='направление')
 
-    debitorka1 = models.BooleanField(default=False, verbose_name='подтвержение выгузки1')
-    debitorka2 = models.BooleanField(default=False, verbose_name='подтвержение выгузки2')
-    debitorka3 = models.BooleanField(default=False, verbose_name='подтвержение выгузки3')
-    debitorka4 = models.BooleanField(default=False, verbose_name='подтвержение выгузки4')
-    debitorka5 = models.BooleanField(default=False, verbose_name='подтвержение выгузки5')
-    debitorka6 = models.BooleanField(default=False, verbose_name='подтвержение выгузки6')
-    debitorka7 = models.BooleanField(default=False, verbose_name='подтвержение выгузки7')
-    debitorka8 = models.BooleanField(default=False, verbose_name='подтвержение выгузки8')
-    debitorka9 = models.BooleanField(default=False, verbose_name='подтвержение выгузки9')
-    debitorka10 = models.BooleanField(default=False, verbose_name='подтвержение выгузки10')
+    debitorka1 = models.BooleanField(default=False, verbose_name='подтвержение выгузки1 (дебиторка)')
+    debitorka2 = models.BooleanField(default=False, verbose_name='подтвержение выгузки2 (дебиторка)')
+    debitorka3 = models.BooleanField(default=False, verbose_name='подтвержение выгузки3 (дебиторка)')
+    debitorka4 = models.BooleanField(default=False, verbose_name='подтвержение выгузки4 (дебиторка)')
+    debitorka5 = models.BooleanField(default=False, verbose_name='подтвержение выгузки5 (дебиторка)')
+    debitorka6 = models.BooleanField(default=False, verbose_name='подтвержение выгузки6 (дебиторка)')
+    debitorka7 = models.BooleanField(default=False, verbose_name='подтвержение выгузки7 (дебиторка)')
+    debitorka8 = models.BooleanField(default=False, verbose_name='подтвержение выгузки8 (дебиторка)')
+    debitorka9 = models.BooleanField(default=False, verbose_name='подтвержение выгузки9 (дебиторка)')
+    debitorka10 = models.BooleanField(default=False, verbose_name='подтвержение выгузки10 (дебиторка)')
 
     profit = models.CharField(max_length=20, blank=True, verbose_name='прибыль в евро')
     class Meta:
         ordering = ['-time_update', '-time_create', 'number',]
 
-    def __str__(self):
-        return 'Сделка №' +  str(self.number)
+    def __str__(self) -> str:
+        return f"Сделка №' {self.number:03}"
 
     def get_absolute_url(self):
         return reverse('show_sdelka', kwargs={'c_id': self.pk})

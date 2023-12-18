@@ -12,11 +12,15 @@
 </div>
 
 <div class="centercontent">
+ <button class="addbutton"><a href="{% url 'document_itself' %}">Загрузить новый документ </a></button>
+
+
+
 
 
     {% for c in documents %}
-    =============
-        <h3>{{c.name}}</h3>
+
+        <h3>Название документа: {{c.name}}</h3>
     <ul>
         {% if c.client%}
         <li><b>Документ от Заказчика:</b> {{c.client}}</li>
@@ -26,7 +30,7 @@
          <li><b>Документ от Сторонней организации: </b>{{c.other_oranization}}</li>
         {%else%}
         <li><b>Корпоративный документ:</b> </li>
-        =======================
+
 
 
         {% endif %}
@@ -43,15 +47,8 @@
 
 
 
-<h2>Загрузить новый документ</h2>
 
-    <form action="{% url 'documents' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <p>
-            {{ form.file}}
-        </p>
-        <p><input type="submit" value="загрузить файл" /></p>
-    </form>
+
 
 
 

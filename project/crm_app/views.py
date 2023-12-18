@@ -1,7 +1,7 @@
 import calendar
 from calendar import HTMLCalendar
 from pprint import pprint
-
+import csv
 from django.db.models import *
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve
@@ -11,7 +11,7 @@ from django.views.generic import ListView
 from dateutil.relativedelta import relativedelta
 from .forms import *
 from .models import *
-
+from django.http import HttpResponse
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 from django.db.models.functions import *
@@ -371,11 +371,12 @@ def update_other_company(request, c_id):
     return render(request, 'crm_app/update_other_company.html', context=context)
 
 
+
 # ===update_supplyer======
 def update_supplyer(request, c_id):
     supplyer = get_object_or_404(Supplyer, pk=c_id)
 
-    form = AddClientForm(request.POST or None, instance=supplyer)
+    form = AddSupplyerForm(request.POST or None, instance=supplyer)
     url = resolve(request.path_info).url_name
     supplyers = Supplyer.objects.all()
     context = {
@@ -1255,9 +1256,29 @@ def login(request):
     return render(request, 'crm_app/login.html', {'menu': menu, "title": "Войти"})
 
 
+#=======add document======
+def document_itself(request):
+    document = get_object_or_404(Documents)
+    form = DocumentSdelkaSupplyerForm(request.POST or None,
+                                      instance=document)
+    url = resolve(request.path_info).url_name
+    context = {
+        'now_year': now_year,
+        'operationss': operationss,
+        'documentss': documentss,
+        'menu': menu,
+        "title": "Редактирование документа",
+        'form': form,
+        'document': document,
+        'url': url,
+    }
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'file добавлен')
+        return redirect('documents')
+    return render(request, 'crm_app/document_itself.html', context=context)
 
-
-
+#============
 def add_client(request):
     if request.method == 'POST':
         form = AddClientForm(request.POST)
@@ -1326,6 +1347,30 @@ def quot_sdelka(request, c_id):
         return redirect('sdelki')
     return render(request, 'crm_app/quot_sdelka.html', context=context)
 
+# ===add documents !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+def document_itself(request):
+    document = Documents.objects.all()
+    if request.method == "POST":
+        form = UploadDocumentsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'file добавлен')
+            return redirect('documents')
+    else:
+        form=UploadDocumentsForm()
+
+    context = {
+        'now_year': now_year,
+        'operationss': operationss,
+        'documentss': documentss,
+        'menu': menu,
+        "title": "Добавление документа",
+        'form': form,
+        'document': document,
+    }
+
+    return render(request, 'crm_app/document_itself.html', context=context)
+
 
 # =============Forms add+++++++++++++++++
 def add_sdelka(request):
@@ -1371,7 +1416,8 @@ def add_quotation(request):
     return render(request, 'crm_app/add_quotation.html', context=context)
 
 
-# ===documents !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
 def document_sdelka_supplyer(request, c_id):
     documents = Documents.objects.all()
@@ -1422,9 +1468,6 @@ def document_sdelka_client(request, c_id):
 #====
 
 #==========delete document++++++++
-
-
-# ++
 
 def download_document(request):
     documents = Documents.objects.all()
@@ -1533,19 +1576,75 @@ def upload_documents(request):
 
 
 # -----------============================------------------
+'''def show_sdelka(request, c_id):
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
 
-def sdelka_vypiska(request):
-    '''простые запросы'''
-    value = ""
-    '''
-    & - і (пріор 2)
-    | - ілі (пріор 3)
-    ~ - не (пріор 1)
-    
-    __gt  >
-    __gte >=
-    __lt  <
-    __lte <=
-    '''
-    obj_list = Sdelka.objects.filter(client=1).all()
-    return render(request, 'crm_app/extract.html', {'obj_list': obj_list, 'value': value})
+    url = resolve(request.path_info).url_name
+    sdelki = Sdelka.objects.all()
+
+    # ~Q(currency1=2) | ~Q(cusdelkarrency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) |)
+
+    context = {
+        'now_year': now_year,
+        'url': url,
+        'operationss': operationss,
+        'sdelka': sdelka,
+        'sdelki': sdelki,
+        'menu': menu,
+        "title": f'Сделка № {str(sdelka.number)}',
+
+    }
+    return render(request, 'crm_app/sdelka.html', context=context)'''
+
+
+
+#----------GENERATE excel  FILE----------------
+def to_excel(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] ='attachment; filename=.vypiska.csv'
+    # designet a model
+    writer = csv.writer(response)
+    sdelki = Sdelka.objects.all()
+
+    writer.writerow(['заказчик','перевозчик'])
+
+    for s in sdelki:
+        writer.writerow([s.client,  s.supplyer_1])
+
+    return response
+
+
+
+
+#-------------------------------------------
+
+def extract(request, c_id):
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] ='attachment; filename=vypiska_sdelki.txt'
+    # designet a model
+    url = resolve(request.path_info).url_name
+    sdelki = Sdelka.objects.all()
+    sdelka = get_object_or_404(Sdelka, pk=c_id)
+    lin = '-' * 110
+    space = " " * 4
+    lin = '-' * 110
+
+    # create lines:
+    lines = [f"{lin}\n",
+           f"Заказчик {space}{space} Сумма заказчика {space} Валюта\n",
+           f"{lin}\n",
+           ]
+     # for s in sdelki:
+    for a in sdelki:
+        a.cl=str(a.client)
+        lines.append(f"{a.cl:>15}   {a.client_price:15}    {a.client_currency}\n")
+    response.writelines(lines)
+
+    return response
+
+
+
+
+
+
+
