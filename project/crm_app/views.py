@@ -927,6 +927,9 @@ def supplyers_for_period(request):
         fromdate = request.POST.get('fromdate')
         todate = request.POST.get('todate')
         day = timedelta(minutes=60 * 24)
+
+        plus1 = day.strftime("%Y-%m-%d")
+
         end_date = datetime.today() + timedelta(days=1)
         typed = type(day)
         end_date2 = end_date.strftime("%Y-%m-%d")
@@ -939,6 +942,7 @@ def supplyers_for_period(request):
     else:
         result = "Что-то пошло не так .. "
     context = {
+        'plus1': plus1,
         'now_year': now_year,
         'fromdate': fromdate,
         'todate': todate,
@@ -1030,20 +1034,48 @@ def quotations_for_period(request):
     return render(request, 'crm_app/quotations_for_period.html', context=context)
 #
 # =
+
+'''def supplyers_filter(request, pk):
+    supplyers = Supplyer.objects.all()
+    title2 = f'C _____ по настоящее время:'
+    now_str = datetime.now().strftime("%d.%m.%Y")
+    if pk == 1:
+        now = datetime.now() - timedelta(minutes=60 * 24 * 7)  # 60*24---это сутки*7  =неделя
+        supplyers = supplyers.filter(time_create__gte=now)
+        selected = 1
+    elif pk == 2:
+        now = datetime.now()
+        supplyers = Supplyer.objects.all()
+        selected = True
+    elif pk == 3:
+       
+        three = period_quartal()
+        now = datetime.now()
+        supplyers = supplyers.filter(time_create__gte=three)
+        selected = 3'''
+
 # =========================sdelki by period==========================
 def sdelki_for_period(request, sdelki=None):
    # sdelki = Sdelka.objects.all()
     if request.method == "POST":
         fromdate = request.POST.get('fromdate')
         todate = request.POST.get('todate')
+
+       #======
         day = timedelta(minutes=60 * 24)
+        now = datetime.now().strftime("%Y-%m-%d")
         end_date = datetime.today() + timedelta(days=1)
         typed = type(day)
         end_date2 = end_date.strftime("%d.%m.%Y")
         typedd = type(todate)
-        sdelki = Sdelka.objects.raw(
-            'select * from crm_app_sdelka where time_create between "' + fromdate + '" and "' + todate + '"')
 
+        #=========time_create__gte=now
+        sdelki = Sdelka.objects.filter(time_create__gte=fromdate, time_create__lte=todate)
+       # sdelki = Sdelka.objects.filter(Q(time_create__gte=fromdate) | Q(time_create__lte=todate) | Q(time_create=todate))
+       # sdelki = Sdelka.objects.raw(
+         #   'select * from crm_app_sdelka where time_create between "' + fromdate + '" and "' + todate + '"')
+        sdelka_last = sdelki.latest('time_create')
+        #sdelki = sdelki+ sdelka_last
     else:
         result = "Что-то пошло не так .. "
     context = {
@@ -1054,12 +1086,15 @@ def sdelki_for_period(request, sdelki=None):
         'sdelki': sdelki,
         'menu': menu,
         "title": "Сделки",
-
+        "now": now,
         'day': day,
         'end_date2': end_date2,
         'typed': typed,
         'typedd': typedd,
         'end_date': end_date,
+        'sdelka_last': sdelka_last,
+
+
     }
     return render(request, 'crm_app/sdelki_for_period.html', context=context)
 
