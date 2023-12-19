@@ -307,7 +307,7 @@ class Sdelka(Operation):
 
     profit = models.CharField(max_length=20, blank=True, verbose_name='прибыль в евро')
     class Meta:
-        ordering = ['-time_update', '-time_create', 'number',]
+        ordering = [ 'time_create', 'number',]
 
     def __str__(self) -> str:
         return f"Сделка №' {self.number:03}"

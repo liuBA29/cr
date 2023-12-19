@@ -17,8 +17,8 @@ urlpatterns = [
     path('clients_for_period/', clients_for_period, name='clients_for_period'),
     path('supplyers_for_period/', supplyers_for_period, name='supplyers_for_period'),
 
-    path('clients_search/', clients_search, name='clients_search'),
-    path('supplyers_search/', supplyers_search, name='supplyers_search'),
+  #  path('clients_search/', clients_search, name='clients_search'),
+   # path('supplyers_search/', supplyers_search, name='supplyers_search'),
 
     path('other_companies/', other_companies, name='other_companies'),
 
@@ -34,8 +34,8 @@ urlpatterns = [
 
     path('quotations_for_period/', quotations_for_period, name='quotations_for_period'),
     path('sdelki_for_period/', sdelki_for_period, name='sdelki_for_period'),
-    path('quotations_search/', quotations_search, name='quotations_search'),
-    path('sdelki_search/', sdelki_search, name='sdelki_search'),
+  #  path('quotations_search/', quotations_search, name='quotations_search'),
+   # path('sdelki_search/', sdelki_search, name='sdelki_search'),
 
     path('update_quotation/<int:c_id>/', update_quotation, name='update_quotation'),
     path('update_sdelka/<int:c_id>/', update_sdelka, name='update_sdelka'),
@@ -98,9 +98,14 @@ urlpatterns = [
 
     path('document_sdelka_client/<int:c_id>/', document_sdelka_client, name='document_sdelka_client'),
     path('document_sdelka_supplyer/<int:c_id>/', document_sdelka_supplyer, name='document_sdelka_supplyer'),
-    path('extract/<int:c_id>/', extract, name='extract'),
-    path('to_excel/', to_excel, name='to excel'),
 
+    # выписки по сделкам
+    path('extract/<int:pk>/', extract, name='extract'),
+    path('to_excel/', to_excel, name='to excel'),
+    path('dinamic_file/3', dinamic_file_quartal_sdelki, name='dinamic_file_quartal_sdelki'),
+    path('dinamic_file/6', dinamic_file_six_sdelki, name='dinamic_file_six_sdelki'),
+    path('dinamic_file/', dinamic_file_all_sdelki, name='dinamic_file_all_sdelki'),
+    path('dinamic_file/1', dinamic_file_week_sdelki, name='dinamic_file_week_sdelki'),
 
 
 

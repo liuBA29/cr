@@ -12,7 +12,7 @@
 
 </div>
 
-<div class="centercontent"><ul>
+<div class="centercontent">
     <button class="addbutton"><a href="{% url 'add_client' %}">Добавить Заказчика</a></button>
      {% for msg in messages %}
     <div class="success">{{msg}}</div>
@@ -22,9 +22,11 @@
 
 <ul>
 
+
+
     <h4>Заказчики за период:</h4>
     <h3 class="choicetitle">с: {{fromdate}} по: {{todate}}</h3>
-{% for r in result %}
+{% for r in clients %}
      <li> {{r.company_name}} </li>
    <li>создан:  {{r.time_create}} </li>
     <li>{{r.address}} </li>

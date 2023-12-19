@@ -968,7 +968,7 @@ def clients_for_period(request):
         typed = type(day)
         end_date2 = end_date.strftime("%Y-%m-%d")
         typedd = type(todate)
-        result = Client.objects.raw(
+        clients = Client.objects.raw(
             'select * from crm_app_client where time_create between "' + fromdate + '" and "' + todate + '"')
 
     else:
@@ -981,7 +981,7 @@ def clients_for_period(request):
         'clients': clients,
         'menu': menu,
         "title": "Перевозчики",
-        'result': result,
+
         'day': day,
         'end_date2': end_date2,
 
@@ -1031,8 +1031,8 @@ def quotations_for_period(request):
 #
 # =
 # =========================sdelki by period==========================
-def sdelki_for_period(request):
-    sdelki = Sdelka.objects.all()
+def sdelki_for_period(request, sdelki=None):
+   # sdelki = Sdelka.objects.all()
     if request.method == "POST":
         fromdate = request.POST.get('fromdate')
         todate = request.POST.get('todate')
@@ -1041,7 +1041,7 @@ def sdelki_for_period(request):
         typed = type(day)
         end_date2 = end_date.strftime("%d.%m.%Y")
         typedd = type(todate)
-        result = Sdelka.objects.raw(
+        sdelki = Sdelka.objects.raw(
             'select * from crm_app_sdelka where time_create between "' + fromdate + '" and "' + todate + '"')
 
     else:
@@ -1054,7 +1054,7 @@ def sdelki_for_period(request):
         'sdelki': sdelki,
         'menu': menu,
         "title": "Сделки",
-        'result': result,
+
         'day': day,
         'end_date2': end_date2,
         'typed': typed,
@@ -1066,6 +1066,7 @@ def sdelki_for_period(request):
 
 
 # =========search supplyer by date =========
+'''
 def supplyers_search(request):
     supplyers = Supplyer.objects.all()
     earlier_supplyer = Supplyer.objects.earliest('time_create')
@@ -1117,7 +1118,7 @@ def quotations_search(request):
     return render(request, 'crm_app/quotations_search.html', context=context)
 
 
-# =========  search сделки by date =========
+
 def sdelki_search(request):
     sdelki = Quotation.objects.all()
     earlier_sdelka = Sdelka.objects.earliest('time_create')
@@ -1133,7 +1134,7 @@ def sdelki_search(request):
         "title": "Сделки",
     }
     return render(request, 'crm_app/sdelki_search.html', context=context)
-
+'''
 
 # =============end serching======================
 
@@ -1293,8 +1294,6 @@ def add_client(request):
 
 
 # ======
-
-# ====
 
 def add_supplyer(request):
     if request.method == 'POST':
@@ -1575,29 +1574,6 @@ def upload_documents(request):
     return render(request, 'crm_app/documents.html', context=context)
 
 
-# -----------============================------------------
-'''def show_sdelka(request, c_id):
-    sdelka = get_object_or_404(Sdelka, pk=c_id)
-
-    url = resolve(request.path_info).url_name
-    sdelki = Sdelka.objects.all()
-
-    # ~Q(currency1=2) | ~Q(cusdelkarrency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) | ~Q(currency1=2) |)
-
-    context = {
-        'now_year': now_year,
-        'url': url,
-        'operationss': operationss,
-        'sdelka': sdelka,
-        'sdelki': sdelki,
-        'menu': menu,
-        "title": f'Сделка № {str(sdelka.number)}',
-
-    }
-    return render(request, 'crm_app/sdelka.html', context=context)'''
-
-
-
 #----------GENERATE excel  FILE----------------
 def to_excel(request):
     response = HttpResponse(content_type='text/csv')
@@ -1615,19 +1591,16 @@ def to_excel(request):
 
 
 
-
-#-------------------------------------------
-
-def extract(request, c_id):
+def extract(request, pk):
+    sdelki = Sdelka.objects.all()
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] ='attachment; filename=vypiska_sdelki.txt'
     # designet a model
     url = resolve(request.path_info).url_name
-    sdelki = Sdelka.objects.all()
-    sdelka = get_object_or_404(Sdelka, pk=c_id)
+
+    sdelka = get_object_or_404(Sdelka, pk=pk)
     lin = '-' * 110
     space = " " * 4
-    lin = '-' * 110
 
     # create lines:
     lines = [f"{lin}\n",
@@ -1635,16 +1608,118 @@ def extract(request, c_id):
            f"{lin}\n",
            ]
      # for s in sdelki:
-    for a in sdelki:
-        a.cl=str(a.client)
-        lines.append(f"{a.cl:>15}   {a.client_price:15}    {a.client_currency}\n")
+    if pk == 1:
+
+        sdelki = sdelki.filter(number=12)
+        for a in sdelki:
+            a.cl=str(a.client)
+            lines.append(f"{a.cl:>15}   {a.client_price:15}    {a.client_currency}\n")
+    elif pk == 3:
+        sdelki = sdelki.filter(number=5)
+        for a in sdelki:
+            a.cl=str(a.client)
+            lines.append(f"{a.cl:>15}   {a.client_price:15}    {a.client_currency}\n")
+    elif pk == 2:
+        sdelki = sdelki.filter(number=5)
+        for a in sdelki:
+            a.cl=str(a.client)
+            lines.append(f"{a.cl:>15}   {a.client_price:15}    {a.client_currency}\n")
     response.writelines(lines)
 
     return response
 
+now = datetime.now() - timedelta(minutes=60 * 24 * 7)  # 60*24---это сутки*7  =неделя
+six = six_months_period()
+three = period_quartal()
+sd = Sdelka.objects.all()
+sd_quartal = Sdelka.objects.filter(time_create__gte=three)
+sd_six = Sdelka.objects.filter(time_create__gte=six)
+sd_week = Sdelka.objects.filter(time_create__gte=now)
 
+#============ВЫПИСКА ВСЕ СДЕЛКИ===============
 
+def dinamic_file_all_sdelki(request):
+    sdelki = sd
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=vypiska_all.txt'
+    lin = '-' * 110
+    space = " " * 4
+    lines = [f"{lin}\n",
+             f"Выписка за весь период \n"
+             f"{lin}\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{lin}\n",
+             ]
+    for s in sdelki:
+        s.cl = str(s.client)
+        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
 
+    response.writelines(lines)
+
+    return response
+
+#============  ВЫПИСКА 3 МЕСЯЦА ===============
+def dinamic_file_quartal_sdelki(request):
+    sdelki = sd_quartal
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=vypiska_quartal.txt'
+    lin = '-' * 110
+    space = " " * 4
+    lines = [f"{lin}\n",
+             f"Выписка за: 3 месяца\n"
+             f"{lin}\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{lin}\n",
+             ]
+    for s in sdelki:
+        s.cl = str(s.client)
+        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+
+    response.writelines(lines)
+
+    return response
+
+#===============  six month  ============
+def dinamic_file_six_sdelki(request):
+    sdelki = sd_six
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=vypiska_half_year.txt'
+    lin = '-' * 110
+    space = " " * 4
+    lines = [f"{lin}\n",
+             f"Выписка за: 6 месяцев\n"
+             f"{lin}\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{lin}\n",
+             ]
+    for s in sdelki:
+        s.cl = str(s.client)
+        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+
+    response.writelines(lines)
+
+    return response
+
+#================= vypiska week  ===================
+def dinamic_file_week_sdelki(request):
+    sdelki = sd_week
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
+    lin = '-' * 110
+    space = " " * 4
+    lines = [f"{lin}\n",
+             f"Выписка за: 7 дней \n"
+             f"{lin}\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{lin}\n",
+             ]
+    for s in sdelki:
+        s.cl = str(s.client)
+        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+
+    response.writelines(lines)
+
+    return response
 
 
 

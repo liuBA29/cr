@@ -11,12 +11,15 @@
 
 <div class="centercontent"><ul>
 
+
+
+
     <a href="{% url 'sdelka_filter' pk=1 %}"><button>week</button></a>
     <a href="{% url 'sdelka_filter' pk=2 %}"><button>month</button></a>
     <a href="{% url 'sdelka_filter' pk=3 %}"><button>all</button></a>
 
 
-    <br>{{sdelki}}
+
 
     <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить сделку</a></button>
 
