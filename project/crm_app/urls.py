@@ -107,8 +107,7 @@ urlpatterns = [
     path('dinamic_file/', dinamic_file_all_sdelki, name='dinamic_file_all_sdelki'),
     path('dinamic_file/1', dinamic_file_week_sdelki, name='dinamic_file_week_sdelki'),
 
-
-
+    path('calendar_filter/pk', calendar_filter, name='calendar_filter'),
 
 ]
 

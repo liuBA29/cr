@@ -16,11 +16,12 @@ class CurrencyAdmin(admin.ModelAdmin):
     list_display = ('id', 'currency_name')
 
 
+class TimePeriodAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created', 'fromdate', 'todate')
+
+
 admin.site.register(Client)
-
 admin.site.register(Supplyer, SupplyerAdmin)
-
-
 admin.site.register(OtherCompany)
 admin.site.register(Documents)
 admin.site.register(Currency, CurrencyAdmin)
@@ -28,3 +29,4 @@ admin.site.register(Direction)
 admin.site.register(Transport)
 admin.site.register(Quotation, QuotationAdmin)
 admin.site.register(Sdelka, SdelkaAdmin)
+admin.site.register(TimePeriod)

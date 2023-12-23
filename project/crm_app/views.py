@@ -1,4 +1,5 @@
 import calendar
+import datetime
 from calendar import HTMLCalendar
 from pprint import pprint
 import csv
@@ -20,6 +21,7 @@ from django.db.models.functions import *
 now = datetime.now()
 now_year = now.year
 # ================functions===============
+#========================фильтрация за 3 месяца ========================
 def period_quartal():
     '''считаем период за квартал'''
     m1, m2, m3 = 0, 0, 0
@@ -42,7 +44,7 @@ def period_quartal():
     print(result)
     return result
 
-
+#========================фильтрация за 6 месцев ========================
 def six_months_period():
     '''считаем период за 6 месяцев'''
     m1, m2, m3, m4, m5, m6 = 0, 0, 0, 0, 0, 0
@@ -919,7 +921,6 @@ def sdelki_filter(request, pk):
     }
     return render(request, 'crm_app/sdelki.html', context=context)
 
-
 # =========supplyers_for_period=====
 def supplyers_for_period(request):
     supplyers = Supplyer.objects.all()
@@ -928,21 +929,16 @@ def supplyers_for_period(request):
         todate = request.POST.get('todate')
         day = timedelta(minutes=60 * 24)
 
-        plus1 = day.strftime("%Y-%m-%d")
 
-        end_date = datetime.today() + timedelta(days=1)
-        typed = type(day)
-        end_date2 = end_date.strftime("%Y-%m-%d")
-        typedd = type(todate)
 
         # result = Supplyer.objects.filter(time_create__lte=todate, time_create__gte=fromdate)
         result = Supplyer.objects.raw(
-            'select * from crm_app_supplyer where time_create between "' + fromdate + '" and "' + todate + '"')
+
+    'select * from crm_app_supplyer where time_create between "' + fromdate + '" and date("' + todate + '", "1 day") ')
 
     else:
         result = "Что-то пошло не так .. "
     context = {
-        'plus1': plus1,
         'now_year': now_year,
         'fromdate': fromdate,
         'todate': todate,
@@ -952,11 +948,7 @@ def supplyers_for_period(request):
         "title": "Перевозчики",
         'result': result,
         'day': day,
-        'end_date2': end_date2,
 
-        'typed': typed,
-        'typedd': typedd,
-        'end_date': end_date,
     }
     return render(request, 'crm_app/supplyers_for_period.html', context=context)
 
@@ -973,8 +965,7 @@ def clients_for_period(request):
         end_date2 = end_date.strftime("%Y-%m-%d")
         typedd = type(todate)
         clients = Client.objects.raw(
-            'select * from crm_app_client where time_create between "' + fromdate + '" and "' + todate + '"')
-
+        'select * from crm_app_client where time_create between "' + fromdate + '" and date("' + todate + '", "1 day")')
     else:
         result = "Что-то пошло не так .. "
     context = {
@@ -984,8 +975,7 @@ def clients_for_period(request):
         'contragentss': contragentss,
         'clients': clients,
         'menu': menu,
-        "title": "Перевозчики",
-
+        "title": "Заказчики",
         'day': day,
         'end_date2': end_date2,
 
@@ -1005,35 +995,29 @@ def quotations_for_period(request):
         day = timedelta(minutes=60 * 24)
         end_date = datetime.today() + timedelta(days=1)
         typed = type(day)
-        end_date2 = end_date.strftime("%d.%m.%Y")
-
-
-
         typedd = type(todate)
         result = Quotation.objects.raw(
-            'select * from crm_app_quotation where time_create between "' + fromdate + '" and "' + todate + '"')
-
+            'select * from crm_app_quotation where time_create between "' + fromdate + '" and date("'+ todate +'", "1 day") ')
     else:
         result = "Что-то пошло не так .. "
     context = {
         'now_year': now_year,
         'fromdate': fromdate,
         'todate': todate,
+
         'operationss': operationss,
         'quotations': quotations,
         'menu': menu,
         "title": "Котировки",
         'result': result,
         'day': day,
-        'end_date2': end_date2,
         'typed': typed,
         'typedd': typedd,
         'end_date': end_date,
-
     }
     return render(request, 'crm_app/quotations_for_period.html', context=context)
-#
-# =
+
+
 
 '''def supplyers_filter(request, pk):
     supplyers = Supplyer.objects.all()
@@ -1054,35 +1038,6 @@ def quotations_for_period(request):
         supplyers = supplyers.filter(time_create__gte=three)
         selected = 3'''
 
-# =========================sdelki by period==========================
-def sdelki_for_period(request, sdelki=None):
-   # sdelki = Sdelka.objects.all()
-    if request.method == "POST":
-        fromdate = request.POST.get('fromdate')
-        todate = request.POST.get('todate')
-       #======
-        #=========time_create__gte=now
-        sdelki = Sdelka.objects.filter(time_create__gte=fromdate, time_create__lte=todate)
-       # sdelki = Sdelka.objects.filter(Q(time_create__gte=fromdate) | Q(time_create__lte=todate) | Q(time_create=todate))
-       # sdelki = Sdelka.objects.raw(
-         #   'select * from crm_app_sdelka where time_create between "' + fromdate + '" and "' + todate + '"')
-
-    else:
-        result = "Что-то пошло не так .. "
-    context = {
-        'now_year': now_year,
-        'fromdate': fromdate,
-        'todate': todate,
-        'operationss': operationss,
-        'sdelki': sdelki,
-        'menu': menu,
-        "title": "Сделки",
-        "now": now,
-
-
-
-    }
-    return render(request, 'crm_app/sdelki_for_period.html', context=context)
 
 
 
@@ -1700,7 +1655,7 @@ def dinamic_file_quartal_sdelki(request):
 
     return response
 
-#===============  six month  ============
+#===============  6 month  ============
 def dinamic_file_six_sdelki(request):
     sdelki = sd_six
     response = HttpResponse(content_type='text/plain')
@@ -1737,10 +1692,71 @@ def dinamic_file_week_sdelki(request):
     for s in sdelki:
         s.cl = str(s.client)
         lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
-
     response.writelines(lines)
-
     return response
 
+
+
+#================= vypiska week  ===================
+def calendar_filter(request):
+    period2 = TimePeriod.objects.latest('created')
+    fromdate = str(period2.fromdate)
+    todate = str(period2.todate)
+    # sdelki = Sdelka.objects.raw(
+    #     'select * from crm_app_sdelka where time_create between "' + fromdate + '" and "' + todate + '" ')
+    sdelki = Sdelka.objects.filter(time_create__gte=fromdate, time_create__lte=todate)
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
+    lin = '-' * 110
+    space = " " * 4
+    lines = [f"{lin}\n",
+             f"Выписка СДЕЛОК за период с: {period2.fromdate: %d.%m.%Y} по: {period2.todate: %d.%m.%Y} \n"
+             f"{lin}\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{lin}\n",
+             ]
+    for s in sdelki:
+        s.cl = str(s.client)
+        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+    response.writelines(lines)
+    return response
+
+# =========================sdelki by period==========================
+def sdelki_for_period(request, pk=None):
+    period = TimePeriod.objects.all()
+    # sdelki = Sdelka.objects.all()
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate')
+        form = AddTimePeriod(request.POST)
+        for p in period:
+            if (str(p.todate) == todate) and (str(p.fromdate) == fromdate):
+                p.delete()
+                print("already exists", todate)
+                str_todate=str(p.todate)
+                str_fromdate=str(p.fromdate)
+            else:
+                print("not exists")
+        form.save()
+        p_id=period.latest('created')
+        sdelki = Sdelka.objects.raw(
+            'select * from crm_app_sdelka where time_create between "' + fromdate + '" and date("' + todate + '", "1 day") ')
+    else:
+        sdelki = "Что-то пошло не так .. "
+    sd = Sdelka.objects.filter(time_create__gte=fromdate, time_create__lte=todate)
+    context = {
+        'now_year': now_year,
+        'fromdate': fromdate,
+        'todate': todate,
+        'operationss': operationss,
+        'sdelki': sdelki,
+        'menu': menu,
+        "title": "Сделки",
+        "now": now,
+        'form': form,
+        'period': period,
+        'p_id': p_id,
+    }
+    return render(request, 'crm_app/sdelki_for_period.html', context=context)
 
 

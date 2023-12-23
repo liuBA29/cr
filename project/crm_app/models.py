@@ -4,6 +4,19 @@ from django.db import models
 from django.urls import reverse
 
 
+class TimePeriod(models.Model):
+
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Время создания')
+    fromdate = models.DateField(blank=True, max_length=40, null=True, verbose_name='Дата с')
+    todate = models.DateField(blank=True, max_length=40, null=True, verbose_name='Дата по')
+
+    def __str__(self):
+        return (f'{self.fromdate} - {self.todate}')
+    class Meta:
+        ordering = ['fromdate', 'todate',]
+
+
+
 class Contragent(models.Model):
     company_name = models.CharField(max_length=35)
     contact_name = models.CharField(max_length=100, blank=True, verbose_name='Контактное лицо')
@@ -16,6 +29,9 @@ class Contragent(models.Model):
 
     class Meta:
         abstract = True
+
+
+
 
 
 class Transport(models.Model):
@@ -380,10 +396,6 @@ class Quotation(Operation):
                                          related_name='com_transport')
 
 
-###
-
-    #####
-
 
     supplyer_1 = models.ForeignKey(Supplyer, max_length=40, blank=True, null=True, on_delete=models.PROTECT,
                                    verbose_name='Перевозчик', related_name="supplyer_1")
@@ -457,7 +469,7 @@ class Quotation(Operation):
 
 
     comment_field1 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 1')
-    comment_field2 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке ')
+    comment_field2 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 2')
     comment_field3 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 3')
     comment_field4 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 4')
     comment_field5 = models.CharField(max_length=280, blank=True, verbose_name='Комментарий к ставке 5')
@@ -480,6 +492,12 @@ class Quotation(Operation):
     class Meta:
         verbose_name = "Котировка"
         verbose_name_plural = "Котировки"
+
+        ordering = ['time_create' ]
+
+
+
+
 
 
 

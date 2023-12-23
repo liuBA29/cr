@@ -6,8 +6,9 @@
 
 <div class="left-bar"><ul>
 
+
     {%for c in operationss %}
-         {% if c.url_name == url %}
+         {% if c.url_name == 'quotations' %}
        <li class="selected">{{c.title}}</li>
     {%else%}
     <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
@@ -26,7 +27,6 @@
     <div class="success">{{msg}}</div>
     {% endfor %}
 
-    -----------
       <br>
 
 <div class="poisk_table">

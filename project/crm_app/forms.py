@@ -2,6 +2,12 @@ from django import forms
 from .models import *
 
 
+class AddTimePeriod(forms.ModelForm):
+    class Meta:
+        model = TimePeriod
+        fields = '__all__'
+
+#===========================================
 class UploadDocumentsForm(forms.ModelForm):
     class Meta:
         model = Documents

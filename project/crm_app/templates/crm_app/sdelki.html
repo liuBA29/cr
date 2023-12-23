@@ -7,7 +7,7 @@
 <div class="left-bar"><ul>
 
     {%for c in operationss %}
-         {% if c.url_name == url %}
+         {% if c.url_name == 'sdelki' %}
        <li class="selected">{{c.title}}</li>
     {%else%}
     <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
@@ -43,6 +43,9 @@
 </div>
 
     <div class="search-right">
+
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
+
 <b>Найти за период:</b>
     <form action="{% url 'sdelki_for_period' %}" method="post">
         {% csrf_token %}
@@ -50,6 +53,9 @@
             По: <input type="date" name="todate">
             <input type="submit" value="Искать"/>
 </form>
+         <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
+        {{form}}
+
 </div>
 </div>
 
