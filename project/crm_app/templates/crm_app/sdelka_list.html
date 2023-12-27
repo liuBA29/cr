@@ -12,9 +12,12 @@
 
 </div>
 
-<div class="centercontent"><ul>
+<div class="centercontent">
+
+    <ul>
 
     <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить Сделку</a></button>
+    <button class=""><a href="{% url 'qf_vypiska' %}">Сделать Выписку</a></button>
     {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}

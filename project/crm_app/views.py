@@ -631,13 +631,62 @@ class ClassicSearchQuotation(ListView):
         context['q'] = self.request.GET.get('q')
         return context
 
+##=========
 
+
+def qf(request, pk=None):
+    qf = Qfilter.objects.all()
+    Qfilter.objects.create(qfilter='pere')
+    context={
+        'qf': qf,
+    }
+    return render(request, 'crm_app/sdelka_list.html', context=context)
+#=======================================
+
+
+def qf_vypiska(request):
+    qf = Qfilter.objects.latest('created')
+
+    sdelki = Sdelka.objects.filter(description__iregex=qf.qfilter)
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
+    lin = '-' * 110
+    space = " " * 4
+    lines = [f"{lin}\n",
+             f'Выписка СДЕЛОК поиска о описанию: " {qf.qfilter} "\n',
+             f"{lin}\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{lin}\n",
+             ]
+    for s in sdelki:
+        s.cl = str(s.client)
+        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+    response.writelines(lines)
+    return response
+
+
+# ==
 class ClassicSearchSdelka(ListView):
     model = Sdelka
     context_object_name = 'sdelki'
-
     def get_queryset(self):
+        qf = Qfilter.objects.all()
+
+        for f in qf:
+            if (str(f.qfilter) == str(self.request.GET.get('q'))) :
+                f.delete()
+                print("already exists", )
+
+            else:
+                print("not exists")
+        Qfilter.objects.create(qfilter=self.request.GET.get('q'))
+
         return Sdelka.objects.filter(description__iregex=self.request.GET.get('q'))
+
+    def create_qf(request):
+        qfilter = Qfilter.objects.acreate(qfilter="Tim")
+        print(qfilter.qfilter)
+        return qfilter
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -645,7 +694,11 @@ class ClassicSearchSdelka(ListView):
         context['menu'] = menu
         context['operationss'] = operationss
         context['q'] = self.request.GET.get('q')
+        context['f_id']=Qfilter.objects.latest('created')
+
         return context
+
+
 
 ''' Сортііровка по неделе, кварталу, 6 месяцам, все....'''
 #==========
@@ -1758,5 +1811,6 @@ def sdelki_for_period(request, pk=None):
         'p_id': p_id,
     }
     return render(request, 'crm_app/sdelki_for_period.html', context=context)
+#=================qfilter=================================
 
 

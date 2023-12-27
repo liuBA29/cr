@@ -19,6 +19,9 @@ class CurrencyAdmin(admin.ModelAdmin):
 class TimePeriodAdmin(admin.ModelAdmin):
     list_display = ('id', 'created', 'fromdate', 'todate')
 
+class QfilterAdmin(admin.ModelAdmin):
+    list_display = ('id', 'qfilter')
+
 
 admin.site.register(Client)
 admin.site.register(Supplyer, SupplyerAdmin)
@@ -30,3 +33,4 @@ admin.site.register(Transport)
 admin.site.register(Quotation, QuotationAdmin)
 admin.site.register(Sdelka, SdelkaAdmin)
 admin.site.register(TimePeriod)
+admin.site.register(Qfilter)

@@ -108,6 +108,7 @@ urlpatterns = [
     path('dinamic_file/1', dinamic_file_week_sdelki, name='dinamic_file_week_sdelki'),
 
     path('calendar_filter/pk', calendar_filter, name='calendar_filter'),
-
+   # path('some_view/', some_view, name='some_view'),qf
+    path('qf_vypiska/', qf_vypiska, name='qf_vypiska'),
 ]
 

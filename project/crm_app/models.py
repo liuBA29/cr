@@ -16,6 +16,15 @@ class TimePeriod(models.Model):
         ordering = ['fromdate', 'todate',]
 
 
+class Qfilter(models.Model):
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Время создания')
+    qfilter = models.CharField(max_length=35)
+
+    def __str__(self):
+        return f'{self.qfilter} '
+    class Meta:
+        ordering = ['qfilter']
+
 
 class Contragent(models.Model):
     company_name = models.CharField(max_length=35)
