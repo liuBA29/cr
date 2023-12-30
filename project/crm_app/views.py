@@ -16,6 +16,26 @@ from django.http import HttpResponse
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 from django.db.models.functions import *
+from .currency_parcer import find_currency
+
+#=========================
+
+#from bs4 import BeautifulSoup
+from pprint import pprint
+
+
+
+# our_cur = find_currency('RUB')
+# print(our_cur)
+
+
+
+# ====================
+#------parcing currency
+
+# =
+
+
 
 #============= declare now_time ++++++++++=========
 now = datetime.now()
@@ -136,13 +156,13 @@ menu = [
 
 
 def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    cur = find_currency('RUB')
     name = "Calendar"
     month = month.title()
     # convert month from name to number
     month_number = list(calendar.month_name).index(month)
     month_number = int(month_number)
     now = datetime.now()
-
     now_year = now.year
     time = now.strftime('%H:%M')
     # create calendar
@@ -159,7 +179,6 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
     client_search_year = Client.objects.filter(
         time_create__year=year,
     )
-
     context = {
         'name': name,
         'menu': menu,
@@ -173,6 +192,7 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
         'time': time,
         'client_search_month': client_search_month,
         'client_search_year': client_search_year,
+        'cur': cur,
 
     }
 
@@ -646,7 +666,7 @@ def qf(request, pk=None):
 
 def qf_vypiska(request):
     qf = Qfilter.objects.latest('created')
-
+    cur = find_currency('CNY', 25)
     sdelki = Sdelka.objects.filter(description__iregex=qf.qfilter)
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
@@ -655,12 +675,23 @@ def qf_vypiska(request):
     lines = [f"{lin}\n",
              f'Выписка СДЕЛОК поиска о описанию: " {qf.qfilter} "\n',
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
+             f"{space} Заказчик{space} Сумма заказчика {space} Валюта{space}  "
+             f"Перевозчик1 {space} Сумма{space}Валюта \n",
              f"{lin}\n",
              ]
     for s in sdelki:
         s.cl = str(s.client)
-        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+        s.cl_cur=str(s.client_currency)
+        # переводим цену заказчика в евро
+        s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
+
+        s.sup1 = str(s.supplyer_1)
+
+
+        lines.append(f"{s.cl:>17}  {s.client_price:18}    {s.cl_cur:4} "
+                     f"{s.sup1:>22} {s.sup_price_1:>10}    {s.currency1}\n")
+        #lines.append(find_currency('CNY', s.client_price))
+    lines.append(f'{lin}\n {cur}  \n this is the end...')
     response.writelines(lines)
     return response
 
