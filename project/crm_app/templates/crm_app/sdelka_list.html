@@ -17,7 +17,9 @@
     <ul>
 
     <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить Сделку</a></button>
-    <button class=""><a href="{% url 'qf_vypiska' %}">Сделать Выписку</a></button>
+
+         <a class="" href="{% url 'qf_vypiska' %}">
+        <button class="custom-btn btn-7"> <span>Сделать выписку</span></button></a>
     {% for msg in messages %}
     <div class="success">{{msg}}</div>
     {% endfor %}

@@ -14,8 +14,9 @@
 
 <div class="centercontent">
     <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить Сделку</a></button>
-    <button class=""><a href="{% url 'calendar_filter' %}">Выпискa</a></button>
 
+<a class="" href="{% url 'calendar_filter' %}">
+        <button class="custom-btn btn-7"> <span>Сделать выписку</span></button></a>
 
      {% for msg in messages %}
     <div class="success">{{msg}}</div>

@@ -16,7 +16,7 @@ from django.http import HttpResponse
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 from django.db.models.functions import *
-from .currency_parcer import find_currency
+from .currency_parcer import find_currency, show_profit
 
 #=========================
 
@@ -156,7 +156,7 @@ menu = [
 
 
 def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
-    cur = find_currency('RUB')
+
     name = "Calendar"
     month = month.title()
     # convert month from name to number
@@ -192,7 +192,7 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
         'time': time,
         'client_search_month': client_search_month,
         'client_search_year': client_search_year,
-        'cur': cur,
+
 
     }
 
@@ -664,34 +664,56 @@ def qf(request, pk=None):
 #=======================================
 
 
+#  function forvypiska
 def qf_vypiska(request):
     qf = Qfilter.objects.latest('created')
-    cur = find_currency('CNY', 25)
     sdelki = Sdelka.objects.filter(description__iregex=qf.qfilter)
     response = HttpResponse(content_type='text/plain')
-    response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
-    lin = '-' * 110
+    response['Content-Disposition'] = 'attachment; filename=vypiska_description_search.txt'
+    lin = '-' * 220
     space = " " * 4
     lines = [f"{lin}\n",
-             f'Выписка СДЕЛОК поиска о описанию: " {qf.qfilter} "\n',
+             f'Выписка СДЕЛОК поиска по описанию: " {qf.qfilter} "\n',
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта{space}  "
-             f"Перевозчик1 {space} Сумма{space}Валюта \n",
-             f"{lin}\n",
+             f"{space}Заказчик{space} Сумма заказчика  Валюта{space}",
+             f"{space}Перевозчик1 {space}{space}{space} Сумма Валюта{space} Дата разгрузки{space} {space}Дебиторка"
+             f"{space}Профит,EUR{space}Направление {space} Транспорт\n",
+            f"\n",
              ]
+
     for s in sdelki:
         s.cl = str(s.client)
         s.cl_cur=str(s.client_currency)
-        # переводим цену заказчика в евро
+        # переводим цену заказчика в евро:
         s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
 
+
+        # переводим цену ПЕРЕВОЗЧИКОВ в евро:
+
         s.sup1 = str(s.supplyer_1)
+        s.sub_cur1 = str(s.currency1)
+        s.sup1_price_into_eur = str(find_currency(str(s.currency1), s.sup_price_1))
 
+        s.price_into_eur_fl = find_currency(str(s.client_currency), s.client_price)
+        s.sup1_price_into_eur_fl = find_currency(str(s.currency1), s.sup_price_1)
+        profit = str(show_profit(s.sup1_price_into_eur_fl, s.price_into_eur_fl))
 
-        lines.append(f"{s.cl:>17}  {s.client_price:18}    {s.cl_cur:4} "
-                     f"{s.sup1:>22} {s.sup_price_1:>10}    {s.currency1}\n")
-        #lines.append(find_currency('CNY', s.client_price))
-    lines.append(f'{lin}\n {cur}  \n this is the end...')
+        s.sup2_price_into_eur = str(find_currency(str(s.currency2), s.sup_price_2))
+        s.sup2 = str(s.supplyer_2)
+        s.razgruzka = str(s.data_zagruzki_1)
+
+        transport=str(s.common_transport)
+        direction = str(s.common_direction)
+
+        lines.append(f"{s.cl:>18}  {s.client_price:>10}    {s.cl_cur:5} "
+                     f"{s.sup1:>22}   {s.sup_price_1:>12}    {s.sub_cur1:5}     {s.razgruzka:15}  "
+                     f"      {s.debitorka1:>5}  {profit:>12} {direction:>12} {transport:>20}\n")
+
+    lines.append(f"{lin}\n")
+    lines.append(f"Профит высчитывается: СУММА ПЕРЕВОЗЧИКА,eur  -  СУММА ЗАКАЗЧИКА,eur\n")
+    lines.append(f"\n")
+    lines.append(f'{lin}\n   \n this is the end...')
+
     response.writelines(lines)
     return response
 
@@ -702,17 +724,15 @@ class ClassicSearchSdelka(ListView):
     context_object_name = 'sdelki'
     def get_queryset(self):
         qf = Qfilter.objects.all()
-
         for f in qf:
             if (str(f.qfilter) == str(self.request.GET.get('q'))) :
                 f.delete()
                 print("already exists", )
-
             else:
                 print("not exists")
         Qfilter.objects.create(qfilter=self.request.GET.get('q'))
-
         return Sdelka.objects.filter(description__iregex=self.request.GET.get('q'))
+
 
     def create_qf(request):
         qfilter = Qfilter.objects.acreate(qfilter="Tim")
@@ -1702,20 +1722,45 @@ def dinamic_file_all_sdelki(request):
     sdelki = sd
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_all.txt'
-    lin = '-' * 110
+    lin = '-' * 220
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка за весь период \n"
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
-             f"{lin}\n",
+             f"{space}Заказчик{space} Сумма заказчика  Валюта{space}",
+             f"{space}Перевозчик1 {space}{space}{space} Сумма Валюта{space} Дата разгрузки{space} {space}Дебиторка"
+             f"{space}Профит,EUR{space}Направление {space} Транспорт\n",
+             f"\n",
              ]
     for s in sdelki:
         s.cl = str(s.client)
-        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+        s.cl_cur = str(s.client_currency)
+        # переводим цену заказчика в евро:
+        s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
+        # переводим цену ПЕРЕВОЗЧИКОВ в евро:
+        s.sup1 = str(s.supplyer_1)
+        s.sub_cur1 = str(s.currency1)
+        s.sup1_price_into_eur = str(find_currency(str(s.currency1), s.sup_price_1))
 
+        s.price_into_eur_fl = find_currency(str(s.client_currency), s.client_price)
+        s.sup1_price_into_eur_fl = find_currency(str(s.currency1), s.sup_price_1)
+        profit = str(show_profit(s.sup1_price_into_eur_fl, s.price_into_eur_fl))
+
+        s.sup2_price_into_eur = str(find_currency(str(s.currency2), s.sup_price_2))
+        s.sup2 = str(s.supplyer_2)
+        s.razgruzka = str(s.data_zagruzki_1)
+
+        transport = str(s.common_transport)
+        direction = str(s.common_direction)
+
+        lines.append(f"{s.cl:>18}  {s.client_price:>10}    {s.cl_cur:5} "
+                     f"{s.sup1:>22}   {s.sup_price_1:>12}    {s.sub_cur1:5}     {s.razgruzka:15}  "
+                     f"      {s.debitorka1:>5}  {profit:>12} {direction:>12} {transport:>20}\n")
+    lines.append(f"{lin}\n")
+    lines.append(f"Профит высчитывается: СУММА ПЕРЕВОЗЧИКА,eur  -  СУММА ЗАКАЗЧИКА,eur\n")
+    lines.append(f"\n")
+    lines.append(f'{lin}\n   \n this is the end...')
     response.writelines(lines)
-
     return response
 
 #============  ВЫПИСКА 3 МЕСЯЦА ===============
@@ -1723,20 +1768,45 @@ def dinamic_file_quartal_sdelki(request):
     sdelki = sd_quartal
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_quartal.txt'
-    lin = '-' * 110
+    lin = '-' * 220
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка за: 3 месяца\n"
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
-             f"{lin}\n",
+             f"{space}Заказчик{space} Сумма заказчика  Валюта{space}",
+             f"{space}Перевозчик1 {space}{space}{space} Сумма Валюта{space} Дата разгрузки{space} {space}Дебиторка"
+             f"{space}Профит,EUR{space}Направление {space} Транспорт\n",
+             f"\n",
              ]
     for s in sdelki:
         s.cl = str(s.client)
-        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+        s.cl_cur = str(s.client_currency)
+        # переводим цену заказчика в евро:
+        s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
+        # переводим цену ПЕРЕВОЗЧИКОВ в евро:
+        s.sup1 = str(s.supplyer_1)
+        s.sub_cur1 = str(s.currency1)
+        s.sup1_price_into_eur = str(find_currency(str(s.currency1), s.sup_price_1))
 
+        s.price_into_eur_fl = find_currency(str(s.client_currency), s.client_price)
+        s.sup1_price_into_eur_fl = find_currency(str(s.currency1), s.sup_price_1)
+        profit = str(show_profit(s.sup1_price_into_eur_fl, s.price_into_eur_fl))
+
+        s.sup2_price_into_eur = str(find_currency(str(s.currency2), s.sup_price_2))
+        s.sup2 = str(s.supplyer_2)
+        s.razgruzka = str(s.data_zagruzki_1)
+
+        transport = str(s.common_transport)
+        direction = str(s.common_direction)
+
+        lines.append(f"{s.cl:>18}  {s.client_price:>10}    {s.cl_cur:5} "
+                     f"{s.sup1:>22}   {s.sup_price_1:>12}    {s.sub_cur1:5}     {s.razgruzka:15}  "
+                     f"      {s.debitorka1:>5}  {profit:>12} {direction:>12} {transport:>20}\n")
+    lines.append(f"{lin}\n")
+    lines.append(f"Профит высчитывается: СУММА ПЕРЕВОЗЧИКА,eur  -  СУММА ЗАКАЗЧИКА,eur\n")
+    lines.append(f"\n")
+    lines.append(f'{lin}\n   \n this is the end...')
     response.writelines(lines)
-
     return response
 
 #===============  6 month  ============
@@ -1749,15 +1819,40 @@ def dinamic_file_six_sdelki(request):
     lines = [f"{lin}\n",
              f"Выписка за: 6 месяцев\n"
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
-             f"{lin}\n",
+             f"{space}Заказчик{space} Сумма заказчика  Валюта{space}",
+             f"{space}Перевозчик1 {space}{space}{space} Сумма Валюта{space} Дата разгрузки{space} {space}Дебиторка"
+             f"{space}Профит,EUR{space}Направление {space} Транспорт\n",
+             f"\n",
              ]
     for s in sdelki:
         s.cl = str(s.client)
-        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+        s.cl_cur = str(s.client_currency)
+        # переводим цену заказчика в евро:
+        s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
+        # переводим цену ПЕРЕВОЗЧИКОВ в евро:
+        s.sup1 = str(s.supplyer_1)
+        s.sub_cur1 = str(s.currency1)
+        s.sup1_price_into_eur = str(find_currency(str(s.currency1), s.sup_price_1))
 
+        s.price_into_eur_fl = find_currency(str(s.client_currency), s.client_price)
+        s.sup1_price_into_eur_fl = find_currency(str(s.currency1), s.sup_price_1)
+        profit = str(show_profit(s.sup1_price_into_eur_fl, s.price_into_eur_fl))
+
+        s.sup2_price_into_eur = str(find_currency(str(s.currency2), s.sup_price_2))
+        s.sup2 = str(s.supplyer_2)
+        s.razgruzka = str(s.data_zagruzki_1)
+
+        transport = str(s.common_transport)
+        direction = str(s.common_direction)
+
+        lines.append(f"{s.cl:>18}  {s.client_price:>10}    {s.cl_cur:5} "
+                     f"{s.sup1:>22}   {s.sup_price_1:>12}    {s.sub_cur1:5}     {s.razgruzka:15}  "
+                     f"      {s.debitorka1:>5}  {profit:>12} {direction:>12} {transport:>20}\n")
+    lines.append(f"{lin}\n")
+    lines.append(f"Профит высчитывается: СУММА ПЕРЕВОЗЧИКА,eur  -  СУММА ЗАКАЗЧИКА,eur\n")
+    lines.append(f"\n")
+    lines.append(f'{lin}\n   \n this is the end...')
     response.writelines(lines)
-
     return response
 
 #================= vypiska week  ===================
@@ -1770,12 +1865,39 @@ def dinamic_file_week_sdelki(request):
     lines = [f"{lin}\n",
              f"Выписка за: 7 дней \n"
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
-             f"{lin}\n",
+             f"{space}Заказчик{space} Сумма заказчика  Валюта{space}",
+             f"{space}Перевозчик1 {space}{space}{space} Сумма Валюта{space} Дата разгрузки{space} {space}Дебиторка"
+             f"{space}Профит,EUR{space}Направление {space} Транспорт\n",
+             f"\n",
              ]
     for s in sdelki:
         s.cl = str(s.client)
-        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+        s.cl_cur = str(s.client_currency)
+        # переводим цену заказчика в евро:
+        s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
+        # переводим цену ПЕРЕВОЗЧИКОВ в евро:
+        s.sup1 = str(s.supplyer_1)
+        s.sub_cur1 = str(s.currency1)
+        s.sup1_price_into_eur = str(find_currency(str(s.currency1), s.sup_price_1))
+
+        s.price_into_eur_fl = find_currency(str(s.client_currency), s.client_price)
+        s.sup1_price_into_eur_fl = find_currency(str(s.currency1), s.sup_price_1)
+        profit = str(show_profit(s.sup1_price_into_eur_fl, s.price_into_eur_fl))
+
+        s.sup2_price_into_eur = str(find_currency(str(s.currency2), s.sup_price_2))
+        s.sup2 = str(s.supplyer_2)
+        s.razgruzka = str(s.data_zagruzki_1)
+
+        transport = str(s.common_transport)
+        direction = str(s.common_direction)
+
+        lines.append(f"{s.cl:>18}  {s.client_price:>10}    {s.cl_cur:5} "
+                     f"{s.sup1:>22}   {s.sup_price_1:>12}    {s.sub_cur1:5}     {s.razgruzka:15}  "
+                     f"      {s.debitorka1:>5}  {profit:>12} {direction:>12} {transport:>20}\n")
+    lines.append(f"{lin}\n")
+    lines.append(f"Профит высчитывается: СУММА ПЕРЕВОЗЧИКА,eur  -  СУММА ЗАКАЗЧИКА,eur\n")
+    lines.append(f"\n")
+    lines.append(f'{lin}\n   \n this is the end...')
     response.writelines(lines)
     return response
 
@@ -1788,20 +1910,48 @@ def calendar_filter(request):
     todate = str(period2.todate)
     # sdelki = Sdelka.objects.raw(
     #     'select * from crm_app_sdelka where time_create between "' + fromdate + '" and "' + todate + '" ')
-    sdelki = Sdelka.objects.filter(time_create__gte=fromdate, time_create__lte=todate)
+    sdelki = Sdelka.objects.raw(
+            'select * from crm_app_sdelka where time_create between "' + fromdate + '" and date("' + todate + '", "1 day") ')
     response = HttpResponse(content_type='text/plain')
-    response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
+    response['Content-Disposition'] = 'attachment; filename=selected_period_vypiska.txt'
     lin = '-' * 110
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка СДЕЛОК за период с: {period2.fromdate: %d.%m.%Y} по: {period2.todate: %d.%m.%Y} \n"
              f"{lin}\n",
-             f"{space} Заказчик{space} Сумма заказчика {space} Валюта\n",
-             f"{lin}\n",
+             f"{space}Заказчик{space} Сумма заказчика  Валюта{space}",
+             f"{space}Перевозчик1 {space}{space}{space} Сумма Валюта{space} Дата разгрузки{space} {space}Дебиторка"
+             f"{space}Профит,EUR{space}Направление {space} Транспорт\n",
+             f"\n",
              ]
     for s in sdelki:
         s.cl = str(s.client)
-        lines.append(f"{s.cl:>15}   {s.client_price:15}    {s.client_currency}\n")
+        s.cl_cur = str(s.client_currency)
+        # переводим цену заказчика в евро:
+        s.price_into_eur = str(find_currency(str(s.client_currency), s.client_price))
+        # переводим цену ПЕРЕВОЗЧИКОВ в евро:
+        s.sup1 = str(s.supplyer_1)
+        s.sub_cur1 = str(s.currency1)
+        s.sup1_price_into_eur = str(find_currency(str(s.currency1), s.sup_price_1))
+
+        s.price_into_eur_fl = find_currency(str(s.client_currency), s.client_price)
+        s.sup1_price_into_eur_fl = find_currency(str(s.currency1), s.sup_price_1)
+        profit = str(show_profit(s.sup1_price_into_eur_fl, s.price_into_eur_fl))
+
+        s.sup2_price_into_eur = str(find_currency(str(s.currency2), s.sup_price_2))
+        s.sup2 = str(s.supplyer_2)
+        s.razgruzka = str(s.data_zagruzki_1)
+
+        transport = str(s.common_transport)
+        direction = str(s.common_direction)
+
+        lines.append(f"{s.cl:>18}  {s.client_price:>10}    {s.cl_cur:5} "
+                     f"{s.sup1:>22}   {s.sup_price_1:>12}    {s.sub_cur1:5}     {s.razgruzka:15}  "
+                     f"      {s.debitorka1:>5}  {profit:>12} {direction:>12} {transport:>20}\n")
+    lines.append(f"{lin}\n")
+    lines.append(f"Профит высчитывается: СУММА ПЕРЕВОЗЧИКА,eur  -  СУММА ЗАКАЗЧИКА,eur\n")
+    lines.append(f"\n")
+    lines.append(f'{lin}\n   \n this is the end...')
     response.writelines(lines)
     return response
 
