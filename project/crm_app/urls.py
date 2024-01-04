@@ -66,7 +66,9 @@ urlpatterns = [
     path('quotations/<int:pk>/', quotations_filter, name='quotations_filter'),
     path('sdelki/<int:pk>/', sdelki_filter, name='sdelki_filter'),
 
-    path('login/', login, name='login'),
+    path('login/', LoginUser.as_view(), name='login'),
+    path('logout/', logout_user, name='logout'),
+    path('register/', RegisterUser.as_view(), name='register'),
     path('add_client/', add_client, name='add_client'),
     path('add_supplyer/', add_supplyer, name='add_supplyer'),
 

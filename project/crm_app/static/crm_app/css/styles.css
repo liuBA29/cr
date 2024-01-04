@@ -30,6 +30,9 @@ h1{text-align: center;}
     display: flex;
 }
 
+.container > div:last {
+margin-left: auto;}
+
 .footage{max-height: 250px;}
 
 .left-bar{

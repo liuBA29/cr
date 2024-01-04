@@ -3,12 +3,16 @@ import datetime
 from calendar import HTMLCalendar
 from pprint import pprint
 import csv
+
+from django.contrib.auth import logout, login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.db.models import *
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from django.urls import resolve
+from django.urls import resolve, reverse_lazy
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from dateutil.relativedelta import relativedelta
 from .forms import *
 from .models import *
@@ -151,7 +155,7 @@ menu = [
     {'title': 'Контрагенты', 'url_name': 'contragents'},
     {'title': 'Операции', 'url_name': 'operations'},
     {'title': 'Документы', 'url_name': 'documents'},
-    {'title': 'Войти', 'url_name': 'login'},
+
 ]
 
 
@@ -670,7 +674,7 @@ def qf_vypiska(request):
     sdelki = Sdelka.objects.filter(description__iregex=qf.qfilter)
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_description_search.txt'
-    lin = '-' * 220
+    lin = '-' * 180
     space = " " * 4
     lines = [f"{lin}\n",
              f'Выписка СДЕЛОК поиска по описанию: " {qf.qfilter} "\n',
@@ -1333,8 +1337,12 @@ def sdelki(request):
     return render(request, 'crm_app/sdelki.html', context=context)
 
 
-def login(request):
-    return render(request, 'crm_app/login.html', {'menu': menu, "title": "Войти"})
+
+
+
+
+
+
 
 
 #=======add document======
@@ -1679,7 +1687,7 @@ def extract(request, pk):
     url = resolve(request.path_info).url_name
 
     sdelka = get_object_or_404(Sdelka, pk=pk)
-    lin = '-' * 110
+    lin = '-' * 180
     space = " " * 4
 
     # create lines:
@@ -1722,7 +1730,7 @@ def dinamic_file_all_sdelki(request):
     sdelki = sd
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_all.txt'
-    lin = '-' * 220
+    lin = '-' * 180
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка за весь период \n"
@@ -1768,7 +1776,7 @@ def dinamic_file_quartal_sdelki(request):
     sdelki = sd_quartal
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_quartal.txt'
-    lin = '-' * 220
+    lin = '-' * 180
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка за: 3 месяца\n"
@@ -1814,7 +1822,7 @@ def dinamic_file_six_sdelki(request):
     sdelki = sd_six
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_half_year.txt'
-    lin = '-' * 110
+    lin = '-' * 180
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка за: 6 месяцев\n"
@@ -1860,7 +1868,7 @@ def dinamic_file_week_sdelki(request):
     sdelki = sd_week
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=vypiska_week.txt'
-    lin = '-' * 110
+    lin = '-' * 180
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка за: 7 дней \n"
@@ -1914,7 +1922,7 @@ def calendar_filter(request):
             'select * from crm_app_sdelka where time_create between "' + fromdate + '" and date("' + todate + '", "1 day") ')
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=selected_period_vypiska.txt'
-    lin = '-' * 110
+    lin = '-' * 180
     space = " " * 4
     lines = [f"{lin}\n",
              f"Выписка СДЕЛОК за период с: {period2.fromdate: %d.%m.%Y} по: {period2.todate: %d.%m.%Y} \n"
@@ -1994,4 +2002,46 @@ def sdelki_for_period(request, pk=None):
     return render(request, 'crm_app/sdelki_for_period.html', context=context)
 #=================qfilter=================================
 
+# resister and login users
 
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'crm_app/register.html'
+    success_url = reverse_lazy('login')
+    now = datetime.now()
+    now_year = now.year
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now_year']: now_year
+        context['title'] = 'Регистрация'
+        context['menu'] = menu
+        context['contragentss'] = contragentss
+        return dict(list(context.items()))
+
+    #auto login
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'crm_app/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now_year']: now_year
+        context['title'] = 'Авторизация'
+        context['menu'] = menu
+        context['contragentss'] = contragentss
+        return dict(list(context.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
