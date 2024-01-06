@@ -1,0 +1,295 @@
+
+body {
+  background-color: #e1f4db;
+
+}
+
+li {
+  list-style-type:  none;
+}
+
+hr {
+    color: green;
+}
+
+
+.mainmenu {
+    background-color: #e1f4db;
+    padding:10px;
+    margin: 0;
+    font-size: 22px;
+    height:60px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+
+h1{text-align: center;}
+
+.container {
+    display: flex;
+}
+
+.container > div:last {
+margin-left: auto;}
+
+.footage{max-height: 250px;}
+
+.left-bar{
+    width:24%;
+    target: 30px;
+    list-style-type: none;
+
+}
+
+ .left-bar li{
+     list-style-type: none;
+     font-size:20px;
+
+}
+
+.centercontent{
+    background-color: ligthgrey;
+    width:75%;
+
+}
+
+.search-right {
+    justify-content: flex-end;
+
+
+}
+
+.addbutton {
+    float: right;
+}
+
+.not_allowed {
+    text-align: center;
+}
+.center{
+    text-align: center;
+
+}
+
+.info {
+    font-size: 25px;
+     font-style: italic;
+}
+
+
+
+.selected {
+    color: grey;
+}
+
+.remark {
+    padding: 10px;
+    margin: 5px;
+    width: 100%;
+    height: 60px;
+    background-color: #ccdedd;
+}
+
+img.sm-pic {
+    max-height: 245px;
+}
+.form-input{
+    width: 350px;
+}
+.displ:hover{
+    color:green;
+}
+.displ:visit{
+    color:red;
+}
+
+p#hh {
+    color: green;
+}
+
+.tree li{
+  display      : block;
+  position     : relative;
+  padding-left : calc(2 * var(--spacing) - var(--radius) - 2px);
+}
+
+
+.success{
+    color: green;
+    width: 366px;
+    height: 36px;
+    font-size: 25px;
+    text-align: center;
+    border: 2px dashed green;
+}
+
+/*когда не авторизован*/
+
+/*end not allowed*/
+
+
+/*кнопка посмотреть подробней */
+.double-border-button {
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 20px;
+  padding: 10px 30px;
+  position: relative;
+  border: 2px solid #f1c40f;
+  color: #f1c40f;
+  font-family: 'Montserrat', sans-serif;
+  transition: .4s;
+}
+.double-border-button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: .4s;
+}
+.double-border-button:hover:after {
+  border-color: #f1c40f;
+  width: calc(100% - 10px);
+  height: calc(100% + 10px);
+}
+
+/*кнопка посмотреть подробней */
+
+.borders {
+    border: 2px solid #f1c40f;
+     margin: 10px 20px;
+     padding: 10px 30px;
+}
+
+
+.poisk_table{
+    display:flex;
+    justify-content: space-between;
+}
+
+.c {
+  color: green;
+  background: pink;
+
+}
+.c:active {
+  background: green;
+  outline: none;
+  box-shadow: 0 0 0 4px #cbd6ee;
+}
+
+button:active {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .5);
+   }
+
+.choicetitle {
+    color: teal;
+}
+
+.green{color: green;}
+.blue{color: blue;}
+
+
+
+/* кнопка  выписки */
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-7 {
+background: linear-gradient(0deg, rgba(255,151,0,1) 0%, rgba(251,75,2,1) 100%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-7 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-7:before,
+.btn-7:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: rgba(251,75,2,1);
+  box-shadow:
+   -7px -7px 20px 0px rgba(255,255,255,.9),
+   -4px -4px 5px 0px rgba(255,255,255,.9),
+   7px 7px 20px 0px rgba(0,0,0,.2),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+  transition: all 0.3s ease;
+}
+.btn-7:before{
+   height: 0%;
+   width: 2px;
+}
+.btn-7:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-7:hover{
+  color: rgba(251,75,2,1);
+  background: transparent;
+}
+.btn-7:hover:before {
+  height: 100%;
+}
+.btn-7:hover:after {
+  width: 100%;
+}
+.btn-7 span:before,
+.btn-7 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: rgba(251,75,2,1);
+  box-shadow:
+   -7px -7px 20px 0px rgba(255,255,255,.9),
+   -4px -4px 5px 0px rgba(255,255,255,.9),
+   7px 7px 20px 0px rgba(0,0,0,.2),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+  transition: all 0.3s ease;
+}
+.btn-7 span:before {
+  width: 2px;
+  height: 0%;
+}
+.btn-7 span:after {
+  height: 2px;
+  width: 0%;
+}
+.btn-7 span:hover:before {
+  height: 100%;
+}
+.btn-7 span:hover:after {
+  width: 100%;
+}
+/*конец кнопка выписки*/

@@ -1,0 +1,103 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+<div class="borders">
+
+    <h3>Котировка создана:  {{quotation.time_create}}</h3>
+    <li>Описание потребности: {{quotation.description}}</li>
+    <li>Транспорт: {{quotation.transport}}</li>
+    <li>Заказчик: {{quotation.client}} </li>
+    <li>Место загрузки груза: {{quotation.loading_country}} </li>
+    <li>Место выгрузки груза: {{quotation.unloading_country}} </li>
+    <li> Перевозчик: {{quotation.supplyer_1}} </li>
+     <li>Ставка Перевозчика: {{quotation.sup_price_1}} {{quotation.currency1}}  </li>
+    <li>Комментарий: {{quotation.comment_field1}} </li>
+
+    {% if  quotation.supplyer_2  %}
+<br>
+    <li>Ставка Перевозчика 2 - {{quotation.supplyer_2}}
+     <li>цена:  -{{quotation.sup_price_2}} {{quotation.currency2}}  </li>
+    <li>коммент 2 - {{quotation.comment_field2}} </li>
+
+    {% endif %}
+
+{% if  quotation.supplyer_3  %}
+    <br>
+    <li>Ставка Перевозчика 3 - {{quotation.supplyer_3}}
+     <li>цена:  -{{quotation.sup_price_3}} {{quotation.currency3}}  </li>
+    <li>коммент 3 - {{quotation.comment_field3}} </li>
+    {% endif %}
+
+
+{% if  quotation.supplyer_4  %}
+    <br>
+    <li>Ставка Перевозчика 4 -{{quotation.supplyer_4}} </li>
+     <li>цена:  -{{quotation.sup_price_4}} {{quotation.currency4}}  </li>
+    <li>коммент 4 -{{quotation.comment_field4}} </li>
+    {% endif %}
+
+{% if  quotation.supplyer_5  %}
+    <br>
+     <li>Ставка Перевозчика 5  -{{quotation.supplyer_5}} </li>
+     <li>цена:  - {{quotation.sup_price_5}} {{quotation.currency5}}  </li>
+    <li>коммент 5 -{{quotation.comment_field5}} </li>
+    {% endif %}
+
+{% if  quotation.supplyer_6  %}
+    <br>
+    <li>Ставка Перевозчика 6 - {{quotation.supplyer_6}} </li>
+     <li>цена:  - {{quotation.sup_price_6}} {{quotation.currency6}}  </li>
+    <li>коммент 6 - {{quotation.comment_field6}} </li>
+    {% endif %}
+
+{% if  quotation.supplyer_7  %}
+    <br>
+    <li>Ставка Перевозчика 7 - {{quotation.supplyer_7}} </li>
+     <li>цена:  - {{quotation.sup_price_7}} {{quotation.currency7}}  </li>
+    <li>коммент 7 -{{quotation.comment_field7}} </li>
+    {% endif %}
+
+{% if  quotation.supplyer_8  %}
+    <br>
+    <li>Ставка Перевозчика 8 -{{quotation.supplyer_8}} </li>
+     <li>цена:  - {{quotation.sup_price_8}} {{quotation.currency8}}  </li>
+    <li>коммент 8 - {{quotation.comment_field8}} </li>
+    {% endif %}
+
+{% if  quotation.supplyer_9  %}
+    <br>
+    <li>Ставка Перевозчика 9 - {{quotation.supplyer_9}} </li>
+     <li>цена:  - {{quotation.sup_price_9}} {{quotation.currency9}}  </li>
+    <li>коммент 9 - {{quotation.comment_field9}} </li>
+    {% endif %}
+
+{% if  quotation.supplyer_10  %}
+    <br>
+    <li>Ставка Перевозчика 10 -{{quotation.supplyer_10}} </li>
+     <li>цена:  - {{quotation.sup_price_10}} {{quotation.currency10}}  </li>
+    <li>коммент 10 - {{quotation.comment_field10}} </li>
+{% endif %}
+    <br>
+    <li>Статус котировки: {{quotation.status}} </li>
+    <li value="">Результат котировки: {{quotation.result}}</li>
+
+    <li>Транспорт: {{quotation.common_transport}} </li>
+
+    <br>
+
+<td ><a href="{% url 'update_quotation' quotation.id %}">Редактировать</a>
+    <td align = 'right'><a href="{% url 'delete_quotation' quotation.id %}">Удалить</a></td>
+</div>
+</ul>
+</div>
+{%endblock content%}

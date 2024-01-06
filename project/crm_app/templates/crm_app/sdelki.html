@@ -1,0 +1,217 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+{% six_month as six_month%}{%period_quartal as period_quartal%}
+
+<div class="left-bar"><ul>
+
+    {%for c in operationss %}
+         {% if c.url_name == 'sdelki' %}
+       <li class="selected">{{c.title}}</li>
+    {%else%}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {% endif%}
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+   <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить Сделку</a></button>
+
+
+
+
+
+    {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+      <br>
+
+
+<div class="poisk_table">
+
+<div class="">
+
+<b> Поиск по названию:</b>
+    <form action="{% url 'classic_search_sdelka' %}" method="get">
+
+        <input class="search" type="text" name="q" placeholder="Поиск Сделки"><button>Найти</button>
+    </form>
+</div>
+
+    <div class="search-right">
+
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
+
+<b>Найти за период:</b>
+    <form action="{% url 'sdelki_for_period' %}" method="post">
+        {% csrf_token %}
+           С: <input type="date" name="fromdate">
+            По: <input type="date" name="todate">
+            <input type="submit" value="Искать"/>
+</form>
+         <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
+        {{form}}
+
+</div>
+</div>
+
+     <h4>Поиск по дате создания:</h4>
+
+
+
+    <a href="{% url 'sdelki_filter' pk=1 %}"><button>Неделя</button></a>
+    <a href="{% url 'sdelki_filter' pk=3 %}"><button>Квартал</button></a>
+    <a href="{% url 'sdelki_filter' pk=6 %}"><button>6 месяцев</button></a>
+    <a href="{% url 'sdelki' %}"><button>Все</button></a>
+
+    <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->
+
+    <hr>
+<h2>{{title2}}</h2>
+    {% if not selected %}
+    <h3 class="choicetitle"> Сделки за весь период</h3>
+    <a class="addbutton" href="{% url 'dinamic_file_all_sdelki' %}">
+        <button class="custom-btn btn-7"> <span>Сделать выписку</span></button></a>
+
+    {% endif %}
+
+        {% for s in selectings%}
+         {% if s.selected == selected %}
+        {% if selected == 3%}
+
+        <h3 class="choicetitle"> Сделки за период: с
+            {{period_quartal}} по {{now_str}}</h3>
+   <a class="addbutton" href="{% url 'dinamic_file_quartal_sdelki' %}"><button class="custom-btn btn-7"><span>
+       Сделать выписку</span></button></a>
+        {% elif selected == 6%}
+
+        <h3 class="choicetitle"> Сделки за период: с
+            {{six_month}} по {{now_str}}</h3>
+<a class="addbutton" href="{% url 'dinamic_file_six_sdelki' %}"><button class="custom-btn btn-7"><span>
+       Сделать выписку</span></button></a>
+         {% else %}
+        <h3 class="choicetitle"> Сделки за неделю: </h3>
+    <a class="addbutton" href="{% url 'dinamic_file_week_sdelki' %}"><button class="custom-btn btn-7"><span>
+       Сделать выписку</span></button></a>
+
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+    <!-- отображение СДЕЛОК -->
+{% for c in sdelki %}
+        <h3>Название Заказчика: {{c.client}}</h3>
+    <li>Сделка номер: <b> {{c.number}}</b></li>
+    <li>Сделка создана: {{c.time_create}}</li>
+    <li>Описание перевозки: {{c.description}}</li>
+    <li>Статус: <b>{{c.status_sdelka}}</b>, Состояние: <b>{{c.status_sdelka_other}}</b></li>
+
+    <li>Перевозчик 1: {{c.supplyer_1}}</li>
+     {% if  c.debitorka1 == True  %}
+    <li>Дебиторка: ✔️</li>
+    {% else %}
+     <li>Дебиторка: ❌ </li>
+    {% endif %}
+
+    {% if c.supplyer_2 %}<br>
+        <li>Перевозчик 2: {{c.supplyer_2}}</li>
+        {% if  c.debitorka2 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_3 %}<br>
+        <li>Перевозчик 3: {{c.supplyer_3}}</li>
+        {% if  c.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_4 %}<br>
+        <li>Перевозчик 4: {{c.supplyer_4}}</li>
+        {% if  c.debitorka4 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_5 %}<br>
+        <li>Перевозчик 5: {{c.supplyer_5}}</li>
+        {% if  c.debitorka5 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_6 %}<br>
+        <li>Перевозчик 6: {{c.supplyer_6}}</li>
+        {% if  c.debitorka6 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_7 %}<br>
+        <li>Перевозчик 7: {{c.supplyer_7}}</li>
+        {% if  c.debitorka7 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_8 %}<br>
+        <li>Перевозчик 8: {{c.supplyer_8}}</li>
+        {% if  c.debitorka8 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_9 %}<br>
+        <li>Перевозчик 9: {{c.supplyer_9}}</li>
+        {% if  c.debitorka9 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+    {% if c.supplyer_10 %}<br>
+        <li>Перевозчик 10: {{c.supplyer_10}}</li>
+        {% if  c.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+
+
+
+    <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+    {% endfor %}<hr>
+<!-- END отображение СДЕЛОК -->
+<a href="#">Сделать Выпіску</a>
+</ul>
+</div>
+{%endblock content%}

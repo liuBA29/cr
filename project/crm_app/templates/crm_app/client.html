@@ -1,0 +1,64 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in contragentss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+ <div class="borders">
+        <h3>Название: {{client.company_name}}</h3>
+    <li>Контакт с сотрудником: {{client.contact_name}}</li>
+    <li>Email заказчика:{{client.email}} </li>
+    <li>Телефон: {{client.phone}}</li>
+    <li>Адрес: {{client.address}} </li>
+    <hr>
+    <li>{{client.created}} </li>
+    <li>{{client.updated}} </li>
+
+
+      {% if  client.client_status == True%}
+        <li>Постоянный клиент: ✔️ </li>
+        {% else %}
+        {% endif %}
+
+
+
+
+
+    <br>
+    <h3>Сделки, в которых учавствует Заказчик:</h3>
+
+
+    {% for s in client.sdelka_set.all %}
+   <p><a href="{% url 'show_sdelka' s.pk %}">Сделка № {{s.number}}</a></p>
+
+    {% endfor %}
+    <hr>    <p>Количество всех сделок:  {{client.sdelka_set.count}} </p>
+
+    <br>
+   <h3>Документы:</h3>
+    {% for d in doc_cl %}
+
+    <li>{{d.sdelka}}</li>
+
+
+    <!--    <li><a href="#">Сделка номер</a></li>-->
+    <a href="{{d.file.url}}">{{d}}</a>
+
+    {% endfor %}
+     <p>Количество всех документов:  {{doc_cl.count}} </p>
+
+
+ </div>
+<button><a href="{% url 'update_client' client.id  %}">Редактировать</a></button>
+     <td align = 'right'><a href="{% url 'delete_client' client.id %}">Удалить</a></td>
+
+</ul>
+</div>
+{%endblock content%}

@@ -1,0 +1,42 @@
+{% extends 'crm_app/base.html' %}
+
+{%block content%}
+
+
+
+
+<div class="left-bar"><ul>
+    {%for c in contragentss %}
+         {% if c.url_name == 'other_companies' %}
+
+       <li class="selected">{{c.title}}</li>
+    {%else%}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {% endif%}
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+     <button class="addbutton"><a href="{% url 'add_othercompany' %}">Добавить Организацию</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+    {% for c in other_companies %}
+
+
+
+
+        <h3>Название: {{c.company_name}}</h3>
+    <li>Описание: {{c.descripsion}}</li>
+    <li>email:{{c.email}} </li>
+    <li>Тел.:{{c.phone}}</li>
+    <li>Адрес:{{c.address}} </li>
+    <li>Дата создания:{{c.created}} </li>
+
+<p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+    {% endfor %}<hr>
+</ul>
+</div>
+{%endblock content%}

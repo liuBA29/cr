@@ -1,0 +1,202 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+<div class="left-bar"><ul>
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}</ul>
+</div>
+
+<div class="centercontent"><ul>
+    <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить Сделку</a></button>
+    <button class=""><a href="{% url 'extract' 2 %}">Подготовить выписку</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+<ul>
+<h3 class="choicetitle">Самая ранняя Сделка:</h3>
+   <li> Номер сделки: {{earlier_sdelka.number}} </li>
+
+        <h3>Название Заказчика: {{earlier_sdelka.client}}</h3>
+    <li>Сделка номер: <b> {{earlier_sdelka.number}}</b></li>
+    <li>Сделка создана: {{earlier_sdelka.time_create}}</li>
+    <li>Описание перевозки: {{earlier_sdelka.description}}</li>
+    <li>Статус: <b>{{earlier_sdelka.status_sdelka}}</b>, Состояние: <b>{{earlier_sdelka.status_sdelka_other}}</b></li>
+    <br>
+    <li>Перевозчик 1: {{earlier_sdelka.supplyer_1}}</li>
+     {% if  earlier_sdelka.debitorka1 == True  %}
+    <li>Дебиторка: ✔️</li>
+    {% else %}
+     <li>Дебиторка: ❌ </li>
+    {% endif %}
+    {% if earlier_sdelka.supplyer_2 %}<br>
+        <li>Перевозчик 2: {{earlier_sdelka.supplyer_2}}</li>
+        {% if  earlier_sdelka.debitorka2 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_3 %}<br>
+        <li>Перевозчик 3: {{earlier_sdelka.supplyer_3}}</li>
+        {% if  earlier_sdelka.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_4 %}<br>
+        <li>Перевозчик 4: {{earlier_sdelka.supplyer_4}}</li>
+        {% if  earlier_sdelka.debitorka4 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_5 %}<br>
+        <li>Перевозчик 5: {{earlier_sdelka.supplyer_5}}</li>
+        {% if  earlier_sdelka.debitorka5 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_6 %}<br>
+        <li>Перевозчик 6: {{earlier_sdelka.supplyer_6}}</li>
+        {% if  earlier_sdelka.debitorka6 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_7 %}<br>
+        <li>Перевозчик 7: {{earlier_sdelka.supplyer_7}}</li>
+        {% if  earlier_sdelka.debitorka7 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_8 %}<br>
+        <li>Перевозчик 8: {{earlier_sdelka.supplyer_8}}</li>
+        {% if  earlier_sdelka.debitorka8 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_9 %}<br>
+        <li>Перевозчик 9: {{earlier_sdelka.supplyer_9}}</li>
+        {% if  earlier_sdelka.debitorka9 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if earlier_sdelka.supplyer_10 %}<br>
+        <li>Перевозчик 10: {{earlier_sdelka.supplyer_10}}</li>
+        {% if  earlier_sdelka.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    <p ><a class="double-border-button" href="{{ earlier_sdelka.get_absolute_url }}">Посмотреть подробней</a></p>
+
+
+
+ <h3 class="choicetitle">Самая поздняя Сделка:</h3>
+   <li> Номер сделки: {{latest_sdelka.number}} </li>
+        <h3>Название Заказчика: {{latest_sdelka.client}}</h3>
+    <li>Сделка номер: <b> {{latest_sdelka.number}}</b></li>
+    <li>Сделка создана: {{latest_sdelka.time_create}}</li>
+    <li>Описание перевозки: {{latest_sdelka.description}}</li>
+    <li>Статус: <b>{{latest_sdelka.status_sdelka}}</b>, Состояние: <b>{{latest_sdelka.status_sdelka_other}}</b></li>
+    <br>
+    <li>Перевозчик 1: {{latest_sdelka.supplyer_1}}</li>
+     {% if  latest_sdelka.debitorka1 == True  %}
+    <li>Дебиторка: ✔️</li>
+    {% else %}
+     <li>Дебиторка: ❌ </li>
+    {% endif %}
+    {% if latest_sdelka.supplyer_2 %}<br>
+        <li>Перевозчик 2: {{latest_sdelka.supplyer_2}}</li>
+        {% if  latest_sdelka.debitorka2 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_3 %}<br>
+        <li>Перевозчик 3: {{latest_sdelka.supplyer_3}}</li>
+        {% if  latest_sdelka.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_4 %}<br>
+        <li>Перевозчик 4: {{latest_sdelka.supplyer_4}}</li>
+        {% if  latest_sdelka.debitorka4 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_5 %}<br>
+        <li>Перевозчик 5: {{latest_sdelka.supplyer_5}}</li>
+        {% if  latest_sdelka.debitorka5 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_6 %}<br>
+        <li>Перевозчик 6: {{latest_sdelka.supplyer_6}}</li>
+        {% if  latest_sdelka.debitorka6 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_7 %}<br>
+        <li>Перевозчик 7: {{latest_sdelka.supplyer_7}}</li>
+        {% if  latest_sdelka.debitorka7 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_8 %}<br>
+        <li>Перевозчик 8: {{latest_sdelka.supplyer_8}}</li>
+        {% if  latest_sdelka.debitorka8 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_9 %}<br>
+        <li>Перевозчик 9: {{latest_sdelka.supplyer_9}}</li>
+        {% if  latest_sdelka.debitorka9 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+    {% if latest_sdelka.supplyer_10 %}<br>
+        <li>Перевозчик 10: {{latest_sdelka.supplyer_10}}</li>
+        {% if  latest_sdelka.debitorka3 == True  %}
+            <li>Дебиторка: ✔️</li>
+            {% else %}
+             <li>Дебиторка: ❌ </li>
+        {% endif %}
+    {% endif %}
+<p ><a class="double-border-button" href="{{ latest_sdelka.get_absolute_url }}">Посмотреть подробней</a></p>
+
+
+
+</ul>
+</ul>
+</div>
+{%endblock content%}

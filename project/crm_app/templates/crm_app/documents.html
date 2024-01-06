@@ -1,0 +1,57 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+
+    {%for c in documentss %}
+
+            <li><a href="{%  url c.url_name %}">{{c.title}}</a></li>
+
+    {%endfor%}</ul>
+</div>
+
+<div class="centercontent">
+ <button class="addbutton"><a href="{% url 'document_itself' %}">Загрузить новый документ </a></button>
+
+
+
+
+
+    {% for c in documents %}
+
+        <h3>Название документа: {{c.name}}</h3>
+    <ul>
+        {% if c.client%}
+        <li><b>Документ от Заказчика:</b> {{c.client}}</li>
+        {% elif c.supplyer%}
+         <li><b>Документ от Перевозчика:</b> {{c.supplyer}}</li>
+        {% elif c.other_organization%}
+         <li><b>Документ от Сторонней организации: </b>{{c.other_oranization}}</li>
+        {%else%}
+        <li><b>Корпоративный документ:</b> </li>
+
+
+
+        {% endif %}
+
+         <li><b>Тип документа: </b>{{c.type}}</li>
+         {% if c.file %}
+         <a href="{{c.file.url}}">{{c.file}}</a>
+        {%else%}
+        <p>---no file---</p>
+        {% endif %}
+    </ul>
+<p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+    {% endfor %}<hr>
+
+
+
+
+
+
+
+
+
+</div>
+{%endblock content%}

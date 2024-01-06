@@ -1,0 +1,37 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+
+<div class="left-bar"><ul>
+    {%for c in contragentss %}
+
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+    <button class="addbutton"><a href="{% url 'add_supplyer' %}">Добавить Перевозчика</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+
+
+<ul>
+
+    <h3 class="choicetitle">Перевозчики за период с: {{fromdate}} по: {{todate}}</h3>
+{% for r in result %}
+     <li> {{r.company_name}} </li>
+   <li>создан:  {{r.time_create}} </li>
+    <li>{{r.address}} </li>
+    <p ><a class="double-border-button" href="{{ r.get_absolute_url }}">Посмотреть подробней</a></p>
+    <hr>
+{%endfor%}
+
+</ul>
+</ul>
+</div>
+{%endblock content%}

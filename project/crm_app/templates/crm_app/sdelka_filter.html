@@ -1,0 +1,45 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+    {%for c in operationss %}
+        <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+
+
+
+    <a href="{% url 'sdelka_filter' pk=1 %}"><button>week</button></a>
+    <a href="{% url 'sdelka_filter' pk=2 %}"><button>month</button></a>
+    <a href="{% url 'sdelka_filter' pk=3 %}"><button>all</button></a>
+
+
+
+
+    <button class="addbutton"><a href="{% url 'add_sdelka' %}">Добавить сделку</a></button>
+
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+
+{% for c in sdelki %}
+        <h3>{{c.client}}</h3>
+    <li>Сделка создана: {{c.time_create}}</li>
+    <li>{{c.description}}</li>
+
+
+
+
+    <p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+    {% endfor %}<hr>
+
+
+</ul>
+</div>
+{%endblock content%}

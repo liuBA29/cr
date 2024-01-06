@@ -1,0 +1,54 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+   {%for c in documentss %}
+
+            <li><a href="{%  url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}</ul>
+</div>
+
+<div class="centercontent">
+
+
+
+    {% for c in documents %}
+        {% if c.len > 0 %}
+
+         <h3>{{c.name}}</h3>
+
+
+    <ul>{% if c.client%}
+        <li><b>Документ от Заказчика: </b>{{c.client}}</li>
+
+        {% elif c.supplyer%}
+        <li><b>Документ от Перевозчикаа: </b>{{c.supplyert}}</li>
+        {% elif c.other_organization%}
+        <li><b>Документ от сторонней организации: </b>{{c.other_company}}</li>
+       {%endif%}
+
+         <li>Тип документа: {{c.type}}</li>
+         {% if c.file %}
+         <a href="{{c.file.url}}">{{c.file}}</a>
+        {%else%}
+        <p>no file</p>
+        {% endif %}
+
+    </ul>
+     {%endif%}
+    {% endfor %}
+    <hr>
+    <br><br>
+
+<h2>Загрузить новый документ</h2>
+
+    <form action="{% url 'documents' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            {{ form.file}}
+        </p>
+        <p><input type="submit" value="загрузить файл" /></p>
+    </form>
+
+</div>
+{%endblock content%}

@@ -1,0 +1,36 @@
+{% extends 'crm_app/base.html' %}
+
+{%block content%}
+
+<div class="left-bar"><ul>
+
+</ul>
+</div>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+     <div class="form-error">{{ form.non_field_errors }}</div>
+
+     <p><label for="{{ form.name.id_for_label }}">{{ form.name.label }}:</label>{{ form.name }}</p>
+    <div class="form-error">{{ form.name.errors }}</div>
+     <p><label for="{{ form.client.id_for_label }}">{{ form.client.label }}:</label>{{ form.client }}</p>
+    <div class="form-error">{{ form.client.errors }}</div>
+    <p><label for="{{ form.sdelka.id_for_label }}">{{ form.sdelka.label }}:</label>{{ form.sdelka }}</p>
+    <div class="form-error">{{ form.sdelka.errors }}</div>
+
+    <p><label for="{{ form.other_company.id_for_label }}">{{ form.other_company.label }}:</label>{{ form.other_company }}</p>
+    <div class="form-error">{{ form.other_company.errors }}</div>
+
+    <p><label for="{{ form.type.id_for_label }}">{{ form.type.label }}:</label>{{ form.type }}</p>
+    <div class="form-error">{{ form.type.errors }}</div>
+    <p><label for="{{ form.file.id_for_label }}">{{ form.file.label }}:</label>{{ form.file }}</p>
+    <div class="form-error">{{ form.file.errors }}</div>
+
+
+
+
+
+<button >Добавить файл</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% load static %}
+{% load crm_app_tags %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link type="text/css" href="{% static 'crm_app/css/styles.css' %}" rel="stylesheet">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href=" {% static 'crm_app/images/slogo.ico' %}" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+{% block mainmenu %}
+<div class="header">
+<ul id="mainmenu" class="mainmenu">
+    <li class="logo"><a href="{% url 'home' %}"> <img src="{% static 'crm_app/images/logo.png' %}" alt=""> </a></li>
+    {% for m in menu %}
+    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+    {% endfor %}
+    {% if request.user.is_authenticated %}
+    <div class="last">{{user.username}} <b>|</b> <a href="{% url 'logout' %}"> Выйти </a></div>
+    {% else %}
+   <div class="last"> <a href="{% url 'register' %}"> Регистрация </a><b>|</b><a href="{% url 'login' %}"> Войти</a></div>
+    {% endif %}
+</ul>
+</div>
+
+{% block title %}
+<h1>{{title}}</h1>
+{% endblock title %}
+
+{% endblock mainmenu %}
+
+
+<div class="container">
+{%block content%}
+    <p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+{%endblock content%}
+
+
+</div>
+
+<div class="footage">
+{%block footage%}
+    <br>
+<center> Copyright (c) {{now_year}} </center>
+    <br>
+{% endblock footage %}
+</div>
+<script src="{% static 'crm_app/js/script.js' %}"></script>
+
+</body>
+</html>

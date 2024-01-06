@@ -1,0 +1,325 @@
+{% extends 'crm_app/base.html' %}
+
+{%block content%}
+
+<div class="left-bar"><ul>
+
+</ul>
+</div>
+
+<form action="." method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="form-error">{{ form.non_field_errors }}</div>
+
+     <p><label for="{{ form.number.id_for_label }}">{{ form.number.label }}:</label>{{ form.number }}</p>
+    <div class="form-error">{{ form.number.errors }}</div>
+
+   <p><label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>{{ form.description }}</p>
+    <div class="form-error">{{ form.description.errors }}</div>
+
+  <p><label for="{{ form.client.id_for_label }}">{{ form.client.label }}:</label>{{ form.client }}</p>
+    <div class="form-error">{{ form.client.errors }}</div>
+
+<p><label for="{{ form.client_price.id_for_label }}">{{ form.client_price.label }}:</label>{{ form.client_price }}
+        <label for="{{ form.client_currency.id_for_label }}">{{ form.client_currency.label }}:</label>{{ form.client_currency }}</p>
+    <div class="form-error">{{ form.client_price.errors }}{{ form.client_currency.errors }}</div>
+    <p><label for="{{ form.common_transport.id_for_label }}">{{ form.common_transport.label }}:</label>{{ form.common_transport }}</p>
+    <div class="form-error">{{ form.common_transport.errors }}</div>
+
+
+    <!-- ПЕРЕВОЗЧИК 1 -->
+
+<h4>Перевозчик 1:</h4>
+  <p><label for="{{ form.supplyer_1.id_for_label }}">{{ form.supplyer_1.label }}:</label>{{ form.supplyer_1 }}</p>
+    <div class="form-error">{{ form.supplyer_1.errors }}</div>
+    <div class="form-error">{{ form.loading_country_1.errors }}</div>
+    <div class="form-error">{{ form.unloading_country_1.errors }}</div>
+    <p><label for="{{ form.sup_price_1.id_for_label }}">{{ form.sup_price_1.label }}:</label>{{ form.sup_price_1 }}
+        <label for="{{ form.currency1.id_for_label }}">{{ form.currency1.label }}:</label>{{ form.currency1 }}</p>
+    <div class="form-error">{{ form.sup_price_1.errors }}{{ form.currency1.errors }}</div>
+<p><label for="{{ form.loading_country_1.id_for_label }}">{{ form.loading_country_1.label }}:</label>{{ form.loading_country_1 }}
+    <label for="{{ form.unloading_country_1.id_for_label }}">{{ form.unloading_country_1.label }}:</label>{{ form.unloading_country_1 }}</p>
+    <div class="form-error">{{ form.loading_country_1.errors }}</div><div class="form-error">{{ form.unloading_country_1.errors }}</div>
+
+    <p><label for="{{ form.data_zagruzki_1.id_for_label }}">{{ form.data_zagruzki_1.label }}:</label>{{ form.data_zagruzki_1 }}
+    <label for="{{ form.data_vygruzki_1.id_for_label }}">{{ form.data_vygruzki_1.label }}:</label>{{ form.data_vygruzki_1 }}</p>
+    <div class="form-error">{{ form.data_zagruzki_1.errors }}</div><div class="form-error">{{ form.data_vygruzki_1.errors }}</div>
+
+
+  <p><label for="{{ form.comment_field1.id_for_label }}">{{ form.comment_field1.label }}:</label>{{ form.comment_field1 }}</p>
+    <div class="form-error">{{ form.comment_field1.errors }}</div>
+
+    <p><label for="{{ form.debitorka1.id_for_label }}">{{ form.debitorka1.label }}:</label>{{ form.debitorka1 }}</p>
+    <div class="form-error">{{ form.debitorka1.errors }}</div>
+
+    <!-- перевозчики: 2, 3, 4 -->
+    <ul class="tree">
+      <li><details><summary> Перевозчик 2: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_2.id_for_label }}">{{ form.supplyer_2.label }}:</label>{{ form.supplyer_2 }}</summary>
+            <div class="form-error">{{ form.supplyer_2.errors }}</div>
+        </li>
+            <li>
+            <summary><label for="{{ form.sup_price_2.id_for_label }}">{{ form.sup_price_2.label }}:</label>{{ form.sup_price_2 }}<label for="{{ form.currency2.id_for_label }}">{{ form.currency2.label }}:</label>{{ form.currency2 }}</summary>
+            <div class="form-error">{{ form.sup_price_2.errors }}{{ form.currency2.errors }}</div>
+        </li>
+          <li>
+              <summary><label for="{{ form.loading_country_2.id_for_label }}">{{ form.loading_country_2.label }}:</label>{{ form.loading_country_2 }}
+    <label for="{{ form.unloading_country_2.id_for_label }}">{{ form.unloading_country_2.label }}:</label>{{ form.unloading_country_2 }}</summary>
+             <div class="form-error">{{ form.loading_country_2.errors }}</div><div class="form-error">{{ form.unloading_country_2.errors }}</div></li>
+           <li><summary><label for="{{ form.data_zagruzki_2.id_for_label }}">{{ form.data_zagruzki_2.label }}:</label>{{ form.data_zagruzki_2 }}
+    <label for="{{ form.data_vygruzki_2.id_for_label }}">{{ form.data_vygruzki_2.label }}:</label>{{ form.data_vygruzki_2 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_2.errors }}</div><div class="form-error">{{ form.data_vygruzki_2.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field2.id_for_label }}">{{ form.comment_field2.label }}:</label>{{ form.comment_field2 }}</summary>
+            <div class="form-error">{{ form.comment_field2.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka2.id_for_label }}">{{ form.debitorka2.label }}:</label>{{ form.debitorka2 }}</p>
+    <div class="form-error">{{ form.debitorka2.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+   <ul class="tree">
+      <li><details><summary> Перевозчик 3: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_3.id_for_label }}">{{ form.supplyer_3.label }}:</label>{{ form.supplyer_3 }}</summary>
+            <div class="form-error">{{ form.supplyer_3.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_3.id_for_label }}">{{ form.sup_price_3.label }}:</label>{{ form.sup_price_3 }}<label for="{{ form.currency3.id_for_label }}">{{ form.currency3.label }}:</label>{{ form.currency3 }}</summary>
+            <div class="form-error">{{ form.sup_price_3.errors }}{{ form.currency3.errors }}</div>
+        </li>
+           <li> <label for="{{ form.loading_country_3.id_for_label }}">{{ form.loading_country_3.label }}:</label>{{ form.loading_country_3 }}
+    <label for="{{ form.unloading_country_3.id_for_label }}">{{ form.unloading_country_3.label }}:</label>{{ form.unloading_country_3 }}
+                <div class="form-error">{{ form.loading_country_3.errors }}</div><div class="form-error">{{ form.unloading_country_3.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_3.id_for_label }}">{{ form.data_zagruzki_3.label }}:</label>{{ form.data_zagruzki_3 }}
+    <label for="{{ form.data_vygruzki_3.id_for_label }}">{{ form.data_vygruzki_3.label }}:</label>{{ form.data_vygruzki_3 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_3.errors }}</div><div class="form-error">{{ form.data_vygruzki_3.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field3.id_for_label }}">{{ form.comment_field3.label }}:</label>{{ form.comment_field3 }}</summary>
+            <div class="form-error">{{ form.comment_field3.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka3.id_for_label }}">{{ form.debitorka3.label }}:</label>{{ form.debitorka3 }}</p>
+    <div class="form-error">{{ form.debitorka3.errors }}</div>
+
+        </ul>
+      </details></li>
+
+    </ul>
+
+    <ul class="tree">
+      <li><details><summary> Перевозчик 4: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_4.id_for_label }}">{{ form.supplyer_4.label }}:</label>{{ form.supplyer_4 }}</summary>
+            <div class="form-error">{{ form.supplyer_4.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_4.id_for_label }}">{{ form.sup_price_4.label }}:</label>{{ form.sup_price_4 }}<label for="{{ form.currency4.id_for_label }}">{{ form.currency4.label }}:</label>{{ form.currency4 }}</summary>
+            <div class="form-error">{{ form.sup_price_4.errors }}{{ form.currency4.errors }}</div>
+        </li>
+            <li> <label for="{{ form.loading_country_4.id_for_label }}">{{ form.loading_country_4.label }}:</label>{{ form.loading_country_4 }}
+    <label for="{{ form.unloading_country_4.id_for_label }}">{{ form.unloading_country_4.label }}:</label>{{ form.unloading_country_4 }}
+                <div class="form-error">{{ form.loading_country_4.errors }}</div><div class="form-error">{{ form.unloading_country_4.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_4.id_for_label }}">{{ form.data_zagruzki_4.label }}:</label>{{ form.data_zagruzki_4 }}
+    <label for="{{ form.data_vygruzki_4.id_for_label }}">{{ form.data_vygruzki_4.label }}:</label>{{ form.data_vygruzki_4 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_4.errors }}</div><div class="form-error">{{ form.data_vygruzki_4.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field4.id_for_label }}">{{ form.comment_field4.label }}:</label>{{ form.comment_field4 }}</summary>
+            <div class="form-error">{{ form.comment_field4.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka4.id_for_label }}">{{ form.debitorka4.label }}:</label>{{ form.debitorka4 }}</p>
+    <div class="form-error">{{ form.debitorka4.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+
+
+    <ul class="tree">
+      <li><details><summary> Перевозчик 5: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_5.id_for_label }}">{{ form.supplyer_5.label }}:</label>{{ form.supplyer_5 }}</summary>
+            <div class="form-error">{{ form.supplyer_5.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_5.id_for_label }}">{{ form.sup_price_5.label }}:</label>{{ form.sup_price_5 }}<label for="{{ form.currency5.id_for_label }}">{{ form.currency5.label }}:</label>{{ form.currency5 }}</summary>
+            <div class="form-error">{{ form.sup_price_5.errors }}{{ form.currency5.errors }}</div>
+        </li>
+            <li> <label for="{{ form.loading_country_5.id_for_label }}">{{ form.loading_country_5.label }}:</label>{{ form.loading_country_5 }}
+    <label for="{{ form.unloading_country_5.id_for_label }}">{{ form.unloading_country_5.label }}:</label>{{ form.unloading_country_5 }}
+                <div class="form-error">{{ form.loading_country_5.errors }}</div><div class="form-error">{{ form.unloading_country_5.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_5.id_for_label }}">{{ form.data_zagruzki_5.label }}:</label>{{ form.data_zagruzki_5 }}
+    <label for="{{ form.data_vygruzki_5.id_for_label }}">{{ form.data_vygruzki_5.label }}:</label>{{ form.data_vygruzki_5 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_5.errors }}</div><div class="form-error">{{ form.data_vygruzki_5.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field5.id_for_label }}">{{ form.comment_field5.label }}:</label>{{ form.comment_field5 }}</summary>
+            <div class="form-error">{{ form.comment_field5.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka5.id_for_label }}">{{ form.debitorka5.label }}:</label>{{ form.debitorka5 }}</p>
+    <div class="form-error">{{ form.debitorka5.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+
+  <ul class="tree">
+      <li><details><summary>  Перевозчик 6: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_6.id_for_label }}">{{ form.supplyer_6.label }}:</label>{{ form.supplyer_6 }}</summary>
+            <div class="form-error">{{ form.supplyer_6.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_6.id_for_label }}">{{ form.sup_price_6.label }}:</label>{{ form.sup_price_6 }}<label for="{{ form.currency6.id_for_label }}">{{ form.currency6.label }}:</label>{{ form.currency6 }}</summary>
+            <div class="form-error">{{ form.sup_price_6.errors }}{{ form.currency6.errors }}</div>
+        </li>
+            <li> <label for="{{ form.loading_country_6.id_for_label }}">{{ form.loading_country_6.label }}:</label>{{ form.loading_country_6 }}
+    <label for="{{ form.unloading_country_6.id_for_label }}">{{ form.unloading_country_6.label }}:</label>{{ form.unloading_country_6 }}
+                <div class="form-error">{{ form.loading_country_6.errors }}</div><div class="form-error">{{ form.unloading_country_6.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_6.id_for_label }}">{{ form.data_zagruzki_6.label }}:</label>{{ form.data_zagruzki_6 }}
+    <label for="{{ form.data_vygruzki_6.id_for_label }}">{{ form.data_vygruzki_6.label }}:</label>{{ form.data_vygruzki_6 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_6.errors }}</div><div class="form-error">{{ form.data_vygruzki_6.errors }}</div></li6
+      <li>
+            <summary><label for="{{ form.comment_field6.id_for_label }}">{{ form.comment_field6.label }}:</label>{{ form.comment_field6 }}</summary>
+            <div class="form-error">{{ form.comment_field6.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka6.id_for_label }}">{{ form.debitorka6.label }}:</label>{{ form.debitorka6 }}</p>
+    <div class="form-error">{{ form.debitorka6.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+    <ul class="tree">
+      <li><details><summary>  Перевозчик 7: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_7.id_for_label }}">{{ form.supplyer_7.label }}:</label>{{ form.supplyer_7 }}</summary>
+            <div class="form-error">{{ form.supplyer_7.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_7.id_for_label }}">{{ form.sup_price_7.label }}:</label>{{ form.sup_price_7 }}<label for="{{ form.currency7.id_for_label }}">{{ form.currency7.label }}:</label>{{ form.currency7 }}</summary>
+            <div class="form-error">{{ form.sup_price_7.errors }}{{ form.currency7.errors }}</div>
+        </li>
+            <li> <label for="{{ form.loading_country_7.id_for_label }}">{{ form.loading_country_7.label }}:</label>{{ form.loading_country_7 }}
+    <label for="{{ form.unloading_country_7.id_for_label }}">{{ form.unloading_country_7.label }}:</label>{{ form.unloading_country_7 }}
+                <div class="form-error">{{ form.loading_country_7.errors }}</div><div class="form-error">{{ form.unloading_country_7.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_7.id_for_label }}">{{ form.data_zagruzki_7.label }}:</label>{{ form.data_zagruzki_7 }}
+    <label for="{{ form.data_vygruzki_7.id_for_label }}">{{ form.data_vygruzki_7.label }}:</label>{{ form.data_vygruzki_7 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_7.errors }}</div><div class="form-error">{{ form.data_vygruzki_7.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field7.id_for_label }}">{{ form.comment_field7.label }}:</label>{{ form.comment_field7 }}</summary>
+            <div class="form-error">{{ form.comment_field7.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka7.id_for_label }}">{{ form.debitorka7.label }}:</label>{{ form.debitorka7 }}</p>
+    <div class="form-error">{{ form.debitorka7.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+    <ul class="tree">
+      <li><details><summary>  Перевозчик 8: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_8.id_for_label }}">{{ form.supplyer_8.label }}:</label>{{ form.supplyer_8 }}</summary>
+            <div class="form-error">{{ form.supplyer_8.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_8.id_for_label }}">{{ form.sup_price_8.label }}:</label>{{ form.sup_price_8 }}<label for="{{ form.currency8.id_for_label }}">{{ form.currency8.label }}:</label>{{ form.currency8 }}</summary>
+            <div class="form-error">{{ form.sup_price_8.errors }}{{ form.currency8.errors }}</div>
+        </li>
+            <li> <label for="{{ form.loading_country_8.id_for_label }}">{{ form.loading_country_8.label }}:</label>{{ form.loading_country_8 }}
+    <label for="{{ form.unloading_country_8.id_for_label }}">{{ form.unloading_country_8.label }}:</label>{{ form.unloading_country_8 }}
+                <div class="form-error">{{ form.loading_country_8.errors }}</div><div class="form-error">{{ form.unloading_country_8.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_8.id_for_label }}">{{ form.data_zagruzki_8.label }}:</label>{{ form.data_zagruzki_8 }}
+    <label for="{{ form.data_vygruzki_8.id_for_label }}">{{ form.data_vygruzki_8.label }}:</label>{{ form.data_vygruzki_8 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_8.errors }}</div><div class="form-error">{{ form.data_vygruzki_8.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field8.id_for_label }}">{{ form.comment_field8.label }}:</label>{{ form.comment_field8 }}</summary>
+            <div class="form-error">{{ form.comment_field8.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka8.id_for_label }}">{{ form.debitorka8.label }}:</label>{{ form.debitorka8 }}</p>
+    <div class="form-error">{{ form.debitorka8.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+    <ul class="tree">
+      <li><details><summary>  Перевозчик 9: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_9.id_for_label }}">{{ form.supplyer_9.label }}:</label>{{ form.supplyer_9 }}</summary>
+            <div class="form-error">{{ form.supplyer_9.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_9.id_for_label }}">{{ form.sup_price_9.label }}:</label>{{ form.sup_price_9 }}<label for="{{ form.currency9.id_for_label }}">{{ form.currency9.label }}:</label>{{ form.currency9 }}</summary>
+            <div class="form-error">{{ form.sup_price_9.errors }}{{ form.currency9.errors }}</div>
+        </li>
+        <li> <label for="{{ form.loading_country_9.id_for_label }}">{{ form.loading_country_9.label }}:</label>{{ form.loading_country_9 }}
+    <label for="{{ form.unloading_country_9.id_for_label }}">{{ form.unloading_country_9.label }}:</label>{{ form.unloading_country_9 }}
+                <div class="form-error">{{ form.loading_country_9.errors }}</div><div class="form-error">{{ form.unloading_country_9.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_9.id_for_label }}">{{ form.data_zagruzki_9.label }}:</label>{{ form.data_zagruzki_9 }}
+    <label for="{{ form.data_vygruzki_9.id_for_label }}">{{ form.data_vygruzki_9.label }}:</label>{{ form.data_vygruzki_9 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_9.errors }}</div><div class="form-error">{{ form.data_vygruzki_9.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field9.id_for_label }}">{{ form.comment_field9.label }}:</label>{{ form.comment_field9 }}</summary>
+            <div class="form-error">{{ form.comment_field9.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka9.id_for_label }}">{{ form.debitorka9.label }}:</label>{{ form.debitorka9 }}</p>
+    <div class="form-error">{{ form.debitorka9.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+
+    <ul class="tree">
+      <li><details><summary>  Перевозчик 10: </summary>
+        <ul>
+          <li>
+            <summary><label for="{{ form.supplyer_10.id_for_label }}">{{ form.supplyer_10.label }}:</label>{{ form.supplyer_10 }}</summary>
+            <div class="form-error">{{ form.supplyer_10.errors }}</div>
+        </li>
+             <li>
+            <summary><label for="{{ form.sup_price_10.id_for_label }}">{{ form.sup_price_10.label }}:</label>{{ form.sup_price_10 }}
+                <label for="{{ form.currency10.id_for_label }}">{{ form.currency10.label }}:</label>{{ form.currency10 }}</summary>
+            <div class="form-error">{{ form.sup_price_10.errors }}{{ form.currency10.errors }}</div>
+        </li>
+            <li> <label for="{{ form.loading_country_10.id_for_label }}">{{ form.loading_country_10.label }}:</label>{{ form.loading_country_10 }}
+    <label for="{{ form.unloading_country_10.id_for_label }}">{{ form.unloading_country_10.label }}:</label>{{ form.unloading_country_10 }}
+                <div class="form-error">{{ form.loading_country_10.errors }}</div><div class="form-error">{{ form.unloading_country_10.errors }}</div>
+            </li>
+            <li><summary><label for="{{ form.data_zagruzki_10.id_for_label }}">{{ form.data_zagruzki_10.label }}:</label>{{ form.data_zagruzki_10 }}
+    <label for="{{ form.data_vygruzki_10.id_for_label }}">{{ form.data_vygruzki_10.label }}:</label>{{ form.data_vygruzki_10 }}</summary>
+    <div class="form-error">{{ form.data_zagruzki_10.errors }}</div><div class="form-error">{{ form.data_vygruzki_10.errors }}</div></li>
+      <li>
+            <summary><label for="{{ form.comment_field10.id_for_label }}">{{ form.comment_field10.label }}:</label>{{ form.comment_field10 }}</summary>
+            <div class="form-error">{{ form.comment_field10.errors }}</div>
+      </li>
+        <p><label for="{{ form.debitorka10.id_for_label }}">{{ form.debitorka10.label }}:</label>{{ form.debitorka10 }}</p>
+    <div class="form-error">{{ form.debitorka10.errors }}</div>
+
+        </ul>
+      </details></li></ul>
+    <!-- ставки 2, 3, 4 - конец -->
+
+  <p><label for="{{ form.status_sdelka.id_for_label }}">{{ form.status_sdelka.label }}:</label>{{ form.status_sdelka }}</p>
+    <div class="form-error">{{ form.status_sdelka.errors }}</div>
+
+  <p><label for="{{ form.status_sdelka_other.id_for_label }}">{{ form.status_sdelka_other.label }}:</label>{{ form.status_sdelka_other }}</p>
+    <div class="form-error">{{ form.status_sdelka_other.errors }}</div>
+
+
+<button type="submit">Внести изменения</button>
+</form>
+
+{%endblock content%}

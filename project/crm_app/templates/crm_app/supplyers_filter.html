@@ -1,0 +1,35 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+    {%for c in operationss %}
+        <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+    <a href="{% url 'supplyers_filter' pk=1 %}"><button>week</button></a>
+    <a href="{% url 'supplyers_filter' pk=2 %}"><button>month</button></a>
+    <a href="{% url 'supplyers_filter' pk=4 %}"><button>квартал</button></a>
+     <a href="{% url 'supplyers_filter' pk=3 %}"><button>all</button></a>
+    <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->
+</ul>
+    <br>
+
+    <a href="{% url 'add_supplyer' %}"><button class="addbutton">Добавить перевозчика</button></a>
+
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+
+{% for c in supplyers %}
+        <h3>{{c.conpany_name}}</h3>
+
+    <li>Сделка создана: {{c.time_create }}</li>
+    <li>{{c.contact_name}}</li>
+    {% endfor %}
+</div>

@@ -1,0 +1,108 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+{% six_month as six_month%}{%period_quartal as period_quartal%}
+
+<div class="left-bar"><ul>
+
+
+    {%for c in operationss %}
+         {% if c.url_name == 'quotations' %}
+       <li class="selected">{{c.title}}</li>
+    {%else%}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {% endif%}
+    {%endfor%}</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+
+    <button class="addbutton"><a href="{% url 'add_quotation' %}">Добавить котировку</a></button>
+
+
+
+    {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+
+      <br>
+
+<div class="poisk_table">
+
+<div class="">
+
+<b> Поиск по названию:</b>
+    <form action="{% url 'classic_search_quotation' %}" method="get">
+
+        <input class="search" type="text" name="q" placeholder="Поиск Котировки"><button>Найти</button>
+    </form>
+</div>
+
+    <div class="search-right">
+<b>Найти за период:</b>
+    <form action="{% url 'quotations_for_period' %}" method="post">
+        {% csrf_token %}
+           С: <input type="date" name="fromdate">
+            По: <input type="date" name="todate">
+            <input type="submit" value="Искать"/>
+</form>
+</div>
+</div>
+
+     <h4>Поиск по дате создания:</h4>
+
+   
+
+    <a href="{% url 'quotations_filter' pk=1 %}"><button>Неделя</button></a>
+    <a href="{% url 'quotations_filter' pk=3 %}"><button>Квартал</button></a>
+    <a href="{% url 'quotations_filter' pk=6 %}"><button>6 месяцев</button></a>
+    <a href="{% url 'quotations' %}"><button>Все</button></a>
+
+    <!--  <a href="{% url 'supplyers_filter' pk=5 %}"><button>current year</button></a>-->
+
+    <hr>
+<h2>{{title2}}</h2>
+        {% for s in selectings%}
+         {% if s.selected == selected %}
+        {% if selected == 3%}
+        <h3 class="choicetitle"> Котировки за период: с
+            {{period_quartal}} по {{now_str}}</h3>
+        {% elif selected == 6%}
+        <h3 class="choicetitle"> Котировки за период: с
+            {{six_month}} по {{now_str}}</h3>
+
+         {% else %}
+        <h3 class="choicetitle"> Котировки за неделю: </h3>
+
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+
+    {% for c in quotations %}
+
+    <h3>Название Заказчика: {{c.client}}</h3>
+    <li>Котировка создана: {{c.time_create}}</li>
+    <li>Описание потребности: {{c.description}}</li>
+    <li>Статускотировки: {{c.status}}</li>
+    <li>Место загрузки:  {{c.loading_country}}  ||  Место выгрузки: {{c.unloading_country}}</li>
+    <li>Транспорт: {{c.common_transport}} </li>
+
+     {% if c.result == 'PRICE_GOOD' %}
+        <li>Результат: <b><span class="green"> прошли по цене</span></b></li>
+         <button class="option_button"><a  href="{% url 'quot_sdelka' c.id %}">Создать Сделку</a></button>
+            {% elif c.result == 'NOT_READY' %}
+    <li>Результат: <span class="blue"> товар не готов</span></li>
+        {% else %}
+        <li>Результат: не прошли по цене</li>
+
+    {% endif %}
+
+
+<p ><a class="double-border-button" href="{{ c.get_absolute_url }}">Посмотреть подробней</a></p>
+    {% endfor %}<hr>
+</ul>
+</div>
+{%endblock content%}

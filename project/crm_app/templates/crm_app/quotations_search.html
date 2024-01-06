@@ -1,0 +1,33 @@
+{% extends 'crm_app/base.html' %}
+{% load crm_app_tags %}
+{%block content%}
+
+<div class="left-bar"><ul>
+    {%for c in operationss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}</ul>
+</div>
+
+<div class="centercontent"><ul>
+    <button class="addbutton"><a href="{% url 'add_quotation' %}">Добавить Котировку</a></button>
+     {% for msg in messages %}
+    <div class="success">{{msg}}</div>
+    {% endfor %}
+<ul>
+<h4>Самая ранняя Котировка:</h4>
+   <li> {{earlier_quotation.number}} </li>
+   <li> {{earlier_quotation.time_create}} </li>
+    <li>{{earlier_quotation.description}} </li>
+    <p ><a class="double-border-button" href="{{ earlier_quotation.get_absolute_url }}">Посмотреть подробней</a></p>
+ <h4>Самая поздняя Котировка:</h4>
+   <li> {{latest_quotation.number}} </li>
+   <li> {{latest_quotation.time_create}} </li>
+    <li>{{latest_quotation.description}} </li>
+<p ><a class="double-border-button" href="{{ latest_quotation.get_absolute_url }}">Посмотреть подробней</a></p>
+
+
+
+</ul>
+</ul>
+</div>
+{%endblock content%}

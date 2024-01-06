@@ -1,0 +1,43 @@
+{% extends 'crm_app/base.html' %}
+{%block content%}
+
+<div class="left-bar"><ul>
+
+    {%for c in contragentss %}
+    <li><a href="{% url c.url_name %}">{{c.title}}</a></li>
+    {%endfor%}
+</ul>
+
+</div>
+
+<div class="centercontent"><ul>
+ <div class="borders">
+
+
+
+
+        <h3>Название:{{other_company.company_name}}</h3>
+    <li>Контакт с сотрудником:{{other_company.contact_name}}</li>
+    <li>Email:{{other_company.email}} </li>
+    <li>Телефон:{{other_company.phone}}</li>
+    <li>Адрес:{{other_company.address}} </li>
+    <li>Дата создания:{{other_company.time_create}} </li>
+
+    <li>Описание: {{other_company.descripsion}}</li>
+
+   <h3>Документы Перевозчика:</h3>
+    {% for d in doc_cl %}
+
+   <p> {{d.type}}: <a href="{{d.file.url}}">{{d.other_company}}</a></li></p>
+
+    {% endfor %}
+    <br>
+
+<p ><a href="{% url 'update_other_company' other_company.id %}">Редактировать</a></p>
+   <td align = 'right'><a href="{% url 'delete_other_company' other_company.id %}">Удалить</a></td>
+
+
+</div>
+</ul>
+</div>
+{%endblock content%}
