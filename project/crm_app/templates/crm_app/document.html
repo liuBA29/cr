@@ -20,19 +20,19 @@
 
 
     <li>Название документа: {{document.name}}</li>
-    <li>Заказчик: {{document.sdelka}}</li>
-    <li>Транспорт: {{document.client}} </li>
+    <li>Номер сделки: {{document.sdelka}}</li>
+    <li>Наименование заказчика: {{document.client}} </li>
     <li>Наименование Перевозчика: {{document.supplyer_1}}</li>
 
-    <li>Место загрузки: {{document.other_company}}</li>
-    <li>Место разгрузки: {{sdelka.unloading_country_1}}</li>
-    <li> Дата загрузки: {{document.type}}</li>
-    <li>Дата выгрузки: {{document.file}}</li>
+    <li>Наименование стороней организации: {{document.other_company}}</li>
+
+    <li> Вид документа: {{document.type}}</li>
+    <a href="{{document.file.url}}">{{document.file}}</a>
 
 
 <td>
-
-    <td align = 'right'><button><a href="{% url 'delete_document' document.id %}">Удалить</a></button></td>
+    <br>
+    <td align = 'right'><button><a href="{% url 'delete_document' document.id %}">Удалить документ</a></button></td>
 
 
 </ul>

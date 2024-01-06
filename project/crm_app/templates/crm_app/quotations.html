@@ -19,8 +19,8 @@
 
 <div class="centercontent"><ul>
 
-
     <button class="addbutton"><a href="{% url 'add_quotation' %}">Добавить котировку</a></button>
+
 
 
     {% for msg in messages %}
@@ -83,12 +83,12 @@
 
     {% for c in quotations %}
 
-    <h3>Заказчик: {{c.client}}</h3>
-    <li>котировка создана: {{c.time_create}}</li>
+    <h3>Название Заказчика: {{c.client}}</h3>
+    <li>Котировка создана: {{c.time_create}}</li>
     <li>Описание потребности: {{c.description}}</li>
     <li>Статускотировки: {{c.status}}</li>
-    <li>место загрузки:  {{c.loading_country}}  ||  место выгрузки: {{c.unloading_country}}</li>
-    <li>транспорт: {{c.common_transport}} </li>
+    <li>Место загрузки:  {{c.loading_country}}  ||  Место выгрузки: {{c.unloading_country}}</li>
+    <li>Транспорт: {{c.common_transport}} </li>
 
      {% if c.result == 'PRICE_GOOD' %}
         <li>Результат: <b><span class="green"> прошли по цене</span></b></li>

@@ -7,7 +7,10 @@ from calendar import HTMLCalendar
 
 
 urlpatterns = [
+
     path('', index, name='home'),
+    path('not_allowed', redirect_crm, name="not_allowed"),
+
     path('<int:year>/<str:month>/', index, name='home'),
 
     path('contragents/', contragents, name='contragents'),

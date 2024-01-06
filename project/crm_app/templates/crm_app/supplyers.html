@@ -76,18 +76,15 @@
 
         <ul>
     {% for c in supplyers %}
-        <h3>{{c.company_name}}</h3>
-    <li>{{c.id}}</li>
-    <li>time_create:  {{c.time_create}}</li>
-    <li>{{c.contact_name}}</li>
-
+        <h3>Название: {{c.company_name}}</h3>
+    <li>Имя контакта: {{c.contact_name}}</li>
     <li>email: {{c.email}} </li>
-    <li>тел.: {{c.phone}}</li>
-    <li>адрес: {{c.address}} </li>
-    <li>создан: {{c.time_create}} </li>
-    <li>последнеее обновление: {{c.time_create}} </li>
+    <li>Тел.: {{c.phone}}</li>
+    <li>Адрес: {{c.address}} </li>
+    <li>Дата создания: {{c.time_create}} </li>
+    <li>Дата последнего обновления: {{c.time_create}} </li>
 
-{% if  c.supplyer_status == True%}
+{% if c.supplyer_status == True%}
             <li>Надежный перевозчик: ✔️ </li>
 {% endif  %}
 

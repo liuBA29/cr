@@ -12,6 +12,7 @@ hr {
     color: green;
 }
 
+
 .mainmenu {
     background-color: #e1f4db;
     padding:10px;
@@ -21,8 +22,10 @@ hr {
     list-style-type: none;
     display: flex;
     justify-content: space-around;
-
 }
+
+
+
 
 h1{text-align: center;}
 
@@ -36,7 +39,7 @@ margin-left: auto;}
 .footage{max-height: 250px;}
 
 .left-bar{
-    width:30%;
+    width:24%;
     target: 30px;
     list-style-type: none;
 
@@ -50,7 +53,7 @@ margin-left: auto;}
 
 .centercontent{
     background-color: ligthgrey;
-    width:65%;
+    width:75%;
 
 }
 
@@ -62,9 +65,22 @@ margin-left: auto;}
 
 .addbutton {
     float: right;
+}
 
+.not_allowed {
+    text-align: center;
+}
+.center{
+    text-align: center;
 
 }
+
+.info {
+    font-size: 25px;
+     font-style: italic;
+}
+
+
 
 .selected {
     color: grey;
@@ -111,7 +127,9 @@ p#hh {
     border: 2px dashed green;
 }
 
+/*когда не авторизован*/
 
+/*end not allowed*/
 
 
 /*кнопка посмотреть подробней */

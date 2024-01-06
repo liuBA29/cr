@@ -159,6 +159,12 @@ menu = [
 ]
 
 
+def redirect_crm(request):
+    context = {
+        "title2": "Вам надо войти или зарегистрироваться",
+    }
+    return redirect('not_allowed', permanent=True, context=context)
+
 def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 
     name = "Calendar"
@@ -223,7 +229,7 @@ def contragents(request):
         'contragentss': contragentss,
         'clients': clients,
         'menu': menu,
-        "title": "Конртагенты",
+        "title": "Контрагенты",
         'alena': alena,
         'ale': ale,
         'class_q': class_q,
@@ -354,7 +360,7 @@ def show_supplyer(request, c_id):
 def show_other_company(request, c_id):
     other_company = get_object_or_404(OtherCompany, pk=c_id)
     url = resolve(request.path_info).url_name
-
+    doc_cl = other_company.documents_set.all()
     other_companys = OtherCompany.objects.all()
     context = {
         'now_year': now_year,
@@ -364,6 +370,28 @@ def show_other_company(request, c_id):
         'other_companys': other_companys,
         'menu': menu,
         "title": "Организация",
+        'doc_cl': doc_cl,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     return render(request, 'crm_app/other_company.html', context=context)
 
@@ -376,7 +404,7 @@ def show_other_company(request, c_id):
 def update_other_company(request, c_id):
     other_company = get_object_or_404(OtherCompany, pk=c_id)
 
-    form = AddClientForm(request.POST or None, instance=other_company)
+    form = AddOtherCompanyForm(request.POST or None, instance=other_company)
     url = resolve(request.path_info).url_name
     other_companies = OtherCompany.objects.all()
     context = {
@@ -610,6 +638,7 @@ class ClassicSearchSupplyer(ListView):
     context_object_name = 'supplyers'
     now = datetime.now()
     now_year = now.year
+
     def get_queryset(self):
         return Supplyer.objects.filter(company_name__iregex=self.request.GET.get('q'))
 

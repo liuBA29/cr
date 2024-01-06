@@ -28,29 +28,19 @@
 </div>
 
 {% block title %}
-{% if request.user.is_authenticated%}
 <h1>{{title}}</h1>
-{%  endif %}
 {% endblock title %}
 
 {% endblock mainmenu %}
 
- {% if request.user.is_authenticated%}
+
 <div class="container">
 {%block content%}
     <p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
 {%endblock content%}
- </div>
-    {% else %}
-<h2 class="not_allowed">Вам надо авторизоваться или зарегистрироваться <br>для начала работы</h2>
-   <p class="not_allowed">
-       <a href="{% url 'register' %}"> Регистрация </a><b>|</b><a href="{% url 'login' %}"> Войти</a>
-   </p>
 
 
-
-     {% endif %}
-
+</div>
 
 <div class="footage">
 {%block footage%}

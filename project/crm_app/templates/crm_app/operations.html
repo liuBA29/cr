@@ -17,63 +17,11 @@
 </div>
 
 <div class="centercontent">
-<button class=""><a href="{% url 'dinamic_file_all_sdelki' %}">dinamic выпискa</a></button>
-    <br>
-    {{euro}}
-    название: {{euro_insdelka}}
-    всего ={{euro_insdelka.count}} сделка(-ок)
 
-
-    <p>=================================</p>
-    {%for s in supplyers_in_sdelka %}
-    {%if s.supplyer == sdelka.supplyer_1 %}
-   <p>yessss</p>
-    {%else%}
-    <p>no</p>
-  <p> {{s.supplyer}} не равно {{sdelka.supplyer_1}} </p>
-    {%endif%}
-
-    {%endfor%}
-<p>=====================+++++++++++++++++++++++++++++++++++++++</p>
-
-
-         {%for s in sdelki %}
-
-
- {{s}}
-
-        {%endfor%}
-
-
-
-    <p>================================</p>
-latest sdelka is::: {{late_d}} <br>
-next sdelka is::: {{next_d}}<br>
-    next sdelka is::: {{next_d_by}}
-    <br> exists --- {{is_supl_2}}
-<br> agreg --- {{agr_f}}----
-
-    {% for agr in agr_f%}
-    {{agr}}
-    {% endfor %}
-    <br> agreg --- {{agr_f2}}
-    <br>value--{{valu}}
-    <br>{% for i in value%}
-
-    <p>{{i.client}}</p>
-
-    {% endfor %}
-
-
-    <br>{{efe}}  ----------------
-    sum cl > sum supl
-
-
-
-    {% for c in operationss %}
-        <h3>{{c.key}}</h3>
-
+    <br><br><br><br>
+    <p class="info">... здесь может размещаться какая-либо Ваша информация</p>
+    <br><br><br><br><br><br>
     <hr>
-    {% endfor %}
+
 </div>
 {%endblock content%}

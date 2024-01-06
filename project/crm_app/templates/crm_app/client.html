@@ -20,7 +20,17 @@
     <hr>
     <li>{{client.created}} </li>
     <li>{{client.updated}} </li>
-     <li>Постоянный клиент: {{client.client_status}}</li>
+
+
+      {% if  client.client_status == True%}
+        <li>Постоянный клиент: ✔️ </li>
+        {% else %}
+        {% endif %}
+
+
+
+
+
     <br>
     <h3>Сделки, в которых учавствует Заказчик:</h3>
 
