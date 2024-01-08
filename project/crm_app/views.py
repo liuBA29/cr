@@ -1299,18 +1299,18 @@ def show_quotation(request, c_id):
 
 def operations(request):
     euro = Currency.objects.get(pk=2)
-    sdelka = Sdelka.objects.get(pk=3)
+
     sdelki = Sdelka.objects.all()
     euro_insdelka = euro.client_currency.all()
     euro_insdelka_count = euro.client_currency.count()
     late_d = Sdelka.objects.latest('time_update')
-    next_d = late_d.get_previous_by_time_update()  # this isprevious get_next_by will be next
-    next_d_by = late_d.get_previous_by_time_update(client_currency=2)
+    # next_d = late_d.get_previous_by_time_update()  # this isprevious get_next_by will be next
+    # next_d_by = late_d.get_previous_by_time_update(client_currency=2)
     is_supl_2 = Sdelka.objects.filter(supplyer_3=4)
     agr_f = Sdelka.objects.aggregate(Max('client_currency'))
     agr_f2 = Sdelka.objects.aggregate(Max('client_currency'), Min('client_currency'))
-    valu = Sdelka.objects.values('supplyer_1', 'supplyer_2', 'supplyer_3', 'supplyer_4', 'supplyer_5',
-                                 'supplyer_6', ).filter(pk__gt=2)
+    # valu = Sdelka.objects.values('supplyer_1', 'supplyer_2', 'supplyer_3', 'supplyer_4', 'supplyer_5',
+    #                              'supplyer_6', ).filter(pk__gt=2)
     efe = Sdelka.objects.filter(client_currency__gt=F('currency1'))  # сумма клиента больше ілі = суммы перевозчика
 
     context = {
@@ -1322,15 +1322,15 @@ def operations(request):
         'euro': euro,
         'euro_insdelka': euro_insdelka,
         'supplyers_in_sdelka': supplyers_in_sdelka,
-        'sdelka': sdelka,
+        # 'sdelka': sdelka,
         'sdelki': sdelki,
         'late_d': late_d,
-        'next_d': next_d,
-        'next_d_by': next_d_by,
+        # 'next_d': next_d,
+        # 'next_d_by': next_d_by,
         'is_supl_2': is_supl_2,
         'agr_f': agr_f,
         'agr_f2': agr_f2,
-        'valu': valu,
+        #'valu': valu,
         'efe': efe,
     }
     return render(request, 'crm_app/operations.html', context=context)
