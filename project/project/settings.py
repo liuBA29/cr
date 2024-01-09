@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-hdl4glsb#%2g#(%gafzkola!n9+w$rhw+y(&s*gev!$v&o0yq0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['inter.web.cloudcenter.ovh', '192.168.1.185',]
+ALLOWED_HOSTS = ['inter.web.cloudcenter.ovh', '192.168.1.185', '127.0.0.1',]
 
 
 # Application definition
@@ -80,17 +80,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'intertruck',
-        'USER': 'admin',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'user1',
         'PASSWORD': '1212',
         'HOST': 'localhost',
-
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-
-
+        'PORT': '',
     }
 }
 
@@ -130,7 +125,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_DIRS = []
 
 
