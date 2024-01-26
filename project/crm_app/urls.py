@@ -124,6 +124,17 @@ urlpatterns = [
     path('calendar_filter/pk', calendar_filter, name='calendar_filter'),
    # path('some_view/', some_view, name='some_view'),qf
     path('qf_vypiska/', qf_vypiska, name='qf_vypiska'),
-]
+
+   path('api/v1/clients/', ClientAPIView.as_view(), name='clientapi'),
+   path('api/v1/clients/<int:pk>/', ClientAPIUpdate.as_view(), name='clientapiupdate'),
+   path('api/v1/supplyers/', SupplyerAPIList.as_view()),
+   path('api/v1/supplyers/<int:pk>/', SupplyerAPIUpdate.as_view()),
+
+    path('api/v1/sdelki/', SdelkaAPIList.as_view()),
+    path('api/v1/sdelki/<int:pk>/', SdelkaAPIUpdate.as_view()),
+
+    path('cb1/', CallbackView.as_view(), name='cb1'),
+
+ ]
 
 

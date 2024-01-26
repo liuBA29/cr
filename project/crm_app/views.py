@@ -8,12 +8,20 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.db.models import *
+from django.forms import model_to_dict
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.urls import resolve, reverse_lazy
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.views.generic import ListView, CreateView
+from django.views.generic.edit import FormView
+
+
+
 from dateutil.relativedelta import relativedelta
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .forms import *
 from .models import *
 from django.http import HttpResponse
@@ -22,10 +30,14 @@ from dateutil.relativedelta import relativedelta
 from django.db.models.functions import *
 from .currency_parcer import find_currency, show_profit
 
+#==== DRF ======
+from rest_framework import generics, viewsets
+from .serializers import *
 #=========================
 
 #from bs4 import BeautifulSoup
 from pprint import pprint
+
 
 
 
@@ -2074,3 +2086,60 @@ class LoginUser(LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+#====================   DFW  ==========================
+
+
+#=================== api  ----------=========================
+class ClientAPIView(generics.ListCreateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+class ClientAPIUpdate(generics.UpdateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+
+
+class SupplyerAPIList(generics.ListCreateAPIView):
+    queryset = Supplyer.objects.all()
+    serializer_class = SupplyerSerializer
+
+class SupplyerAPIUpdate(generics.UpdateAPIView):
+    queryset = Supplyer.objects.all()
+    serializer_class = SupplyerSerializer
+
+
+class SdelkaAPIList(generics.ListCreateAPIView):
+    queryset = Sdelka.objects.all()
+    serializer_class = SdelkaSerializer
+
+class SdelkaAPIUpdate(generics.UpdateAPIView):
+    queryset = Sdelka.objects.all()
+    serializer_class = SdelkaSerializer
+
+# def callback(request):
+#     form = CallbackForm
+#     context = {
+#         'menu': menu,
+#         "title": "callback",
+#         "form": form,
+#     }
+#     return render(request, 'crm_app/cb.html', context=context)
+#=====================
+class CallbackView(FormView):
+    template_name = 'crm_app/cb.html'
+    form_class = CallbackForm
+    success_url = 'cb1/'
+
+    def post(self, request):
+        return HttpResponse('accept call to %s' % request.POST['phone'])
+
+    def form_valid(self, form):
+        return super(CallbackForm, self).form_valid(form)
+
+
+
+
+

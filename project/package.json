@@ -1,0 +1,15 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "launch a django web app in electron desktop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "project": "electron ."
+  },
+  "author": "Liuba",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^28.2.0"
+  }
+}

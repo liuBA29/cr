@@ -100,3 +100,7 @@ class AddQuotForm(forms.ModelForm):
             'comment_field9': forms.Textarea(attrs={'cols': 40, 'rows': 8}),
             'comment_field10': forms.Textarea(attrs={'cols': 40, 'rows': 8}),
         }
+
+
+class CallbackForm(forms.Form):
+    phone = forms.CharField(max_length=50, help_text="введите номер", widget=forms.TextInput(attrs={'class ': 'form-input'}))

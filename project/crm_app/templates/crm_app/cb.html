@@ -1,0 +1,26 @@
+{% extends 'crm_app/base.html' %}
+
+{%block content%}
+
+<div class="left-bar"><ul>
+
+</ul>
+</div>
+
+<div class="centercontent"><ul>
+
+
+<form action="cb1" method="post">
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+     <p><label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}:</label>{{ form.phone }}</p>
+    <div class="form-error">{{ form.phone.errors }}</div>
+<button type="submit"> Вызов</button>
+</form>
+<p>call back</p>
+
+</ul>
+</div>
+
+{%endblock content%}
