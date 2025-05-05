@@ -1,5 +1,5 @@
 @ECHO off
 
 start /min python manage.py runserver
-timeout 3
+timeout 5
 start /min npm run project
