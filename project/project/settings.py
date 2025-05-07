@@ -1,3 +1,5 @@
+
+# project/project/settings.py
 """
 Django settings for project project.
 
@@ -28,8 +30,7 @@ SECRET_KEY = 'django-insecure-hdl4glsb#%2g#(%gafzkola!n9+w$rhw+y(&s*gev!$v&o0yq0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['inter.web.cloudcenter.ovh', '192.168.1.185', '127.0.0.1', 'localhost',]
-
+ALLOWED_HOSTS = ['testsite.web.cloudcenter.ovh', '192.168.1.185', '192.168.4.103', '127.0.0.1']
 
 # Application definition
 
@@ -87,6 +88,11 @@ DATABASES = {
 
     }
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://testsite.web.cloudcenter.ovh',
+    # Добавь сюда другие домены, если нужно
+]
 
 
 # Password validation

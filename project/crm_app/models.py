@@ -1,3 +1,6 @@
+
+#project/crm_app/models.py
+
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.db import models
