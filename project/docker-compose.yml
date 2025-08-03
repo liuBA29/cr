@@ -7,6 +7,7 @@ services:
     volumes:
       - .:/app
       - static_volume:/app/staticfiles  # Django будет складывать сюда статику
+      - ./db.sqlite3:/app/db.sqlite3  # 🔧 сохраняет файл локально
       - ./media:/app/media
     ports:
       - "8000:8000"
